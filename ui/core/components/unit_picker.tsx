@@ -11,7 +11,7 @@ export interface UnitValue {
 	color?: string;
 }
 
-export interface UnitValueConfig extends DropdownValueConfig<UnitValue> {}
+export interface UnitValueConfig extends DropdownValueConfig<UnitValue> { }
 export interface UnitPickerConfig<ModObject>
 	extends Omit<DropdownPickerConfig<ModObject, UnitReference | undefined, UnitValue>, 'equals' | 'setOptionContent' | 'defaultLabel'> {
 	hideLabelWhenDefaultSelected?: boolean;

@@ -67,7 +67,7 @@ export interface PresetRotationOptions extends Pick<PresetOptionsBase, 'onLoad'>
 export interface PresetEpWeights extends PresetBase {
 	epWeights: Stats;
 }
-export interface PresetEpWeightsOptions extends PresetOptionsBase {}
+export interface PresetEpWeightsOptions extends PresetOptionsBase { }
 
 export interface PresetEncounter extends PresetBase {
 	encounter?: EncounterProto;
@@ -78,7 +78,7 @@ export interface PresetEncounter extends PresetBase {
 	buffs?: IndividualBuffs;
 	consumes?: Consumes;
 }
-export interface PresetEncounterOptions extends PresetOptionsBase {}
+export interface PresetEncounterOptions extends PresetOptionsBase { }
 
 export interface PresetBuild {
 	name: string;
@@ -92,7 +92,7 @@ export interface PresetBuild {
 	options?: Partial<SpecOptions<any>>;
 }
 
-export interface PresetBuildOptions extends Omit<PresetBuild, 'name'> {}
+export interface PresetBuildOptions extends Omit<PresetBuild, 'name'> { }
 
 export function makePresetGear(name: string, gearJson: any, options?: PresetGearOptions): PresetGear {
 	const gear = EquipmentSpec.fromJson(gearJson);

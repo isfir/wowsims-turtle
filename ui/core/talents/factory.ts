@@ -4,7 +4,6 @@ import {
 	specToClass,
 	specTypeFunctions,
 } from '../proto_utils/utils.js';
-
 import { druidTalentsConfig } from './druid.js';
 import { hunterTalentsConfig } from './hunter.js';
 import { mageTalentsConfig } from './mage.js';

@@ -13,7 +13,6 @@ func (warrior *Warrior) registerSunderArmorSpell() {
 
 	var canApplySunder bool
 
-
 	warrior.SunderArmor = warrior.RegisterSpell(AnyStance, core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: spellID},
 		SpellSchool: core.SpellSchoolPhysical,

@@ -17,45 +17,45 @@ export abstract class IndividualExporter<SpecType extends Spec> extends Exporter
 		label: string;
 		labelTooltip: string;
 	}> = [
-		{
-			category: SimSettingCategories.Gear,
-			label: 'Gear',
-			labelTooltip: 'Also includes bonus stats and weapon swaps.',
-		},
-		{
-			category: SimSettingCategories.Talents,
-			label: 'Talents',
-			labelTooltip: 'Talents and Glyphs.',
-		},
-		{
-			category: SimSettingCategories.Rotation,
-			label: 'Rotation',
-			labelTooltip: 'Includes everything found in the Rotation tab.',
-		},
-		{
-			category: SimSettingCategories.Consumes,
-			label: 'Consumes',
-			labelTooltip: 'Flask, pots, food, etc.',
-		},
-		{
-			category: SimSettingCategories.External,
-			label: 'Buffs & Debuffs',
-			labelTooltip: 'All settings which are applied by other raid members.',
-		},
-		{
-			category: SimSettingCategories.Miscellaneous,
-			label: 'Misc',
-			labelTooltip: 'Spec-specific settings, front/back of target, distance from target, etc.',
-		},
-		{
-			category: SimSettingCategories.Encounter,
-			label: 'Encounter',
-			labelTooltip: 'Fight-related settings.',
-		},
-		// Intentionally exclude UISettings category here, because users almost
-		// never intend to export them and it messes with other users' settings.
-		// If they REALLY want to export UISettings, just use the JSON exporter.
-	];
+			{
+				category: SimSettingCategories.Gear,
+				label: 'Gear',
+				labelTooltip: 'Also includes bonus stats and weapon swaps.',
+			},
+			{
+				category: SimSettingCategories.Talents,
+				label: 'Talents',
+				labelTooltip: 'Talents and Glyphs.',
+			},
+			{
+				category: SimSettingCategories.Rotation,
+				label: 'Rotation',
+				labelTooltip: 'Includes everything found in the Rotation tab.',
+			},
+			{
+				category: SimSettingCategories.Consumes,
+				label: 'Consumes',
+				labelTooltip: 'Flask, pots, food, etc.',
+			},
+			{
+				category: SimSettingCategories.External,
+				label: 'Buffs & Debuffs',
+				labelTooltip: 'All settings which are applied by other raid members.',
+			},
+			{
+				category: SimSettingCategories.Miscellaneous,
+				label: 'Misc',
+				labelTooltip: 'Spec-specific settings, front/back of target, distance from target, etc.',
+			},
+			{
+				category: SimSettingCategories.Encounter,
+				label: 'Encounter',
+				labelTooltip: 'Fight-related settings.',
+			},
+			// Intentionally exclude UISettings category here, because users almost
+			// never intend to export them and it messes with other users' settings.
+			// If they REALLY want to export UISettings, just use the JSON exporter.
+		];
 	protected readonly simUI: IndividualSimUI<SpecType>;
 	protected readonly exportCategories: Record<SimSettingCategories, boolean>;
 

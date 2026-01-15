@@ -13,8 +13,8 @@ export class DtpsMetricsTable extends MetricsTable<ActionMetrics> {
 		config.resultsEmitter.on((_, resultData) => {
 			const lastResult = resultData
 				? this.getGroupedMetrics(resultData)
-						.filter(g => g.length)
-						.map(groups => this.mergeMetrics(groups))
+					.filter(g => g.length)
+					.map(groups => this.mergeMetrics(groups))
 				: undefined;
 			this.maxDtpsAmount = Math.max(...(lastResult || []).map(a => a.damage));
 		});
@@ -293,8 +293,7 @@ export class DtpsMetricsTable extends MetricsTable<ActionMetrics> {
 				name: 'Crit %',
 				getValue: (metric: ActionMetrics) => metric.critPercent || metric.critTickPercent,
 				getDisplayString: (metric: ActionMetrics) =>
-					`${formatToPercent(metric.critPercent || metric.critTickPercent, { fallbackString: '-' })}${
-						metric.critPercent && metric.critTickPercent ? ` (${formatToPercent(metric.critTickPercent, { fallbackString: '-' })})` : ''
+					`${formatToPercent(metric.critPercent || metric.critTickPercent, { fallbackString: '-' })}${metric.critPercent && metric.critTickPercent ? ` (${formatToPercent(metric.critTickPercent, { fallbackString: '-' })})` : ''
 					}`,
 			},
 			{

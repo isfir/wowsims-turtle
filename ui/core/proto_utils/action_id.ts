@@ -243,7 +243,7 @@ export class ActionId {
 		let name = baseName;
 		switch (baseName) {
 			case 'Master Demonologist':
-				switch(this.tag) {
+				switch (this.tag) {
 					case 1:
 						name = `${name} (Imp)`;
 						break;
@@ -351,18 +351,18 @@ export class ActionId {
 				break;
 			case 'Power of the Guardian':
 				switch (this.spellId) {
-				case 28142:
-					name = `${name} (Mage)`;
-					break;
-				case 28143:
-					name = `${name} (Warlock)`;
-					break;
-				case 28144:
-					name = `${name} (Priest)`;
-					break;
-				case 28145:
-					name = `${name} (Druid)`;
-					break;
+					case 28142:
+						name = `${name} (Mage)`;
+						break;
+					case 28143:
+						name = `${name} (Warlock)`;
+						break;
+					case 28144:
+						name = `${name} (Priest)`;
+						break;
+					case 28145:
+						name = `${name} (Druid)`;
+						break;
 				}
 				break;
 			default:

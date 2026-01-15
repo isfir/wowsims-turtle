@@ -86,16 +86,16 @@ function determineContentType(filePath: string) {
 }
 
 export const getBaseConfig = ({ command, mode }: ConfigEnv) =>
-	({
-		base: '/classic/',
-		root: path.join(__dirname, 'ui'),
-		build: {
-			outDir: OUT_DIR,
-			minify: mode === 'development' ? false : 'terser',
-			sourcemap: command === 'serve' ? 'inline' : false,
-			target: ['es2020'],
-		},
-	} satisfies Partial<UserConfigExport>);
+({
+	base: '/classic/',
+	root: path.join(__dirname, 'ui'),
+	build: {
+		outDir: OUT_DIR,
+		minify: mode === 'development' ? false : 'terser',
+		sourcemap: command === 'serve' ? 'inline' : false,
+		target: ['es2020'],
+	},
+} satisfies Partial<UserConfigExport>);
 
 export default defineConfig(({ command, mode }) => {
 	const baseConfig = getBaseConfig({ command, mode });

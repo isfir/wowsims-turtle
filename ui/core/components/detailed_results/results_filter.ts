@@ -98,8 +98,8 @@ export class ResultsFilter extends ResultComponent {
 				ref.type == UnitType.Player
 					? simResult.result.getPlayerWithRaidIndex(ref.index)
 					: ref.type == UnitType.Target
-					? simResult.result.getTargetWithEncounterIndex(ref.index)
-					: null;
+						? simResult.result.getTargetWithEncounterIndex(ref.index)
+						: null;
 
 			if (unit) {
 				return {

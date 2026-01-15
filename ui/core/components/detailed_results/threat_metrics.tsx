@@ -13,8 +13,8 @@ export class ThreatMetricsTable extends MetricsTable<ActionMetrics> {
 		config.resultsEmitter.on((_, resultData) => {
 			const lastResult = resultData
 				? this.getGroupedMetrics(resultData)
-						.filter(g => g.length)
-						.map(groups => this.mergeMetrics(groups))
+					.filter(g => g.length)
+					.map(groups => this.mergeMetrics(groups))
 				: undefined;
 			this.maxThreatAmount = Math.max(...(lastResult || []).map(a => a.threat));
 		});
@@ -214,10 +214,9 @@ export class ThreatMetricsTable extends MetricsTable<ActionMetrics> {
 				name: 'Crit %',
 				getValue: (metric: ActionMetrics) => metric.critPercent + metric.blockedCritPercent || metric.critTickPercent,
 				getDisplayString: (metric: ActionMetrics) =>
-					`${formatToPercent(metric.critPercent + metric.blockedCritPercent || metric.critTickPercent, { fallbackString: '-' })}${
-						metric.critPercent + metric.blockedCritPercent && metric.critTickPercent
-							? ` (${formatToPercent(metric.critTickPercent, { fallbackString: '-' })})`
-							: ''
+					`${formatToPercent(metric.critPercent + metric.blockedCritPercent || metric.critTickPercent, { fallbackString: '-' })}${metric.critPercent + metric.blockedCritPercent && metric.critTickPercent
+						? ` (${formatToPercent(metric.critTickPercent, { fallbackString: '-' })})`
+						: ''
 					}`,
 			},
 			{

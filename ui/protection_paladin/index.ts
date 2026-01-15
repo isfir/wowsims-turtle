@@ -1,6 +1,6 @@
-import { Sim } from '../core/sim.js';
 import { Player } from '../core/player.js';
 import { Spec } from '../core/proto/common.js';
+import { Sim } from '../core/sim.js';
 import { TypedEvent } from '../core/typed_event.js';
 import { ProtectionPaladinSimUI } from './sim.js';
 

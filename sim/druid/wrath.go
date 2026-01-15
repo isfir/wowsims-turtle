@@ -49,7 +49,7 @@ func (druid *Druid) newWrathSpellConfig(rank int) core.SpellConfig {
 		MissileSpeed:  20,
 
 		ManaCost: core.ManaCostOptions{
-			FlatCost:   manaCost,
+			FlatCost: manaCost,
 		},
 		Cast: core.CastConfig{
 			DefaultCast: core.Cast{

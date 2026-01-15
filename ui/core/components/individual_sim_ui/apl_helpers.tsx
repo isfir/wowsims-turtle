@@ -129,8 +129,8 @@ const actionIdSets: Record<
 						extraCssClasses: actionId.data.prepullOnly
 							? ['apl-prepull-actions-only']
 							: actionId.data.encounterOnly
-							? ['apl-priority-list-only']
-							: [],
+								? ['apl-priority-list-only']
+								: [],
 					};
 				}),
 				[
@@ -151,8 +151,8 @@ const actionIdSets: Record<
 						extraCssClasses: actionId.data.prepullOnly
 							? ['apl-prepull-actions-only']
 							: actionId.data.encounterOnly
-							? ['apl-priority-list-only']
-							: [],
+								? ['apl-priority-list-only']
+								: [],
 					};
 				}),
 				[
@@ -706,7 +706,7 @@ export function stringFieldConfig(field: string, options?: Partial<APLPickerBuil
 /*
 export function runeTypeFieldConfig(field: string, includeDeath: boolean): APLPickerBuilderFieldConfig<any, any> {
 
-       let values = [
+	   let values = [
 
 		{ value: APLValueRuneType.RuneBlood, label: 'Blood' },
 		{ value: APLValueRuneType.RuneFrost, label: 'Frost' },

@@ -46,7 +46,7 @@ const DEFAULT_CONFIG = {
 	},
 };
 
-export interface ListItemPickerConfig<ModObject, ItemType> extends InputConfig<ModObject, ItemType> {}
+export interface ListItemPickerConfig<ModObject, ItemType> extends InputConfig<ModObject, ItemType> { }
 
 interface ItemPickerPair<ItemType> {
 	elem: HTMLElement;

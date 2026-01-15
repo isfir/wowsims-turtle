@@ -1,7 +1,7 @@
 import { RaidSimSettings } from '../../../core/proto/ui';
 import { TypedEvent } from '../../../core/typed_event';
-import { RaidSimUI } from '../raid_sim_ui';
 import { RaidImporter } from '../raid_importer';
+import { RaidSimUI } from '../raid_sim_ui';
 
 export class RaidJsonImporter extends RaidImporter {
 	constructor(parent: HTMLElement, simUI: RaidSimUI) {

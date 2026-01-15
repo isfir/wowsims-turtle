@@ -102,13 +102,13 @@ export class Database {
 
 		db.items.forEach(
 			item =>
-				(this.itemIcons[item.id] = Promise.resolve(
-					IconData.create({
-						id: item.id,
-						name: item.name,
-						icon: item.icon,
-					}),
-				)),
+			(this.itemIcons[item.id] = Promise.resolve(
+				IconData.create({
+					id: item.id,
+					name: item.name,
+					icon: item.icon,
+				}),
+			)),
 		);
 
 		db.itemIcons.forEach(data => (this.itemIcons[data.id] = Promise.resolve(data)));

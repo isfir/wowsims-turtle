@@ -9,7 +9,7 @@ import (
 
 // Time between focus ticks.
 const MaxFocus = 100.0
-const tickDuration = time.Millisecond * 5250 
+const tickDuration = time.Millisecond * 5250
 const BaseFocusPerTick = 26.25
 
 // OnFocusGain is called any time focus is increased.
@@ -18,7 +18,7 @@ type OnFocusGain func(sim *Simulation)
 type focusBar struct {
 	unit *Unit
 
-	focusPerTick float64
+	focusPerTick         float64
 	focusRegenMultiplier float64
 
 	currentFocus float64
@@ -33,12 +33,12 @@ type focusBar struct {
 
 func (unit *Unit) EnableFocusBar(regenMultiplier float64, onFocusGain OnFocusGain) {
 	unit.focusBar = focusBar{
-		unit:          unit,
-		focusPerTick:  BaseFocusPerTick,
+		unit:                 unit,
+		focusPerTick:         BaseFocusPerTick,
 		focusRegenMultiplier: regenMultiplier,
-		onFocusGain:   onFocusGain,
-		regenMetrics:  unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionFocusRegen}),
-		refundMetrics: unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionRefund}),
+		onFocusGain:          onFocusGain,
+		regenMetrics:         unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionFocusRegen}),
+		refundMetrics:        unit.NewEnergyMetrics(ActionID{OtherID: proto.OtherAction_OtherActionRefund}),
 	}
 }
 
@@ -58,7 +58,7 @@ func (fb *focusBar) CurrentFocusPerSecond() float64 {
 	return fb.CurrentFocusPerTick() / tickDuration.Seconds()
 }
 
-func (fb *focusBar) AddFocusRegenMultiplier (multiplier float64) {
+func (fb *focusBar) AddFocusRegenMultiplier(multiplier float64) {
 	fb.focusRegenMultiplier += multiplier
 }
 

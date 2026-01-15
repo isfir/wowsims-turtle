@@ -371,22 +371,22 @@ export class DamageDealtLog extends SimLog {
 				{this.miss
 					? 'Miss'
 					: this.dodge
-					? 'Dodge'
-					: this.parry
-					? 'Parry'
-					: this.glance
-					? 'Glance'
-					: this.blockedCrit
-					? 'Blocked Crit'
-					: this.block
-					? 'Block'
-					: this.crit
-					? 'Crit'
-					: this.crush
-					? 'Crush'
-					: this.tick
-					? 'Tick'
-					: 'Hit'}
+						? 'Dodge'
+						: this.parry
+							? 'Parry'
+							: this.glance
+								? 'Glance'
+								: this.blockedCrit
+									? 'Blocked Crit'
+									: this.block
+										? 'Block'
+										: this.crit
+											? 'Crit'
+											: this.crush
+												? 'Crush'
+												: this.tick
+													? 'Tick'
+													: 'Hit'}
 				{` `}
 				{this.target?.toHTML() || ''}
 				{!this.miss && !this.dodge && !this.parry ? (
@@ -762,7 +762,7 @@ export class ResourceChangedLog extends SimLog {
 			const verb = isHealth ? (this.isSpend ? 'Lost' : 'Recovered') : this.isSpend ? 'Spent' : 'Gained';
 			const resourceName = resourceNames.get(this.resourceType)!;
 			const resourceClass = `resource-${resourceName.replace(/\s/g, '-').toLowerCase()}`;
-			
+
 			return (
 				<>
 					{this.toPrefix(includeTimestamp)} {verb}{' '}
@@ -771,7 +771,7 @@ export class ResourceChangedLog extends SimLog {
 					</strong>
 					{this.target ? <>{` on `} {this.target?.toHTML()}</> : null}
 					{` from `}
-					{this.newActionIdLink(this.actionId!)}. 
+					{this.newActionIdLink(this.actionId!)}.
 					({this.valueBefore.toFixed(1)} &rarr; {this.valueAfter.toFixed(1)})
 				</>
 			);

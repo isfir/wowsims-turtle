@@ -1166,11 +1166,11 @@ export class Player<SpecType extends Spec> {
 		}
 		parts.push(
 			'pcs=' +
-				this.gear
-					.asArray()
-					.filter(ei => ei !== null)
-					.map(ei => ei!.item.id)
-					.join(':'),
+			this.gear
+				.asArray()
+				.filter(ei => ei !== null)
+				.map(ei => ei!.item.id)
+				.join(':'),
 		);
 
 		elem.dataset.wowhead = parts.join('&');

@@ -28,11 +28,11 @@ export interface PickerStatOption<PickerType, ConfigType> extends StatOption {
 	picker: PickerType;
 }
 
-export interface IconPickerStatOption extends PickerStatOption<typeof IconPicker<Player<any>, any>, IconPickerConfig<Player<any>, any>> {}
+export interface IconPickerStatOption extends PickerStatOption<typeof IconPicker<Player<any>, any>, IconPickerConfig<Player<any>, any>> { }
 
-export interface MultiIconPickerStatOption extends PickerStatOption<typeof MultiIconPicker<Player<any>>, MultiIconPickerConfig<Player<any>>> {}
+export interface MultiIconPickerStatOption extends PickerStatOption<typeof MultiIconPicker<Player<any>>, MultiIconPickerConfig<Player<any>>> { }
 
-export interface IconEnumPickerStatOption extends PickerStatOption<typeof IconEnumPicker<Player<any>, any>, IconEnumPickerConfig<Player<any>, any>> {}
+export interface IconEnumPickerStatOption extends PickerStatOption<typeof IconEnumPicker<Player<any>, any>, IconEnumPickerConfig<Player<any>, any>> { }
 
 export type ItemStatOptions<T> = ItemStatOption<T>;
 export type PickerStatOptions = IconPickerStatOption | MultiIconPickerStatOption | IconEnumPickerStatOption;

@@ -24,7 +24,7 @@ declare global {
 
 // Wasm binary calls this function when its done loading.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-globalThis.wasmready = function () {
+globalThis.wasmready = function() {
 	new WorkerInterface({
 		bulkSimAsync: bulkSimAsync,
 		//bulkSimCombos: bulkSimCombos,
@@ -52,4 +52,4 @@ WebAssembly.instantiateStreaming(fetch('lib.wasm'), go.importObject).then(async 
 	await go.run(inst);
 });
 
-export {};
+export { };

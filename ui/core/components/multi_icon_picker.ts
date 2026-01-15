@@ -8,7 +8,7 @@ import { isRightClick } from '../utils.js';
 import { Component } from './component.js';
 import { IconPicker, IconPickerConfig, IconPickerDirection } from './icon_picker.js';
 
-export interface MultiIconPickerItemConfig<ModObject> extends IconPickerConfig<ModObject, any> {}
+export interface MultiIconPickerItemConfig<ModObject> extends IconPickerConfig<ModObject, any> { }
 
 export interface MultiIconPickerConfig<ModObject> {
 	values: Array<MultiIconPickerItemConfig<ModObject>>;

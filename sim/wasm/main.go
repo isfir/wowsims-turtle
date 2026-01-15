@@ -275,7 +275,7 @@ func bulkSimAsync(this js.Value, args []js.Value) interface{} {
 	}
 
 	reporter := make(chan *proto.ProgressMetrics, 100)
-	
+
 	go core.RunBulkSimAsync(rsr, reporter, requestId)
 	go processAsyncProgress(args[1], reporter)
 	return js.Undefined()

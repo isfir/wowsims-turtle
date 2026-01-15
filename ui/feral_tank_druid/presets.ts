@@ -25,11 +25,11 @@ import BlankGear from './gear_sets/blank.gear.json';
 export const GearBlank = PresetUtils.makePresetGear('Blank', BlankGear);
 
 export const GearPresets = {
-  [Phase.Phase1]: [
-    GearBlank,
-  ],
-  [Phase.Phase2]: [
-  ]
+	[Phase.Phase1]: [
+		GearBlank,
+	],
+	[Phase.Phase2]: [
+	]
 };
 
 // TODO: Add Phase 2 preset and pull from map
@@ -48,11 +48,11 @@ export const DefaultRotation = DruidRotation.create({
 export const DefaultAPL = PresetUtils.makePresetAPLRotation('Default', DefaultApl);
 
 export const APLPresets = {
-  [Phase.Phase1]: [
-    DefaultAPL,
-  ],
-  [Phase.Phase2]: [
-  ]
+	[Phase.Phase1]: [
+		DefaultAPL,
+	],
+	[Phase.Phase2]: [
+	]
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -70,11 +70,11 @@ export const StandardTalents = {
 };
 
 export const TalentPresets = {
-  [Phase.Phase1]: [
-    StandardTalents,
-  ],
-  [Phase.Phase2]: [
-  ]
+	[Phase.Phase1]: [
+		StandardTalents,
+	],
+	[Phase.Phase2]: [
+	]
 };
 
 // TODO: Add Phase 2 preset and pull from map

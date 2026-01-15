@@ -120,11 +120,11 @@ export class PresetConfigurationPicker extends Component {
 		const hasRace = typeof race === 'number' ? race === this.simUI.player.getRace() : true;
 		const hasTalents = talents
 			? SavedTalents.equals(
-					talents.data,
-					SavedTalents.create({
-						talentsString: this.simUI.player.getTalentsString(),
-					}),
-			  )
+				talents.data,
+				SavedTalents.create({
+					talentsString: this.simUI.player.getTalentsString(),
+				}),
+			)
 			: true;
 		let hasRotation = true;
 		if (rotationType) {

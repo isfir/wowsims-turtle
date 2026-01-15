@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	VenomousTotem                    = 19342
-	RenatakisCharmofTrickery         = 19954
+	VenomousTotem            = 19342
+	RenatakisCharmofTrickery = 19954
 )
 
 func init() {

@@ -1,5 +1,5 @@
-import { Database } from '../core/proto_utils/database.js';
 import { WindowedDetailedResults } from '../core/components/detailed_results.js';
+import { Database } from '../core/proto_utils/database.js';
 
 Database.get();
 

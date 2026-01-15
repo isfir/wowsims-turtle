@@ -1,9 +1,9 @@
 import { Input, InputConfig } from '../components/input.js';
 import { Player } from '../player.js';
+import { UnitReference } from '../proto/common.js';
+import { cssClassForClass, emptyUnitReference } from '../proto_utils/utils.js';
 import { Raid } from '../raid.js';
 import { EventID, TypedEvent } from '../typed_event.js';
-import { UnitReference } from '../proto/common.js';
-import { emptyUnitReference, cssClassForClass } from '../proto_utils/utils.js';
 
 export interface UnitReferencePickerConfig<ModObject> extends InputConfig<ModObject, UnitReference> {
 	noTargetLabel: string,
@@ -119,7 +119,7 @@ export class UnitReferencePicker<ModObject> extends Input<ModObject, UnitReferen
 
 	static makeOptionElem(data: OptionElemOptions): HTMLElement {
 		const classCssClass = data.player ? cssClassForClass(data.player.getClass()) : '';
-		let playerFragment = document.createElement('fragment');
+		const playerFragment = document.createElement('fragment');
 
 		playerFragment.innerHTML = `
 			<div class="player ${classCssClass ? `bg-${classCssClass}-dampened` : ''}">

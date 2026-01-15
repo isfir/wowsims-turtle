@@ -24,7 +24,7 @@ window.bootstrap = { Dropdown, Modal, Tab };
 if (history.scrollRestoration) {
 	history.scrollRestoration = 'manual';
 } else {
-	window.onbeforeunload = function () {
+	window.onbeforeunload = function() {
 		window.scrollTo(0, 0);
 	};
 }
@@ -39,6 +39,6 @@ function docReady(fn: any) {
 	}
 }
 
-docReady(function () {
+docReady(function() {
 	document.body.classList.add('ready');
 });

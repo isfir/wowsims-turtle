@@ -33,25 +33,25 @@ func (pa *PoolingActions) sort() {
 func (pa *PoolingActions) calcFloatingEnergy(cat *FeralDruid, sim *core.Simulation) float64 {
 	floatingEnergy := 0.0
 	/*
-	previousTime := sim.CurrentTime
-	tfPending := false
+		previousTime := sim.CurrentTime
+		tfPending := false
 
-	for _, s := range pa.actions {
-		delta_t := float64((s.refreshTime - previousTime) / core.EnergyTickDuration)
-		if !tfPending {
-			tfPending = cat.tfExpectedBefore(sim, s.refreshTime)
-			if tfPending {
-				s.cost -= 60
+		for _, s := range pa.actions {
+			delta_t := float64((s.refreshTime - previousTime) / core.EnergyTickDuration)
+			if !tfPending {
+				tfPending = cat.tfExpectedBefore(sim, s.refreshTime)
+				if tfPending {
+					s.cost -= 60
+				}
+			}
+
+			if delta_t < s.cost {
+				floatingEnergy += s.cost - delta_t
+				previousTime = s.refreshTime
+			} else {
+				previousTime += time.Duration(s.cost * float64(core.EnergyTickDuration))
 			}
 		}
-
-		if delta_t < s.cost {
-			floatingEnergy += s.cost - delta_t
-			previousTime = s.refreshTime
-		} else {
-			previousTime += time.Duration(s.cost * float64(core.EnergyTickDuration))
-		}
-	}
 	*/
 	return floatingEnergy
 }

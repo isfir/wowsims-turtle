@@ -106,14 +106,14 @@ export class RotationTab extends SimTab {
 			inline: true,
 			values: this.simUI.player.hasSimpleRotationGenerator()
 				? [
-						{ value: APLRotationType.TypeAuto, name: 'Auto' },
-						{ value: APLRotationType.TypeSimple, name: 'Simple' },
-						{ value: APLRotationType.TypeAPL, name: 'APL' },
-				  ]
+					{ value: APLRotationType.TypeAuto, name: 'Auto' },
+					{ value: APLRotationType.TypeSimple, name: 'Simple' },
+					{ value: APLRotationType.TypeAPL, name: 'APL' },
+				]
 				: [
-						{ value: APLRotationType.TypeAuto, name: 'Auto' },
-						{ value: APLRotationType.TypeAPL, name: 'APL' },
-				  ],
+					{ value: APLRotationType.TypeAuto, name: 'Auto' },
+					{ value: APLRotationType.TypeAPL, name: 'APL' },
+				],
 			changedEvent: (player: Player<any>) => player.rotationChangeEmitter,
 			getValue: (player: Player<any>) => player.getRotationType(),
 			setValue: (eventID: EventID, player: Player<any>, newValue: number) => {

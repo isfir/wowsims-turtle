@@ -11,28 +11,28 @@ import {
 	IndividualBuffs,
 	Profession,
 	RaidBuffs,
+	SapperExplosive,
 	SaygesFortune,
 	SpellPowerBuff,
 	StrengthBuff,
 	TristateEffect,
 	WeaponImbue,
 	ZanzaBuff,
-	SapperExplosive,
 } from '../core/proto/common.js';
 import { RogueOptions } from '../core/proto/rogue.js';
 import { SavedTalents } from '../core/proto/ui.js';
 import BackstabAPL from './apls/combat_backstab.apl.json';
 import BackstabSweatyAPL from './apls/combat_backstab_sweaty.apl.json';
 import SinisterStrikeAPL from './apls/combat_sinister_strike.apl.json';
-import SinisterStrikeSweatyAPL from './apls/combat_sinister_strike_sweaty.apl.json';
 import SinisterStrikeIEAAPL from './apls/combat_sinister_strike_iea.apl.json';
+import SinisterStrikeSweatyAPL from './apls/combat_sinister_strike_sweaty.apl.json';
 import BlankGear from './gear_sets/blank.gear.json';
-import BackstabGearPreBiS from './gear_sets/combat_backstab_prebis.gear.json';
-import SinisterStrikeGearPreBiS from './gear_sets/combat_sinister_strike_prebis.gear.json';
 import BackstabGearP1BiS from './gear_sets/combat_backstab_p1_bis.gear.json';
 import BackstabGearP2BiS from './gear_sets/combat_backstab_p2_bis.gear.json';
+import BackstabGearPreBiS from './gear_sets/combat_backstab_prebis.gear.json';
 import SinisterStrikeGearP1BiS from './gear_sets/combat_sinister_strike_p1_bis.gear.json';
 import SinisterStrikeGearP2BiS from './gear_sets/combat_sinister_strike_p2_bis.gear.json';
+import SinisterStrikeGearPreBiS from './gear_sets/combat_sinister_strike_prebis.gear.json';
 
 // Preset options for this spec.
 // Eventually we will import these values for the raid sim too, so its good to
@@ -169,7 +169,7 @@ export const P1RaidBuffs = RaidBuffs.create({
 	strengthOfEarthTotem: TristateEffect.TristateEffectImproved,
 	graceOfAirTotem: TristateEffect.TristateEffectImproved,
 	leaderOfThePack: true,
-	trueshotAura: true, 
+	trueshotAura: true,
 });
 
 export const DefaultRaidBuffs = {

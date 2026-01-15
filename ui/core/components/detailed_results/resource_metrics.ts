@@ -31,7 +31,7 @@ export class ResourceMetricsTable extends ResultComponent {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	onSimResult() {}
+	onSimResult() { }
 }
 
 export class TypedResourceMetricsTable extends MetricsTable<ResourceMetrics> {

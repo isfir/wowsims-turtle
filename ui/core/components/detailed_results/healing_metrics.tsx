@@ -13,8 +13,8 @@ export class HealingMetricsTable extends MetricsTable<ActionMetrics> {
 		config.resultsEmitter.on((_, resultData) => {
 			const lastResult = resultData
 				? this.getGroupedMetrics(resultData)
-						.filter(g => g.length)
-						.map(groups => this.mergeMetrics(groups))
+					.filter(g => g.length)
+					.map(groups => this.mergeMetrics(groups))
 				: undefined;
 			this.maxHealingAmount = Math.max(...(lastResult || []).map(a => a.healing));
 		});

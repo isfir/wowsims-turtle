@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const randomUUID = () => uuidv4();
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export const noop = () => {};
+export const noop = () => { };
 
 export const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
@@ -40,7 +40,7 @@ export function sortByProperty(objArray: any[], prop: string) {
 	const clone = objArray.slice(0);
 	const direct = arguments.length > 2 ? arguments[2] : 1; //Default to ascending
 	const propPath = prop.constructor === Array ? prop : prop.split('.');
-	clone.sort(function (a, b) {
+	clone.sort(function(a, b) {
 		for (const p in propPath) {
 			if (a[propPath[p]] && b[propPath[p]]) {
 				a = a[propPath[p]];
@@ -170,7 +170,7 @@ export function formatDeltaTextElem(elem: HTMLElement, before: number, after: nu
 	if (delta >= 0) {
 		deltaStr = `+${deltaStr}`;
 	}
-	
+
 	elem.textContent = `${deltaStr} (${deltaPct}%)`;
 
 	if (noColor || delta == 0) {
@@ -277,8 +277,7 @@ function jsonStringifyCustomHelper(
 		let str = '[\n';
 		const lines = value.map(
 			(e, i) =>
-				`${indentStr.repeat(path.length + 1)}${jsonStringifyCustomHelper(e, indentStr, path.slice().concat([i + '']), handler)}${
-					i == value.length - 1 ? '' : ','
+				`${indentStr.repeat(path.length + 1)}${jsonStringifyCustomHelper(e, indentStr, path.slice().concat([i + '']), handler)}${i == value.length - 1 ? '' : ','
 				}\n`,
 		);
 		str += lines.join('');

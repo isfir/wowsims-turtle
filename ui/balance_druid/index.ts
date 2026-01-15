@@ -1,6 +1,6 @@
+import { Player } from '../core/player';
 import { Spec } from '../core/proto/common';
 import { Sim } from '../core/sim';
-import { Player } from '../core/player';
 import { TypedEvent } from '../core/typed_event';
 import { BalanceDruidSimUI } from './sim';
 

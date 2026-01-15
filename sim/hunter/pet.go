@@ -63,7 +63,7 @@ func (hunter *Hunter) NewHunterPet() *HunterPet {
 
 	baseMinDamage = 18.17 * attackSpeed
 	baseMaxDamage = 27.66 * attackSpeed
-	
+
 	hunterPetBaseStats = stats.Stats{
 		stats.Strength:  136,
 		stats.Agility:   100,

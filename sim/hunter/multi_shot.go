@@ -79,7 +79,7 @@ func (hunter *Hunter) getMultiShotConfig(rank int, timer *core.Timer) core.Spell
 					curTarget = sim.Environment.NextTargetUnit(curTarget)
 				}
 			})
-			
+
 		},
 	}
 }

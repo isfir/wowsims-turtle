@@ -80,7 +80,7 @@ import { Input, InputConfig } from '../input.js';
 import { ListItemPickerConfig, ListPicker } from '../list_picker.js';
 import * as AplHelpers from './apl_helpers.js';
 
-export interface APLValuePickerConfig extends InputConfig<Player<any>, APLValue | undefined> {}
+export interface APLValuePickerConfig extends InputConfig<Player<any>, APLValue | undefined> { }
 
 export type APLValueKind = APLValue['value']['oneofKind'];
 export type APLValueImplStruct<F extends APLValueKind> = Extract<APLValue['value'], { oneofKind: F }>;

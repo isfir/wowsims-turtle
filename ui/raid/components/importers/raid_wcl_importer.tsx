@@ -76,11 +76,11 @@ class WCLSimPlayer {
 		if (this.preset === undefined) {
 			throw new Error(
 				'Could not find matching preset: ' +
-					JSON.stringify({
-						name: this.name,
-						type: this.fullType,
-						talents: data.talents,
-					}).toString(),
+				JSON.stringify({
+					name: this.name,
+					type: this.fullType,
+					talents: data.talents,
+				}).toString(),
 			);
 		}
 
@@ -493,25 +493,25 @@ export class RaidWCLImporter extends RaidImporter {
                     }
 
                     reportCastEvents: events(dataType:Casts, endTime: 99999999, filterExpression: "${[racialSpells, professionSpells]
-						.flat()
-						.map(spell => spell.id)
-						.map(id => `ability.id = ${id}`)
-						.join(' OR ')}", limit: 10000) { data }
+				.flat()
+				.map(spell => spell.id)
+				.map(id => `ability.id = ${id}`)
+				.join(' OR ')}", limit: 10000) { data }
 
                     fightCastEvents: events(fightIDs: [${urlData.fightID}], dataType:Casts, filterExpression: "${[externalCDSpells]
-						.flat()
-						.map(spell => spell.id)
-						.map(id => `ability.id = ${id}`)
-						.join(' OR ')}", limit: 10000) { data }
+				.flat()
+				.map(spell => spell.id)
+				.map(id => `ability.id = ${id}`)
+				.join(' OR ')}", limit: 10000) { data }
 
                     fightHealEvents: events(fightIDs: [${urlData.fightID}], dataType:Healing, filterExpression: "${[
-						samePartyHealingSpells,
-						otherPartyHealingSpells,
-					]
-						.flat()
-						.map(spell => spell.id)
-						.map(id => `ability.id = ${id}`)
-						.join(' OR ')}", limit: 10000) { data }
+				samePartyHealingSpells,
+				otherPartyHealingSpells,
+			]
+				.flat()
+				.map(spell => spell.id)
+				.map(id => `ability.id = ${id}`)
+				.join(' OR ')}", limit: 10000) { data }
 
                     manaTideTotem: events(fightIDs: [${urlData.fightID}], dataType:Resources, filterExpression: "ability.id = 39609", limit: 100) { data }
                 }

@@ -1,4 +1,4 @@
-import { MAX_PARTY_SIZE,Party } from './party.js';
+import { MAX_PARTY_SIZE, Party } from './party.js';
 import { Player } from './player.js';
 import { Raid as RaidProto } from './proto/api.js';
 import {
@@ -97,7 +97,7 @@ export class Raid {
 		return party.getPlayer(index % MAX_PARTY_SIZE);
 	}
 
-	getPlayerFromUnitReference(raidTarget: UnitReference|undefined, contextPlayer?: Player<any>|null): Player<any> | null {
+	getPlayerFromUnitReference(raidTarget: UnitReference | undefined, contextPlayer?: Player<any> | null): Player<any> | null {
 		if (!raidTarget || raidTarget.type == UnitType.Unknown) {
 			return null;
 		} else if (raidTarget.type == UnitType.Player) {

@@ -37,7 +37,7 @@ import { ListItemPickerConfig, ListPicker } from '../list_picker';
 import * as AplHelpers from './apl_helpers';
 import * as AplValues from './apl_values';
 
-export interface APLActionPickerConfig extends InputConfig<Player<any>, APLAction> {}
+export interface APLActionPickerConfig extends InputConfig<Player<any>, APLAction> { }
 
 export type APLActionKind = APLAction['action']['oneofKind'];
 type APLActionImplStruct<F extends APLActionKind> = Extract<APLAction['action'], { oneofKind: F }>;

@@ -15,8 +15,8 @@ var RevengeLevel = [RevengeRanks + 1]int{0, 14, 24, 34, 44, 54, 60}
 func (warrior *Warrior) registerRevengeSpell(cdTimer *core.Timer) {
 	actionID := core.ActionID{SpellID: core.TernaryInt32(core.IncludeAQ, 25288, 11601)}
 	has2pcDreadnaught := warrior.HasSetBonus(ItemSetDreadnaughtsBattlegear, 2)
-	basedamageLow := core.TernaryFloat64(core.IncludeAQ, 81, 64) + core.TernaryFloat64(has2pcDreadnaught, 75, 0) 
-	basedamageHigh := core.TernaryFloat64(core.IncludeAQ, 99, 78) + core.TernaryFloat64(has2pcDreadnaught, 75, 0) 
+	basedamageLow := core.TernaryFloat64(core.IncludeAQ, 81, 64) + core.TernaryFloat64(has2pcDreadnaught, 75, 0)
+	basedamageHigh := core.TernaryFloat64(core.IncludeAQ, 99, 78) + core.TernaryFloat64(has2pcDreadnaught, 75, 0)
 	revengeLevel := core.TernaryFloat64(core.IncludeAQ, 60.0, 54.0)
 
 	warrior.revengeProcAura = warrior.RegisterAura(core.Aura{

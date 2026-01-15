@@ -147,7 +147,7 @@ export default class ItemList<T extends ItemListType> {
 					<h6 className="item-label">
 						{
 							label === SelectorModalTabs.Items ? "Item" :
-							label === SelectorModalTabs.Enchants ? "Enchant" : ""
+								label === SelectorModalTabs.Enchants ? "Enchant" : ""
 						}
 					</h6>
 					{label === SelectorModalTabs.Items && <h6 className="source-label">Source</h6>}

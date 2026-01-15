@@ -1,17 +1,14 @@
+import * as PresetUtils from '../core/preset_utils.js';
 import {
 	Consumes,
 	Flask,
 	Food,
 } from '../core/proto/common.js';
-import { SavedTalents } from '../core/proto/ui.js';
-
 import {
 	PaladinAura,
 	PaladinOptions as HolyPaladinOptions,
 } from '../core/proto/paladin.js';
-
-import * as PresetUtils from '../core/preset_utils.js';
-
+import { SavedTalents } from '../core/proto/ui.js';
 import BlankGear from './gear_sets/blank.gear.json';
 
 // Preset options for this spec.

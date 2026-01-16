@@ -102,13 +102,13 @@ export class Database {
 
 		db.items.forEach(
 			item =>
-			(this.itemIcons[item.id] = Promise.resolve(
-				IconData.create({
-					id: item.id,
-					name: item.name,
-					icon: item.icon,
-				}),
-			)),
+				(this.itemIcons[item.id] = Promise.resolve(
+					IconData.create({
+						id: item.id,
+						name: item.name,
+						icon: item.icon,
+					}),
+				)),
 		);
 
 		db.itemIcons.forEach(data => (this.itemIcons[data.id] = Promise.resolve(data)));
@@ -251,28 +251,14 @@ export class Database {
 	private static async getWowheadTooltipData(id: number, tooltipPostfix: string): Promise<IconData> {
 		if (id === 0) return IconData.create();
 
-		const url = `https://nether.wowhead.com/classic/tooltip/${tooltipPostfix}/${id}?lvl=${MAX_CHARACTER_LEVEL}`;
-		try {
-			const response = await fetch(url);
-			const json = await response.json();
-			let rank = 0;
-
-			if (tooltipPostfix === 'spell') {
-				const rankMatches = Array.from(json['tooltip'].matchAll(RANK_REGEX) as RegExpMatchArray[]);
-				rank = rankMatches.length ? parseInt(rankMatches[0][1]) : 0;
-			}
-
-			return IconData.create({
-				id: id,
-				name: json['name'],
-				icon: json['icon'],
-				hasBuff: json['buff'] !== '',
-				rank: rank,
-			});
-		} catch (e) {
-			console.error('Error while fetching url: ' + url + '\n\n' + e);
-			return IconData.create();
-		}
+		console.warn(`Wowhead tooltip data requested for ${tooltipPostfix} ${id}; returning default icon.`);
+		return IconData.create({
+			id: id,
+			name: '',
+			icon: 'question-mark',
+			hasBuff: false,
+			rank: 0,
+		});
 	}
 
 	public static mergeSimDatabases(db1: SimDatabase, db2: SimDatabase): SimDatabase {

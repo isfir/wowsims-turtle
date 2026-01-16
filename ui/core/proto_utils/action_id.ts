@@ -49,7 +49,7 @@ export class ActionId {
 				break;
 			case OtherAction.OtherActionWait:
 				baseName = 'Wait';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_misc_pocketwatch_01.jpg';
+				iconUrl = '/classic/assets/icons/inv_misc_pocketwatch_01.jpg';
 				break;
 			case OtherAction.OtherActionManaRegen:
 				name = 'Mana Tick';
@@ -82,7 +82,7 @@ export class ActionId {
 				break;
 			case OtherAction.OtherActionAttack:
 				name = 'Melee';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_sword_04.jpg';
+				iconUrl = '/classic/assets/icons/inv_sword_04.jpg';
 				if (tag === 1) {
 					name += ' (Main-Hand)';
 				} else if (tag === 2) {
@@ -93,44 +93,44 @@ export class ActionId {
 				break;
 			case OtherAction.OtherActionShoot:
 				name = 'Shoot';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/ability_marksmanship.jpg';
+				iconUrl = '/classic/assets/icons/ability_marksmanship.jpg';
 				if (tag === 3) {
 					name += ' (Extra Attack)';
 				}
 				break;
 			case OtherAction.OtherActionMove:
 				name = 'Move';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_boots_02.jpg';
+				iconUrl = '/classic/assets/icons/inv_boots_02.jpg';
 				break;
 			case OtherAction.OtherActionPet:
 				break;
 			case OtherAction.OtherActionRefund:
 				baseName = 'Refund';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_misc_coin_01.jpg';
+				iconUrl = '/classic/assets/icons/inv_misc_coin_01.jpg';
 				break;
 			case OtherAction.OtherActionDamageTaken:
 				baseName = 'Damage Taken';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_sword_04.jpg';
+				iconUrl = '/classic/assets/icons/inv_sword_04.jpg';
 				break;
 			case OtherAction.OtherActionHealingModel:
 				baseName = 'Incoming HPS';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/spell_holy_renew.jpg';
+				iconUrl = '/classic/assets/icons/spell_holy_renew.jpg';
 				break;
 			case OtherAction.OtherActionPotion:
 				baseName = 'Potion';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_alchemy_elixir_04.jpg';
+				iconUrl = '/classic/assets/icons/trade_alchemy.jpg';
 				break;
 			case OtherAction.OtherActionExplosives:
 				baseName = 'Explosive';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/Inv_misc_bomb_06.jpg';
+				iconUrl = '/classic/assets/icons/inv_misc_bomb_06.jpg';
 				break;
 			case OtherAction.OtherActionOffensiveEquip:
 				baseName = 'Offensive Equipment';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_trinket_naxxramas03.jpg';
+				iconUrl = '/classic/assets/icons/inv_trinket_naxxramas03.jpg';
 				break;
 			case OtherAction.OtherActionDefensiveEquip:
 				baseName = 'Defensive Equipment';
-				iconUrl = 'https://wow.zamimg.com/images/wow/icons/large/inv_trinket_naxxramas05.jpg';
+				iconUrl = '/classic/assets/icons/inv_trinket_naxxramas05.jpg';
 				break;
 		}
 		this.baseName = baseName;
@@ -159,20 +159,10 @@ export class ActionId {
 	}
 
 	static makeItemUrl(id: number, randomSuffixId?: number): string {
-		const langPrefix = getWowheadLanguagePrefix();
-		const url = new URL(`https://wowhead.com/classic/${langPrefix}item=${id}`);
-		url.searchParams.set('level', String(MAX_CHARACTER_LEVEL));
-		url.searchParams.set('rand', String(randomSuffixId || 0));
-		return url.toString();
+		return `https://database.turtlecraft.gg/?item=${id}`;
 	}
 	static makeSpellUrl(id: number): string {
-		const langPrefix = getWowheadLanguagePrefix();
-		const showBuff = spellIDsToShowBuffs.has(id);
-
-		let url = `https://wowhead.com/classic/${langPrefix}spell=${id}`;
-		if (showBuff) url = `${url}?buff=1`;
-
-		return url;
+		return `https://database.turtlecraft.gg/?spell=${id}`;
 	}
 	static async makeItemTooltipData(id: number, params?: Omit<WowheadTooltipItemParams, 'itemId'>) {
 		return buildWowheadTooltipDataset({ itemId: id, ...params });
@@ -181,12 +171,10 @@ export class ActionId {
 		return buildWowheadTooltipDataset({ spellId: id, ...params });
 	}
 	static makeQuestUrl(id: number): string {
-		const langPrefix = getWowheadLanguagePrefix();
-		return `https://wowhead.com/classic/${langPrefix}quest=${id}`;
+		return `https://database.turtlecraft.gg/?quest=${id}`;
 	}
 	static makeNpcUrl(id: number): string {
-		const langPrefix = getWowheadLanguagePrefix();
-		return `https://wowhead.com/classic/${langPrefix}npc=${id}`;
+		return `https://database.turtlecraft.gg/?npc=${id}`;
 	}
 	static makeZoneUrl(id: number): string {
 		const langPrefix = getWowheadLanguagePrefix();
@@ -518,7 +506,7 @@ export class ActionId {
 	}
 
 	private static makeIconUrl(iconLabel: string): string {
-		return `https://wow.zamimg.com/images/wow/icons/large/${iconLabel}.jpg`;
+		return `/classic/assets/icons/${iconLabel}.jpg`;
 	}
 
 	static async getTooltipData(actionId: ActionId): Promise<IconData> {
@@ -553,57 +541,57 @@ const spellIdIconOverrides: Map<string, ActionIdOverride> = new Map([
 const spellIdTooltipOverrides: Map<string, ActionIdOverride> = new Map([]);
 
 const spellIDsToShowBuffs = new Set([
-	702, // https://www.wowhead.com/classic/spell=702/curse-of-weakness
-	704, // https://www.wowhead.com/classic/spell=704/curse-of-recklessness
-	770, // https://www.wowhead.com/classic/spell=770/faerie-fire
-	778, // https://www.wowhead.com/classic/spell=778/faerie-fire
-	1108, // https://www.wowhead.com/classic/spell=1108/curse-of-weakness
-	1490, // https://www.wowhead.com/classic/spell=1490/curse-of-the-elements
-	6205, // https://www.wowhead.com/classic/spell=6205/curse-of-weakness
-	7646, // https://www.wowhead.com/classic/spell=7646/curse-of-weakness
-	7658, // https://www.wowhead.com/classic/spell=7658/curse-of-recklessness
-	7659, // https://www.wowhead.com/classic/spell=7659/curse-of-recklessness
-	9749, // https://www.wowhead.com/classic/spell=9749/faerie-fire
-	9907, // https://www.wowhead.com/classic/spell=9907/faerie-fire
-	11707, // https://www.wowhead.com/classic/spell=11707/curse-of-weakness
-	11708, // https://www.wowhead.com/classic/spell=11708/curse-of-weakness
-	11717, // https://www.wowhead.com/classic/spell=11717/curse-of-recklessness
-	11721, // https://www.wowhead.com/classic/spell=11721/curse-of-the-elements
-	11722, // https://www.wowhead.com/classic/spell=11722/curse-of-the-elements
-	14201, // https://www.wowhead.com/classic/spell=14201/enrage
-	16257, // https://www.wowhead.com/classic/spell=16257/flurry
-	16277, // https://www.wowhead.com/classic/spell=16277/flurry
-	16278, // https://www.wowhead.com/classic/spell=16278/flurry
-	16279, // https://www.wowhead.com/classic/spell=16279/flurry
-	16280, // https://www.wowhead.com/classic/spell=16280/flurry
-	17862, // https://www.wowhead.com/classic/spell=17862/curse-of-shadow
-	17937, // https://www.wowhead.com/classic/spell=17937/curse-of-shadow
-	18789, // https://www.wowhead.com/classic/spell=18789/burning-wish
-	18790, // https://www.wowhead.com/classic/spell=18790/fel-stamina
-	18791, // https://www.wowhead.com/classic/spell=18791/touch-of-shadow
-	18792, // https://www.wowhead.com/classic/spell=18792/fel-energy
-	20186, // https://www.wowhead.com/classic/spell=20186/judgement-of-wisdom
-	20300, // https://www.wowhead.com/classic/spell=20300/judgement-of-the-crusader
-	20355, // https://www.wowhead.com/classic/spell=20355/judgement-of-wisdom
-	20301, // https://www.wowhead.com/classic/spell=20301/judgement-of-the-crusader
-	20302, // https://www.wowhead.com/classic/spell=20302/judgement-of-the-crusader
-	20303, // https://www.wowhead.com/classic/spell=20303/judgement-of-the-crusader
-	23060, // https://www.wowhead.com/classic/spell=23060/battle-squawk
-	23736, // https://www.wowhead.com/classic/spell=23736/sayges-dark-fortune-of-agility
-	23737, // https://www.wowhead.com/classic/spell=23737/sayges-dark-fortune-of-stamina
-	23738, // https://www.wowhead.com/classic/spell=23738/sayges-dark-fortune-of-spirit
-	23766, // https://www.wowhead.com/classic/spell=23766/sayges-dark-fortune-of-intelligence
-	23768, // https://www.wowhead.com/classic/spell=23768/sayges-dark-fortune-of-damage
-	24907, // https://www.wowhead.com/classic/spell=24907/moonkin-aura
-	24932, // https://www.wowhead.com/classic/spell=24932/leader-of-the-pack
-	402808, // https://www.wowhead.com/classic/spell=402808/cripple
-	425415, // https://www.wowhead.com/classic/spell=425415/enrage
-	461252, // https://www.wowhead.com/classic/spell=461252/shadowflame-fury
-	461270, // https://www.wowhead.com/classic/spell=461270/magmadars-return
-	1214279, // https://www.wowhead.com/classic/spell=1214279/spell-blasting
+	702, // https://database.turtlecraft.gg/?spell=702
+	704, // https://database.turtlecraft.gg/?spell=704
+	770, // https://database.turtlecraft.gg/?spell=770
+	778, // https://database.turtlecraft.gg/?spell=778
+	1108, // https://database.turtlecraft.gg/?spell=1108
+	1490, // https://database.turtlecraft.gg/?spell=1490
+	6205, // https://database.turtlecraft.gg/?spell=6205
+	7646, // https://database.turtlecraft.gg/?spell=7646
+	7658, // https://database.turtlecraft.gg/?spell=7658
+	7659, // https://database.turtlecraft.gg/?spell=7659
+	9749, // https://database.turtlecraft.gg/?spell=9749
+	9907, // https://database.turtlecraft.gg/?spell=9907
+	11707, // https://database.turtlecraft.gg/?spell=11707
+	11708, // https://database.turtlecraft.gg/?spell=11708
+	11717, // https://database.turtlecraft.gg/?spell=11717
+	11721, // https://database.turtlecraft.gg/?spell=11721
+	11722, // https://database.turtlecraft.gg/?spell=11722
+	14201, // https://database.turtlecraft.gg/?spell=14201
+	16257, // https://database.turtlecraft.gg/?spell=16257
+	16277, // https://database.turtlecraft.gg/?spell=16277
+	16278, // https://database.turtlecraft.gg/?spell=16278
+	16279, // https://database.turtlecraft.gg/?spell=16279
+	16280, // https://database.turtlecraft.gg/?spell=16280
+	17862, // https://database.turtlecraft.gg/?spell=17862
+	17937, // https://database.turtlecraft.gg/?spell=17937
+	18789, // https://database.turtlecraft.gg/?spell=18789
+	18790, // https://database.turtlecraft.gg/?spell=18790
+	18791, // https://database.turtlecraft.gg/?spell=18791
+	18792, // https://database.turtlecraft.gg/?spell=18792
+	20186, // https://database.turtlecraft.gg/?spell=20186
+	20300, // https://database.turtlecraft.gg/?spell=20300
+	20355, // https://database.turtlecraft.gg/?spell=20355
+	20301, // https://database.turtlecraft.gg/?spell=20301
+	20302, // https://database.turtlecraft.gg/?spell=20302
+	20303, // https://database.turtlecraft.gg/?spell=20303
+	23060, // https://database.turtlecraft.gg/?spell=23060
+	23736, // https://database.turtlecraft.gg/?spell=23736
+	23737, // https://database.turtlecraft.gg/?spell=23737
+	23738, // https://database.turtlecraft.gg/?spell=23738
+	23766, // https://database.turtlecraft.gg/?spell=23766
+	23768, // https://database.turtlecraft.gg/?spell=23768
+	24907, // https://database.turtlecraft.gg/?spell=24907
+	24932, // https://database.turtlecraft.gg/?spell=24932
+	402808, // https://database.turtlecraft.gg/?spell=402808
+	425415, // https://database.turtlecraft.gg/?spell=425415
+	461252, // https://database.turtlecraft.gg/?spell=461252
+	461270, // https://database.turtlecraft.gg/?spell=461270
+	1214279, // https://database.turtlecraft.gg/?spell=1214279
 ]);
 
-export const defaultTargetIcon = 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_metamorphosis.jpg';
+export const defaultTargetIcon = '/classic/assets/icons/spell_shadow_metamorphosis.jpg';
 
 const petNameToActionId: Record<string, ActionId> = {
 	'Eye of the Void': ActionId.fromSpellId(402789),
@@ -615,50 +603,50 @@ const petNameToActionId: Record<string, ActionId> = {
 
 // https://wowhead.com/classic/hunter-pets
 const petNameToIcon: Record<string, string> = {
-	Bat: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_bat.jpg',
-	Bear: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_bear.jpg',
-	'Bird of Prey': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_owl.jpg',
-	Boar: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_boar.jpg',
-	'Carrion Bird': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_vulture.jpg',
-	Cat: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_cat.jpg',
-	Chimaera: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_chimera.jpg',
-	'Core Hound': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_corehound.jpg',
-	Crab: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_crab.jpg',
-	Crocolisk: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_crocolisk.jpg',
-	Devilsaur: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_devilsaur.jpg',
-	Dragonhawk: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_dragonhawk.jpg',
-	'Emerald Dragon Whelp': 'https://wow.zamimg.com/images/wow/icons/medium/inv_misc_head_dragon_green.jpg',
-	Eskhandar: 'https://wow.zamimg.com/images/wow/icons/large/inv_misc_head_tiger_01.jpg',
-	Felguard: 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_summonfelguard.jpg',
-	Felhunter: 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_summonfelhunter.jpg',
-	'Spirit Wolves': 'https://wow.zamimg.com/images/wow/icons/large/spell_shaman_feralspirit.jpg',
-	Infernal: 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_summoninfernal.jpg',
-	Gorilla: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_gorilla.jpg',
-	Hyena: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_hyena.jpg',
-	Imp: 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_summonimp.jpg',
-	'Mirror Image': 'https://wow.zamimg.com/images/wow/icons/large/spell_magic_lesserinvisibilty.jpg',
-	Moth: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_moth.jpg',
-	'Nether Ray': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_netherray.jpg',
-	Owl: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_owl.jpg',
-	Raptor: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_raptor.jpg',
-	Ravager: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_ravager.jpg',
-	Rhino: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_rhino.jpg',
-	Scorpid: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_scorpid.jpg',
-	Serpent: 'https://wow.zamimg.com/images/wow/icons/medium/spell_nature_guardianward.jpg',
-	Silithid: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_silithid.jpg',
-	Spider: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_spider.jpg',
-	'Spirit Beast': 'https://wow.zamimg.com/images/wow/icons/medium/ability_druid_primalprecision.jpg',
-	'Spore Bat': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_sporebat.jpg',
-	Succubus: 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_summonsuccubus.jpg',
-	Tallstrider: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_tallstrider.jpg',
-	Treants: 'https://wow.zamimg.com/images/wow/icons/medium/ability_druid_forceofnature.jpg',
-	Turtle: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_turtle.jpg',
-	Voidwalker: 'https://wow.zamimg.com/images/wow/icons/large/spell_shadow_summonvoidwalker.jpg',
-	'Warp Stalker': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_warpstalker.jpg',
-	Wasp: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_wasp.jpg',
-	'Wind Serpent': 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_windserpent.jpg',
-	Wolf: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_wolf.jpg',
-	Worm: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_pet_worm.jpg',
+	Bat: '/classic/assets/icons/ability_hunter_pet_bat.jpg',
+	Bear: '/classic/assets/icons/ability_hunter_pet_bear.jpg',
+	'Bird of Prey': '/classic/assets/icons/ability_hunter_pet_owl.jpg',
+	Boar: '/classic/assets/icons/ability_hunter_pet_boar.jpg',
+	'Carrion Bird': '/classic/assets/icons/ability_hunter_pet_vulture.jpg',
+	Cat: '/classic/assets/icons/ability_hunter_pet_cat.jpg',
+	Chimaera: '/classic/assets/icons/ability_hunter_pet_chimera.jpg',
+	'Core Hound': '/classic/assets/icons/ability_hunter_pet_corehound.jpg',
+	Crab: '/classic/assets/icons/ability_hunter_pet_crab.jpg',
+	Crocolisk: '/classic/assets/icons/ability_hunter_pet_crocolisk.jpg',
+	Devilsaur: '/classic/assets/icons/ability_hunter_pet_devilsaur.jpg',
+	Dragonhawk: '/classic/assets/icons/ability_hunter_pet_dragonhawk.jpg',
+	'Emerald Dragon Whelp': '/classic/assets/icons/inv_misc_head_dragon_green.jpg',
+	Eskhandar: '/classic/assets/icons/inv_misc_head_tiger_01.jpg',
+	Felguard: '/classic/assets/icons/spell_shadow_summonfelguard.jpg',
+	Felhunter: '/classic/assets/icons/spell_shadow_summonfelhunter.jpg',
+	'Spirit Wolves': '/classic/assets/icons/spell_shaman_feralspirit.jpg',
+	Infernal: '/classic/assets/icons/spell_shadow_summoninfernal.jpg',
+	Gorilla: '/classic/assets/icons/ability_hunter_pet_gorilla.jpg',
+	Hyena: '/classic/assets/icons/ability_hunter_pet_hyena.jpg',
+	Imp: '/classic/assets/icons/spell_shadow_summonimp.jpg',
+	'Mirror Image': '/classic/assets/icons/spell_magic_lesserinvisibilty.jpg',
+	Moth: '/classic/assets/icons/ability_hunter_pet_moth.jpg',
+	'Nether Ray': '/classic/assets/icons/ability_hunter_pet_netherray.jpg',
+	Owl: '/classic/assets/icons/ability_hunter_pet_owl.jpg',
+	Raptor: '/classic/assets/icons/ability_hunter_pet_raptor.jpg',
+	Ravager: '/classic/assets/icons/ability_hunter_pet_ravager.jpg',
+	Rhino: '/classic/assets/icons/ability_hunter_pet_rhino.jpg',
+	Scorpid: '/classic/assets/icons/ability_hunter_pet_scorpid.jpg',
+	Serpent: '/classic/assets/icons/spell_nature_guardianward.jpg',
+	Silithid: '/classic/assets/icons/ability_hunter_pet_silithid.jpg',
+	Spider: '/classic/assets/icons/ability_hunter_pet_spider.jpg',
+	'Spirit Beast': '/classic/assets/icons/ability_druid_primalprecision.jpg',
+	'Spore Bat': '/classic/assets/icons/ability_hunter_pet_sporebat.jpg',
+	Succubus: '/classic/assets/icons/spell_shadow_summonsuccubus.jpg',
+	Tallstrider: '/classic/assets/icons/ability_hunter_pet_tallstrider.jpg',
+	Treants: '/classic/assets/icons/ability_druid_forceofnature.jpg',
+	Turtle: '/classic/assets/icons/ability_hunter_pet_turtle.jpg',
+	Voidwalker: '/classic/assets/icons/spell_shadow_summonvoidwalker.jpg',
+	'Warp Stalker': '/classic/assets/icons/ability_hunter_pet_warpstalker.jpg',
+	Wasp: '/classic/assets/icons/ability_hunter_pet_wasp.jpg',
+	'Wind Serpent': '/classic/assets/icons/ability_hunter_pet_windserpent.jpg',
+	Wolf: '/classic/assets/icons/ability_hunter_pet_wolf.jpg',
+	Worm: '/classic/assets/icons/ability_hunter_pet_worm.jpg',
 };
 
 export function getPetIconFromName(name: string): string | ActionId | undefined {
@@ -667,10 +655,10 @@ export function getPetIconFromName(name: string): string | ActionId | undefined 
 
 export const resourceTypeToIcon: Record<ResourceType, string> = {
 	[ResourceType.ResourceTypeNone]: '',
-	[ResourceType.ResourceTypeHealth]: 'https://wow.zamimg.com/images/wow/icons/medium/inv_elemental_mote_life01.jpg',
-	[ResourceType.ResourceTypeMana]: 'https://wow.zamimg.com/images/wow/icons/medium/inv_elemental_mote_mana.jpg',
-	[ResourceType.ResourceTypeEnergy]: 'https://wow.zamimg.com/images/wow/icons/medium/spell_shadow_shadowworddominate.jpg',
-	[ResourceType.ResourceTypeRage]: 'https://wow.zamimg.com/images/wow/icons/medium/spell_misc_emotionangry.jpg',
-	[ResourceType.ResourceTypeComboPoints]: 'https://wow.zamimg.com/images/wow/icons/medium/inv_mace_2h_pvp410_c_01.jpg',
-	[ResourceType.ResourceTypeFocus]: 'https://wow.zamimg.com/images/wow/icons/medium/ability_hunter_focusfire.jpg',
+	[ResourceType.ResourceTypeHealth]: '/classic/assets/icons/inv_potion_01.jpg',
+	[ResourceType.ResourceTypeMana]: '/classic/assets/icons/inv_potion_02.jpg',
+	[ResourceType.ResourceTypeEnergy]: '/classic/assets/icons/spell_shadow_shadowworddominate.jpg',
+	[ResourceType.ResourceTypeRage]: '/classic/assets/icons/inv_potion_03.jpg',
+	[ResourceType.ResourceTypeComboPoints]: '/classic/assets/icons/inv_sword_04.jpg',
+	[ResourceType.ResourceTypeFocus]: '/classic/assets/icons/ability_hunter_aimedshot.jpg',
 };

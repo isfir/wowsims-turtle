@@ -13,6 +13,8 @@ import { AdaptiveStringPicker } from '../inputs/string_picker';
 import { NumberPicker, NumberPickerConfig } from '../number_picker';
 import { UnitPicker, UnitPickerConfig, UnitValue } from '../unit_picker';
 
+const escapeRegex = (str: string) => str.replace(/[\\[\]{}()*+?.^$|]/g, '\\$&');
+
 export type ACTION_ID_SET =
 	| 'auras'
 	| 'stackable_auras'
@@ -35,7 +37,7 @@ const actionIdSets: Record<
 		getActionIDs: async metadata => {
 			return metadata.getAuras().map(actionId => {
 				const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
-				const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+				const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 				const hasRanks = metadata.getAuras().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 				return {
 					value: actionId.id,
@@ -52,7 +54,7 @@ const actionIdSets: Record<
 				.filter(aura => aura.data.maxStacks > 0)
 				.map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
-					const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = metadata.getAuras().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -69,7 +71,7 @@ const actionIdSets: Record<
 				.filter(aura => aura.data.hasIcd)
 				.map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
-					const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = metadata.getAuras().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -86,7 +88,7 @@ const actionIdSets: Record<
 				.filter(aura => aura.data.hasExclusiveEffect)
 				.map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
-					const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = metadata.getAuras().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -120,7 +122,7 @@ const actionIdSets: Record<
 				(spells || []).map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
 					// Escape "("" and ")" used to denote (DoT)
-					const rankedNameRegex = new RegExp(`${baseActionName.replace('(', '\\(').replace(')', '\\)')} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = spells.filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 
 					return {
@@ -129,8 +131,8 @@ const actionIdSets: Record<
 						extraCssClasses: actionId.data.prepullOnly
 							? ['apl-prepull-actions-only']
 							: actionId.data.encounterOnly
-								? ['apl-priority-list-only']
-								: [],
+							? ['apl-priority-list-only']
+							: [],
 					};
 				}),
 				[
@@ -143,7 +145,7 @@ const actionIdSets: Record<
 				(cooldowns || []).map(actionId => {
 					// This regex also captures the percentages used in the custom Berserking cooldowns
 					const baseActionName = actionId.id.name.replace(/ \([\w\s%]+\)/g, '');
-					const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = cooldowns.filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -151,8 +153,8 @@ const actionIdSets: Record<
 						extraCssClasses: actionId.data.prepullOnly
 							? ['apl-prepull-actions-only']
 							: actionId.data.encounterOnly
-								? ['apl-priority-list-only']
-								: [],
+							? ['apl-priority-list-only']
+							: [],
 					};
 				}),
 				[
@@ -180,7 +182,7 @@ const actionIdSets: Record<
 				.filter(spell => spell.data.isCastable && spell.data.isChanneled)
 				.map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
-					const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = metadata.getSpells().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -198,7 +200,7 @@ const actionIdSets: Record<
 				.map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
 					// Escape "("" and ")" used to denote (DoT)
-					const rankedNameRegex = new RegExp(`${baseActionName.replace('(', '\\(').replace(')', '\\)')} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = metadata.getSpells().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -215,7 +217,7 @@ const actionIdSets: Record<
 				.filter(spell => spell.data.hasShield)
 				.map(actionId => {
 					const baseActionName = actionId.id.name.replace(/ \(Rank \d+\)/g, '');
-					const rankedNameRegex = new RegExp(`${baseActionName} \\(Rank [0-9]+\\)`);
+					const rankedNameRegex = new RegExp(`${escapeRegex(baseActionName)} \\(Rank [0-9]+\\)`);
 					const hasRanks = metadata.getSpells().filter(spell => !!spell.id.name.match(rankedNameRegex)).length > 1;
 					return {
 						value: actionId.id,
@@ -336,7 +338,7 @@ export class APLRunePicker extends DropdownPicker<Player<any>, ActionID, null> {
 				actionId.fillAndSet(iconElem, true, true);
 				button.appendChild(iconElem);
 
-				const textElem = document.createTextNode("");
+				const textElem = document.createTextNode('');
 				button.appendChild(textElem);
 			},
 			values: [],

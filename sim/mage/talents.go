@@ -16,8 +16,9 @@ func (mage *Mage) ApplyTalents() {
 func (mage *Mage) applyArcaneTalents() {
 	mage.applyMagicAbsorption()
 	mage.applyArcaneConcentration()
-	mage.applyTemporalConvergence()
 	mage.applyArcaneInstability()
+	mage.applyResonanceCascade()
+	mage.applyTemporalConvergence()
 	mage.registerPresenceOfMindCD()
 	mage.registerArcanePowerCD()
 
@@ -246,6 +247,99 @@ func (mage *Mage) applyArcaneConcentration() {
 	})
 }
 
+func (mage *Mage) applyArcaneInstability() {
+	if mage.Talents.ArcaneInstability == 0 {
+		return
+	}
+
+	procChance := []float64{.08, .16, .25}[mage.Talents.ArcaneInstability-1]
+	manaMetrics := mage.NewManaMetrics(core.ActionID{SpellID: 51977})
+
+	arcaneInstabilityDamage := 0.0
+	arcaneInstabilityProc := mage.RegisterSpell(core.SpellConfig{
+		ActionID:    core.ActionID{SpellID: 51977},
+		SpellSchool: core.SpellSchoolArcane,
+		DefenseType: core.DefenseTypeMagic,
+		ProcMask:    core.ProcMaskSpellProc,
+		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+		DamageMultiplier: 1,
+		ThreatMultiplier: 1,
+
+		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+			spell.CalcAndDealDamage(sim, target, arcaneInstabilityDamage, spell.OutcomeAlwaysHit)
+		},
+	})
+	mage.RegisterAura(core.Aura{
+		Label:    "Arcane Instability Talent",
+		Duration: core.NeverExpires,
+		OnReset: func(aura *core.Aura, sim *core.Simulation) {
+			aura.Activate(sim)
+		},
+		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+			if !result.Landed() || !spell.Flags.Matches(SpellFlagMage) || !spell.SpellSchool.Matches(core.SpellSchoolArcane) {
+				return
+			}
+
+			if sim.Proc(procChance, "Arcane Instability") {
+				arcaneInstabilityDamage = result.Damage * 0.25
+
+				mage.SpendMana(sim, mage.BaseMana*0.02, manaMetrics)
+				arcaneInstabilityProc.Cast(sim, result.Target)
+			}
+		},
+	})
+}
+
+func (mage *Mage) applyResonanceCascade() {
+	if mage.Talents.ResonanceCascade == 0 {
+		return
+	}
+
+	procChance := float64(mage.Talents.ResonanceCascade) * 0.04
+
+	resonanceCascadeDamage := 0.0
+	resonanceCascadeProc := mage.RegisterSpell(core.SpellConfig{
+		ActionID:    core.ActionID{SpellID: 51990},
+		SpellSchool: core.SpellSchoolArcane,
+		DefenseType: core.DefenseTypeMagic,
+		ProcMask:    core.ProcMaskSpellProc,
+		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+		DamageMultiplier: 1,
+		ThreatMultiplier: 1,
+
+		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+			spell.CalcAndDealDamage(sim, target, resonanceCascadeDamage, spell.OutcomeAlwaysHit)
+		},
+	})
+
+	mage.RegisterAura(core.Aura{
+		Label:    "Resonance Cascade Talent",
+		Duration: core.NeverExpires,
+		OnReset: func(aura *core.Aura, sim *core.Simulation) {
+			aura.Activate(sim)
+		},
+		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+			if !result.Landed() || !spell.Flags.Matches(SpellFlagMage) || !spell.SpellSchool.Matches(core.SpellSchoolArcane) {
+				return
+			}
+
+			duplicateDamage := result.Damage * 0.5
+			for range 5 {
+				if !sim.Proc(procChance, "Resonance Cascade") {
+					break
+				}
+
+				resonanceCascadeDamage = duplicateDamage
+				resonanceCascadeProc.Cast(sim, result.Target)
+
+				duplicateDamage *= 0.5
+			}
+		},
+	})
+}
+
 func (mage *Mage) applyTemporalConvergence() {
 	if mage.Talents.TemporalConvergence == 0 {
 		return
@@ -304,50 +398,6 @@ func (mage *Mage) applyTemporalConvergence() {
 					}
 				}
 				mage.TemporalConvergenceAura.Activate(sim)
-			}
-		},
-	})
-}
-
-func (mage *Mage) applyArcaneInstability() {
-	if mage.Talents.ArcaneInstability == 0 {
-		return
-	}
-
-	procChance := []float64{.08, .16, .25}[mage.Talents.ArcaneInstability-1]
-	manaMetrics := mage.NewManaMetrics(core.ActionID{SpellID: 51977})
-
-	arcaneInstabilityDamage := 0.0
-	arcaneInstabilityProc := mage.RegisterSpell(core.SpellConfig{
-		ActionID:    core.ActionID{SpellID: 51977},
-		SpellSchool: core.SpellSchoolArcane,
-		DefenseType: core.DefenseTypeMagic,
-		ProcMask:    core.ProcMaskSpellProc,
-		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
-
-		DamageMultiplier: 1,
-		ThreatMultiplier: 1,
-
-		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-			spell.CalcAndDealDamage(sim, target, arcaneInstabilityDamage, spell.OutcomeAlwaysHit)
-		},
-	})
-	mage.RegisterAura(core.Aura{
-		Label:    "Arcane Instability Talent",
-		Duration: core.NeverExpires,
-		OnReset: func(aura *core.Aura, sim *core.Simulation) {
-			aura.Activate(sim)
-		},
-		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-			if !result.Landed() || !spell.Flags.Matches(SpellFlagMage) || !spell.SpellSchool.Matches(core.SpellSchoolArcane) {
-				return
-			}
-
-			if sim.Proc(procChance, "Arcane Instability") {
-				arcaneInstabilityDamage = result.Damage * 0.25
-
-				mage.SpendMana(sim, mage.BaseMana*0.02, manaMetrics)
-				arcaneInstabilityProc.Cast(sim, result.Target)
 			}
 		},
 	})

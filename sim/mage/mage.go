@@ -17,6 +17,7 @@ const (
 	SpellCode_MageArcaneExplosion
 	SpellCode_MageArcaneMissiles
 	SpellCode_MageArcaneMissilesTick
+	SpellCode_MageArcaneRupture
 	SpellCode_MageBlastWave
 	SpellCode_MageFireball
 	SpellCode_MageFireBlast
@@ -56,6 +57,8 @@ type Mage struct {
 	ArcaneExplosion         []*core.Spell
 	ArcaneMissiles          []*core.Spell
 	ArcaneMissilesTickSpell []*core.Spell
+	ArcaneRupture           []*core.Spell
+	ArcaneSurge             []*core.Spell
 	BlastWave               []*core.Spell
 	Blizzard                []*core.Spell
 	Counterspell            *core.Spell
@@ -73,6 +76,8 @@ type Mage struct {
 	Scorch                  []*core.Spell
 
 	ArcanePowerAura     *core.Aura
+	ArcaneRuptureAura   *core.Aura
+	ArcaneSurgeAura     *core.Aura
 	ClearcastingAura    *core.Aura
 	CombustionAura      *core.Aura
 	IceArmorAura        *core.Aura
@@ -102,6 +107,8 @@ func (mage *Mage) AddPartyBuffs(partyBuffs *proto.PartyBuffs) {
 
 func (mage *Mage) Initialize() {
 	mage.registerArcaneMissilesSpell()
+	mage.registerArcaneRuptureSpell()
+	mage.registerArcaneSurgeSpell()
 	mage.registerFireballSpell()
 	mage.registerFireBlastSpell()
 	mage.registerFrostboltSpell()

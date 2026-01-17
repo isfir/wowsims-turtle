@@ -304,35 +304,36 @@ func (mage *Mage) registerArcanePowerCD() {
 		return
 	}
 
+	var apPa *core.PendingAction
 	actionID := core.ActionID{SpellID: 12042}
-
-	affectedSpells := []*core.Spell{}
-
-	mage.OnSpellRegistered(func(spell *core.Spell) {
-		if spell.Flags.Matches(SpellFlagMage) {
-			affectedSpells = append(affectedSpells, spell)
-		}
-	})
+	manaMetricsPeriodic := mage.NewManaMetrics(core.ActionID{SpellID: 12042})
+	manaMetricsDeath := mage.NewManaMetrics(core.ActionID{SpellID: 51941})
 
 	mage.ArcanePowerAura = mage.RegisterAura(core.Aura{
 		Label:    "Arcane Power",
 		ActionID: actionID,
-		Duration: time.Second * 15,
+		Duration: time.Second * 20,
 		OnGain: func(aura *core.Aura, sim *core.Simulation) {
-			for _, spell := range affectedSpells {
-				spell.DamageMultiplierAdditive += 0.3
-				if spell.Cost != nil {
-					spell.Cost.Multiplier += 30
-				}
-			}
+			mage.MultiplyCastSpeed(1.30)
+			mage.PseudoStats.ManaGainMultiplier *= 0.5
+			apPa = core.NewPeriodicAction(sim, core.PeriodicActionOptions{
+				Period: time.Second,
+				OnAction: func(s *core.Simulation) {
+					mage.SpendMana(sim, mage.MaxMana()/100, manaMetricsPeriodic)
+					if mage.CurrentManaPercent() < 0.1 {
+						// Simulate death
+						mage.RemoveHealth(sim, 999999)
+						mage.SpendMana(sim, 999999, manaMetricsDeath)
+						mage.PseudoStats.ManaGainMultiplier = 0
+					}
+				},
+			})
+			sim.AddPendingAction(apPa)
 		},
 		OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-			for _, spell := range affectedSpells {
-				spell.DamageMultiplierAdditive -= 0.3
-				if spell.Cost != nil {
-					spell.Cost.Multiplier -= 30
-				}
-			}
+			mage.MultiplyCastSpeed(1 / 1.30)
+			mage.PseudoStats.ManaGainMultiplier /= 0.5
+			apPa.Cancel(sim)
 		},
 	})
 	core.RegisterPercentDamageModifierEffect(mage.ArcanePowerAura, 1.3)

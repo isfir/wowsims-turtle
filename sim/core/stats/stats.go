@@ -411,6 +411,9 @@ type PseudoStats struct {
 	ForceFullSpiritRegen  bool    // If set, automatically uses full spirit regen regardless of FSR refresh time.
 	SpiritRegenMultiplier float64 // Multiplier on spirit portion of mana regen. For spell effect MOD_POWER_REGEN_PERCENT (110)
 
+	// Used for Arcane Power
+	ManaGainMultiplier float64 // Multiplier on all mana gained
+
 	// If true, allows block/parry.
 	InFrontOfTarget bool
 
@@ -509,6 +512,7 @@ func NewPseudoStats() PseudoStats {
 		MeleeSpeedMultiplier:  1,
 		RangedSpeedMultiplier: 1,
 		SpiritRegenMultiplier: 1,
+		ManaGainMultiplier:    1,
 
 		MeleeCritMultiplier: 1,
 

@@ -80,6 +80,8 @@ func (unit *Unit) AddMana(sim *Simulation, amount float64, metrics *ResourceMetr
 		panic("Trying to add negative mana!")
 	}
 
+	amount *= unit.PseudoStats.ManaGainMultiplier
+
 	oldMana := unit.CurrentMana()
 	newMana := min(oldMana+amount, unit.MaxMana())
 	metrics.AddEvent(amount, newMana-oldMana)

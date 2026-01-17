@@ -1,6 +1,5 @@
 import * as OtherInputs from '../core/components/other_inputs.js';
 import { SPELL_HIT_RATING_PER_HIT_CHANCE } from '../core/constants/mechanics';
-import { Phase } from '../core/constants/other.js';
 import { IndividualSimUI, registerSpecConfig } from '../core/individual_sim_ui.js';
 import { Player } from '../core/player.js';
 import { Class, Faction, PartyBuffs, PseudoStat, Race, Spec, Stat } from '../core/proto/common.js';
@@ -53,22 +52,23 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 	displayPseudoStats: [PseudoStat.PseudoStatCastSpeedMultiplier],
 
 	defaults: {
+		race: Presets.OtherDefaults.race,
 		// Default equipped gear.
 		gear: Presets.DefaultGear.gear,
 		// Default EP weights for sorting gear in the gear picker.
 		epWeights: Stats.fromMap({
-			[Stat.StatIntellect]: 0.49,
+			[Stat.StatIntellect]: 0.3,
 			[Stat.StatSpellPower]: 1,
 			[Stat.StatSpellDamage]: 1,
 			[Stat.StatArcanePower]: 1,
 			[Stat.StatFirePower]: 1,
 			[Stat.StatFrostPower]: 1,
-			// Aggregated across 3 builds
-			[Stat.StatSpellHit]: 18.59,
-			[Stat.StatSpellCrit]: 13.91,
-			[Stat.StatMP5]: 0.11,
-			[PseudoStat.PseudoStatCastSpeedMultiplier]: 14,
-		}),
+			[Stat.StatSpellHit]: 0.0,
+			[Stat.StatSpellCrit]: 13.18,
+		},
+			{
+				[PseudoStat.PseudoStatCastSpeedMultiplier]: 15.7,
+			}),
 		// Default consumes settings.
 		consumes: Presets.DefaultConsumes,
 		// Default talents.
@@ -78,7 +78,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 		other: Presets.OtherDefaults,
 		// Default raid/party buffs settings.
 		raidBuffs: Presets.DefaultRaidBuffs,
-		partyBuffs: PartyBuffs.create({}),
+		partyBuffs: Presets.DefaultPartyBuffs,
 		individualBuffs: Presets.DefaultIndividualBuffs,
 		debuffs: Presets.DefaultDebuffs,
 	},
@@ -111,12 +111,12 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 	},
 
 	presets: {
-		rotations: [...Presets.APLPresets[Phase.Phase1]],
-		talents: [...Presets.TalentPresets[Phase.Phase1]],
-		gear: [...Presets.GearPresets[Phase.Phase1]],
+		rotations: [...Presets.APLPresets],
+		talents: [...Presets.TalentPresets],
+		gear: [...Presets.GearPresets],
 	},
 
-	autoRotation: player => {
+	autoRotation: _player => {
 		return Presets.DefaultAPL.rotation.rotation!;
 	},
 

@@ -1,4 +1,3 @@
-import { Phase } from '../core/constants/other';
 import * as PresetUtils from '../core/preset_utils';
 import {
 	Conjured,
@@ -10,9 +9,12 @@ import {
 	FrostPowerBuff,
 	IndividualBuffs,
 	ManaRegenElixir,
+	PartyBuffs,
 	Potions,
 	Profession,
+	Race,
 	RaidBuffs,
+	SapperExplosive,
 	SaygesFortune,
 	SpellPowerBuff,
 	TristateEffect,
@@ -21,34 +23,32 @@ import {
 } from '../core/proto/common';
 import { Mage_Options as MageOptions, Mage_Options_ArmorType as ArmorType } from '../core/proto/mage';
 import { SavedTalents } from '../core/proto/ui';
-import P1APL from './apls/p1.apl.json';
-import P0BISGear from './gear_sets/p0.bis.gear.json';
-import P1BISGear from './gear_sets/p1.bis.gear.json';
+import DEFAULTAPL from './apls/default.apl.json';
+import BISGear from './gear_sets/bis.gear.json';
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Gear Presets
 ///////////////////////////////////////////////////////////////////////////
 
-export const GearP0BIS = PresetUtils.makePresetGear('Pre-BiS', P0BISGear);
-export const GearP1BIS = PresetUtils.makePresetGear('P1 BiS', P1BISGear);
+export const GearBIS = PresetUtils.makePresetGear('BiS', BISGear);
 
-export const GearPresets = {
-	[Phase.Phase1]: [GearP0BIS, GearP1BIS],
-};
+export const GearPresets = [
+	GearBIS,
+];
 
-export const DefaultGear = GearP0BIS;
+export const DefaultGear = GearBIS;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 APL Presets
 ///////////////////////////////////////////////////////////////////////////
 
-export const APLP1DPS = PresetUtils.makePresetAPLRotation('DPS', P1APL);
+export const APLPDEFAULT = PresetUtils.makePresetAPLRotation('Arcane', DEFAULTAPL);
 
-export const APLPresets = {
-	[Phase.Phase1]: [APLP1DPS],
-};
+export const APLPresets = [
+	APLPDEFAULT,
+];
 
-export const DefaultAPL = APLPresets[Phase.Phase1][0];
+export const DefaultAPL = APLPDEFAULT;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Talent Presets
@@ -57,20 +57,20 @@ export const DefaultAPL = APLPresets[Phase.Phase1][0];
 // Default talents. Uses the wowhead calculator format, make the talents on
 // https://wowhead.com/classic/talent-calc and copy the numbers in the url.
 
-export const TalentsP1DPS = PresetUtils.makePresetTalents('Arcane', SavedTalents.create({ talentsString: '2350550310033311251-50003' }));
+export const TalentsArcane = PresetUtils.makePresetTalents('Arcane', SavedTalents.create({ talentsString: '2350550310033311251-50003' }));
 
-export const TalentPresets = {
-	[Phase.Phase1]: [TalentsP1DPS],
-};
+export const TalentPresets = [
+	TalentsArcane,
+];
 
-export const DefaultTalents = TalentPresets[Phase.Phase1][0];
+export const DefaultTalents = TalentsArcane;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Options
 ///////////////////////////////////////////////////////////////////////////
 
 export const DefaultOptions = MageOptions.create({
-	armor: ArmorType.MoltenArmor,
+	armor: ArmorType.MageArmor,
 });
 
 export const DefaultConsumes = Consumes.create({
@@ -82,7 +82,7 @@ export const DefaultConsumes = Consumes.create({
 	frostPowerBuff: FrostPowerBuff.ElixirOfFrostPower,
 	mainHandImbue: WeaponImbue.BrilliantWizardOil,
 	manaRegenElixir: ManaRegenElixir.MagebloodPotion,
-
+	sapperExplosive: SapperExplosive.SapperGoblinSapper,
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
 	zanzaBuff: ZanzaBuff.CerebralCortexCompound,
 });
@@ -91,28 +91,38 @@ export const DefaultRaidBuffs = RaidBuffs.create({
 	arcaneBrilliance: true,
 	divineSpirit: true,
 	giftOfTheWild: TristateEffect.TristateEffectImproved,
-	manaSpringTotem: TristateEffect.TristateEffectRegular,
+	powerWordFortitude: TristateEffect.TristateEffectImproved,
+	manaSpringTotem: TristateEffect.TristateEffectMissing,
 	moonkinAura: true,
 });
 
+export const DefaultPartyBuffs = PartyBuffs.create({
+	atieshMage: 1,
+	atieshDruid: 1,
+	atieshWarlock: 1,
+});
+
 export const DefaultIndividualBuffs = IndividualBuffs.create({
+	blessingOfKings: true,
 	blessingOfWisdom: TristateEffect.TristateEffectImproved,
-	rallyingCryOfTheDragonslayer: true,
-	saygesFortune: SaygesFortune.SaygesDamage,
-	slipkiksSavvy: true,
-	songflowerSerenade: true,
-	spiritOfZandalar: true,
-	warchiefsBlessing: true,
+	rallyingCryOfTheDragonslayer: false,
+	saygesFortune: SaygesFortune.SaygesUnknown,
+	slipkiksSavvy: false,
+	songflowerSerenade: false,
+	spiritOfZandalar: false,
+	warchiefsBlessing: false,
 });
 
 export const DefaultDebuffs = Debuffs.create({
-	improvedScorch: true,
+	improvedScorch: false,
 	judgementOfWisdom: true,
-	wintersChill: true,
+	wintersChill: false,
+	curseOfShadow: true,
 });
 
 export const OtherDefaults = {
 	distanceFromTarget: 20,
-	profession1: Profession.Alchemy,
-	profession2: Profession.Tailoring,
+	profession1: Profession.Enchanting,
+	profession2: Profession.Engineering,
+	race: Race.RaceGnome,
 };

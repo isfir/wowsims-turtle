@@ -80,8 +80,9 @@ func (mage *Mage) getArcaneMissilesSpellConfig(rank int) core.SpellConfig {
 					}
 				},
 			},
-			NumberOfTicks: numTicks,
-			TickLength:    tickLength,
+			NumberOfTicks:       numTicks,
+			TickLength:          tickLength,
+			AffectedByCastSpeed: mage.Talents.AcceleratedArcana,
 			OnTick: func(sim *core.Simulation, target *core.Unit, dot *core.Dot) {
 				tickSpell.Cast(sim, target)
 			},

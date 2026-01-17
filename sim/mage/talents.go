@@ -56,6 +56,15 @@ func (mage *Mage) applyArcaneTalents() {
 	// TODO: Implement turtle version properly
 	mage.PseudoStats.SpiritRegenRateCasting += 0.05 * float64(mage.Talents.ArcaneMeditation)
 
+	// Accelerated Arcana
+	if mage.Talents.AcceleratedArcana {
+		mage.OnSpellRegistered(func(spell *core.Spell) {
+			if spell.SpellSchool.Matches(core.SpellSchoolArcane) && spell.Flags.Matches(SpellFlagMage) {
+				spell.CastTimeMultiplier *= 0.95
+			}
+		})
+	}
+
 	// Arcane Potency
 	if mage.Talents.ArcanePotency > 0 {
 		critBonus := .50 * float64(mage.Talents.ArcanePotency)

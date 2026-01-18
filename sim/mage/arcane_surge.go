@@ -10,7 +10,7 @@ const ArcaneSurgeRanks = 4
 
 var ArcaneSurgeSpellId = [ArcaneSurgeRanks + 1]int32{0, 51933, 51934, 51935, 51936}
 var ArcaneSurgeBaseDamage = [ArcaneSurgeRanks + 1][]float64{{0}, {202, 245}, {290, 350}, {398, 475}, {517, 613}}
-var ArcaneSurgeSpellCoeff = [ArcaneSurgeRanks + 1]float64{0, .65, .65, .65, .65} // Taken from turtlewowsim, should be verified and lower ranks adjusted
+var ArcaneSurgeSpellCoeff = [ArcaneSurgeRanks + 1]float64{0, .65, .65, .65, .65}
 var ArcaneSurgeManaCost = [ArcaneSurgeRanks + 1]float64{0, 85, 110, 140, 170}
 var ArcaneSurgeLevel = [ArcaneSurgeRanks + 1]int{0, 32, 40, 48, 56}
 

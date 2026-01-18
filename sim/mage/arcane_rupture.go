@@ -10,7 +10,7 @@ const ArcaneRuptureRanks = 6
 
 var ArcaneRuptureSpellId = [ArcaneRuptureRanks + 1]int32{0, 51949, 51950, 51951, 51952, 51953, 51954}
 var ArcaneRuptureBaseDamage = [ArcaneRuptureRanks + 1][]float64{{0}, {101, 115}, {171, 191}, {302, 334}, {375, 434}, {528, 577}, {703, 766}}
-var ArcaneRuptureSpellCoeff = [ArcaneRuptureRanks + 1]float64{0, .9, .9, .9, .9, .9, .9} // Taken from turtlewowsim, should be verified and lower ranks adjusted
+var ArcaneRuptureSpellCoeff = [ArcaneRuptureRanks + 1]float64{0, .9, .9, .9, .9, .9, .9}
 var ArcaneRuptureManaCost = [ArcaneRuptureRanks + 1]float64{0, 80, 145, 210, 270, 320, 390}
 var ArcaneRuptureLevel = [ArcaneRuptureRanks + 1]int{0, 21, 28, 36, 44, 52, 60}
 

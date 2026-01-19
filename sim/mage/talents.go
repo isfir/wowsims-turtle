@@ -59,11 +59,47 @@ func (mage *Mage) applyArcaneTalents() {
 
 	// Accelerated Arcana
 	if mage.Talents.AcceleratedArcana {
+		type spellCD struct {
+			s          *core.Spell
+			baseCD     time.Duration
+			baseShared time.Duration
+		}
+		var arcaneSpellCDs []spellCD
+
 		mage.OnSpellRegistered(func(spell *core.Spell) {
 			if spell.SpellSchool.Matches(core.SpellSchoolArcane) && spell.Flags.Matches(SpellFlagMage) {
+				// Reduce cast time by 5%
 				spell.CastTimeMultiplier *= 0.95
+
+				var baseCD, baseShared time.Duration
+				if spell.CD.Timer != nil && spell.CD.Duration > 0 {
+					baseCD = spell.CD.Duration
+				}
+				if spell.SharedCD.Timer != nil && spell.SharedCD.Duration > 0 {
+					baseShared = spell.SharedCD.Duration
+				}
+				arcaneSpellCDs = append(arcaneSpellCDs, spellCD{s: spell, baseCD: baseCD, baseShared: baseShared})
 			}
 		})
+
+		apply := func() {
+			for _, sc := range arcaneSpellCDs {
+				if sc.s == nil {
+					continue
+				}
+				if sc.baseCD > 0 && sc.s.CD.Timer != nil {
+					sc.s.CD.Duration = mage.ApplyCastSpeed(sc.baseCD)
+				}
+				if sc.baseShared > 0 && sc.s.SharedCD.Timer != nil {
+					sc.s.SharedCD.Duration = mage.ApplyCastSpeed(sc.baseShared)
+				}
+			}
+		}
+
+		// initial final scaling
+		mage.Env.RegisterPreFinalizeEffect(func() { apply() })
+		// dynamic updates when cast-speed changes in-combat (e.g. Arcane Power).
+		mage.OnCastSpeedChanged(func() { apply() })
 	}
 
 	// Arcane Potency

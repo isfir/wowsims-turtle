@@ -154,6 +154,8 @@ type Unit struct {
 
 	// The currently-channeled DOT spell, otherwise nil.
 	ChanneledDot *Dot
+
+	castSpeedChangeHandlers []func()
 }
 
 // Units can be disabled for several reasons:
@@ -370,8 +372,18 @@ func (unit *Unit) SpellGCD() time.Duration {
 	return max(GCDMin, unit.ApplyCastSpeed(GCDDefault))
 }
 
+func (unit *Unit) OnCastSpeedChanged(handler func()) {
+	unit.castSpeedChangeHandlers = append(unit.castSpeedChangeHandlers, handler)
+}
+
 func (unit *Unit) updateCastSpeed() {
+	prev := unit.CastSpeed
 	unit.CastSpeed = 1 / unit.PseudoStats.CastSpeedMultiplier
+	if unit.CastSpeed != prev {
+		for _, h := range unit.castSpeedChangeHandlers {
+			h()
+		}
+	}
 }
 
 func (unit *Unit) MultiplyCastSpeed(amount float64) {

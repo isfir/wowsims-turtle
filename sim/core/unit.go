@@ -10,6 +10,7 @@ import (
 
 type UnitType int
 type SpellRegisteredHandler func(spell *Spell)
+type OnSpeedChanged func(oldSpeed float64, newSpeed float64)
 
 const (
 	PlayerUnit UnitType = iota
@@ -154,6 +155,9 @@ type Unit struct {
 
 	// The currently-channeled DOT spell, otherwise nil.
 	ChanneledDot *Dot
+
+	// Used for reacting to cast speed changes
+	OnCastSpeedChanged []OnSpeedChanged
 }
 
 // Units can be disabled for several reasons:
@@ -209,6 +213,13 @@ func (unit *Unit) AddStat(stat stats.Stat, amount float64) {
 		panic("Already finalized, use AddStatDynamic instead!")
 	}
 	unit.stats[stat] += amount
+}
+
+func (unit *Unit) AddOnCastSpeedChanged(ocsc OnSpeedChanged) {
+	if unit.Env != nil && unit.Env.IsFinalized() {
+		panic("Already finalized, cannot add on casting speed changed callback!")
+	}
+	unit.OnCastSpeedChanged = append(unit.OnCastSpeedChanged, ocsc)
 }
 
 func (unit *Unit) AddResistances(amount float64) {
@@ -371,7 +382,13 @@ func (unit *Unit) SpellGCD() time.Duration {
 }
 
 func (unit *Unit) updateCastSpeed() {
+	oldCastSpeed := unit.CastSpeed
 	unit.CastSpeed = 1 / unit.PseudoStats.CastSpeedMultiplier
+	newCastSpeed := unit.CastSpeed
+
+	for i := range unit.OnCastSpeedChanged {
+		unit.OnCastSpeedChanged[i](oldCastSpeed, newCastSpeed)
+	}
 }
 
 func (unit *Unit) MultiplyCastSpeed(amount float64) {
@@ -383,6 +400,11 @@ func (unit *Unit) ApplyCastSpeed(dur time.Duration) time.Duration {
 }
 func (unit *Unit) ApplyCastSpeedForSpell(dur time.Duration, spell *Spell) time.Duration {
 	return time.Duration(float64(dur) * unit.CastSpeed * math.Max(spell.CastTimeMultiplier, 0))
+}
+func (unit *Unit) ApplyCastSpeedForSpellCappedRounded(dur time.Duration, spell *Spell) time.Duration {
+	mult := math.Max(unit.CastSpeed, 0.5) * math.Max(spell.CastTimeMultiplier, 0)
+	mult = math.Round(mult*100-1e-9) / 100 // We want 0.5*0.95 (0.475) to be rounded down to 0.47 to match Turtle behavior.
+	return time.Duration(float64(dur) * mult)
 }
 
 func (unit *Unit) SwingSpeed() float64 {

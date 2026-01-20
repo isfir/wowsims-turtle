@@ -17,6 +17,7 @@ func (mage *Mage) applyArcaneTalents() {
 	mage.applyMagicAbsorption()
 	mage.applyArcaneConcentration()
 	mage.applyArcaneInstability()
+	mage.applyAcceleratedArcana()
 	mage.applyResonanceCascade()
 	mage.applyTemporalConvergence()
 	mage.registerPresenceOfMindCD()
@@ -56,15 +57,6 @@ func (mage *Mage) applyArcaneTalents() {
 	// Arcane Meditation
 	// TODO: Implement turtle version properly
 	mage.PseudoStats.SpiritRegenRateCasting += 0.05 * float64(mage.Talents.ArcaneMeditation)
-
-	// Accelerated Arcana
-	if mage.Talents.AcceleratedArcana {
-		mage.OnSpellRegistered(func(spell *core.Spell) {
-			if spell.SpellSchool.Matches(core.SpellSchoolArcane) && spell.Flags.Matches(SpellFlagMage) {
-				spell.CastTimeMultiplier *= 0.95
-			}
-		})
-	}
 
 	// Arcane Potency
 	if mage.Talents.ArcanePotency > 0 {
@@ -291,6 +283,37 @@ func (mage *Mage) applyArcaneInstability() {
 	})
 }
 
+func (mage *Mage) applyAcceleratedArcana() {
+	if !mage.Talents.AcceleratedArcana {
+		return
+	}
+
+	type cdEntry struct {
+		spell  *core.Spell
+		baseCD time.Duration
+	}
+
+	var affected []cdEntry
+
+	mage.OnSpellRegistered(func(spell *core.Spell) {
+		if spell.SpellSchool.Matches(core.SpellSchoolArcane) && spell.Flags.Matches(SpellFlagMage) {
+			spell.CastTimeMultiplier *= 0.95
+			if spell.CD.Duration > 0 {
+				affected = append(affected, cdEntry{
+					spell:  spell,
+					baseCD: spell.CD.Duration,
+				})
+			}
+		}
+	})
+
+	mage.AddOnCastSpeedChanged(func(old float64, new float64) {
+		for _, entry := range affected {
+			entry.spell.CD.Duration = mage.ApplyCastSpeedForSpellCappedRounded(entry.baseCD, entry.spell)
+		}
+	})
+}
+
 func (mage *Mage) applyResonanceCascade() {
 	if mage.Talents.ResonanceCascade == 0 {
 		return
@@ -444,8 +467,9 @@ func (mage *Mage) registerPresenceOfMindCD() {
 	})
 
 	mage.PresenceOfMind = mage.RegisterSpell(core.SpellConfig{
-		ActionID: actionID,
-		Flags:    core.SpellFlagNoOnCastComplete,
+		ActionID:    actionID,
+		SpellSchool: core.SpellSchoolArcane,
+		Flags:       core.SpellFlagNoOnCastComplete | SpellFlagMage,
 		Cast: core.CastConfig{
 			CD: core.Cooldown{
 				Timer:    mage.NewTimer(),
@@ -506,8 +530,9 @@ func (mage *Mage) registerArcanePowerCD() {
 	core.RegisterPercentDamageModifierEffect(mage.ArcanePowerAura, 1.3)
 
 	spell := mage.RegisterSpell(core.SpellConfig{
-		ActionID: actionID,
-		Flags:    core.SpellFlagNoOnCastComplete,
+		ActionID:    actionID,
+		SpellSchool: core.SpellSchoolArcane,
+		Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagAPL | SpellFlagMage,
 		Cast: core.CastConfig{
 			CD: core.Cooldown{
 				Timer:    mage.NewTimer(),
@@ -627,7 +652,7 @@ func (mage *Mage) registerCombustionCD() {
 
 	spell := mage.RegisterSpell(core.SpellConfig{
 		ActionID: actionID,
-		Flags:    core.SpellFlagNoOnCastComplete,
+		Flags:    core.SpellFlagNoOnCastComplete | core.SpellFlagAPL | SpellFlagMage,
 		Cast: core.CastConfig{
 			CD: cd,
 		},
@@ -661,7 +686,7 @@ func (mage *Mage) registerColdSnapCD() {
 
 	spell := mage.RegisterSpell(core.SpellConfig{
 		ActionID: core.ActionID{SpellID: 12472},
-		Flags:    core.SpellFlagNoOnCastComplete,
+		Flags:    core.SpellFlagNoOnCastComplete | core.SpellFlagAPL | SpellFlagMage,
 
 		Cast: core.CastConfig{
 			CD: core.Cooldown{

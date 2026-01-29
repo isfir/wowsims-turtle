@@ -167,6 +167,8 @@ var ExtraItemIcons = []int32{
 	18641,
 	15993,
 	16040,
+	10507,
+	4395,
 
 	// Food IDs
 	13928,
@@ -176,6 +178,11 @@ var ExtraItemIcons = []int32{
 	21023,
 	13813,
 	13810,
+	18045,
+	21217,
+	13851,
+	21072,
+	12217,
 
 	// Flask IDs
 	13510,
@@ -185,6 +192,11 @@ var ExtraItemIcons = []int32{
 
 	// Zanza
 	20079,
+
+	// Juju
+	12455,
+	12457,
+	12450,
 
 	// Blasted Lands
 	8412,
@@ -236,9 +248,13 @@ var ExtraItemIcons = []int32{
 	20709,
 	21114,
 	21151,
+	5342,
 
 	// Potions / In Battle Consumes
 	13444,
+	13443,
+	6149,
+	3827,
 
 	// Thistle Tea
 	7676,
@@ -248,6 +264,23 @@ var ExtraItemIcons = []int32{
 	20749,
 	12404,
 	18262,
+	20750,
+	20746,
+	20744,
+	23123,
+	20747,
+	20745,
+
+	// Mana gems
+	5513,
+	5514,
+	8007,
+	8008,
+
+	// Scrolls
+	10306,
+	10307,
+	10308,
 }
 
 var SpellIconoverrides = []*proto.IconData{}

@@ -8,7 +8,6 @@ import (
 	"log"
 	"os"
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/isfir/wowsims-turtle/sim"
@@ -19,30 +18,10 @@ import (
 	"github.com/isfir/wowsims-turtle/tools/database"
 )
 
-// To do a full re-scrape, delete the previous output file first.
-// go run ./tools/database/gen_db -outDir=assets -gen=atlasloot
-// go run ./tools/database/gen_db -outDir=assets -gen=wowhead-items
-// go run ./tools/database/gen_db -outDir=assets -gen=wowhead-spells -maxid=31000
-// go run ./tools/database/gen_db -outDir=assets -gen=wowhead-gearplannerdb
-// go run ./tools/database/gen_db -outDir=assets -gen=wago-db2-items
-
-// Lastly run the following to generate db.json (ensure to delete cached versions and/or rebuild for copying of assets during local development)
-// Note: This does not make network requests, only regenerates core db binary and json files from existing inputs
-// go run ./tools/database/gen_db -outDir=assets -gen=db
-
-var exactId = flag.Int("id", 0, "ID to scan for")
-var minId = flag.Int("minid", 1, "Minimum ID to scan for")
-var maxId = flag.Int("maxid", 31000, "Maximum ID to scan for")
 var outDir = flag.String("outDir", "assets", "Path to output directory for writing generated .go files.")
-var genAsset = flag.String("gen", "", "Asset to generate. Valid values are 'db', 'atlasloot', 'wowhead-items', 'wowhead-spells', 'wowhead-gearplannerdb', and 'wago-db2-items'")
 
 func main() {
 	flag.Parse()
-
-	if *exactId != 0 {
-		minId = exactId
-		maxId = exactId
-	}
 
 	if *outDir == "" {
 		panic("outDir flag is required!")
@@ -51,126 +30,29 @@ func main() {
 	dbDir := fmt.Sprintf("%s/database", *outDir)
 	inputsDir := fmt.Sprintf("%s/db_inputs", *outDir)
 
-	if *genAsset == "atlasloot" {
-		db := database.ReadAtlasLootData(inputsDir)
-		db.WriteJson(fmt.Sprintf("%s/atlasloot_db.json", inputsDir))
-		return
-	} else if *genAsset == "wowhead-items" {
-		database.NewWowheadItemTooltipManager(fmt.Sprintf("%s/wowhead_item_tooltips.csv", inputsDir)).Fetch(int32(*minId), int32(*maxId), database.OtherItemIdsToFetch)
-		return
-	} else if *genAsset == "wowhead-spells" {
-		database.NewWowheadSpellTooltipManager(fmt.Sprintf("%s/wowhead_spell_tooltips.csv", inputsDir)).Fetch(int32(*minId), int32(*maxId), []string{})
-		return
-	} else if *genAsset == "wowhead-gearplannerdb" {
-		tools.WriteFile(fmt.Sprintf("%s/wowhead_gearplannerdb.txt", inputsDir), tools.ReadWebRequired("https://nether.wowhead.com/classic/data/gear-planner?dv=100"))
-		return
-	} else if *genAsset == "wago-db2-items" {
-		tools.WriteFile(fmt.Sprintf("%s/wago_db2_items.csv", inputsDir), tools.ReadWebRequired("https://wago.tools/db2/ItemSparse/csv?build=1.15.3.55646"))
-		return
-
-	} else if *genAsset != "db" {
-		panic("Invalid gen value")
-	}
-
-	itemTooltips := database.NewWowheadItemTooltipManager(fmt.Sprintf("%s/wowhead_item_tooltips.csv", inputsDir)).Read()
-	spellTooltips := database.NewWowheadSpellTooltipManager(fmt.Sprintf("%s/wowhead_spell_tooltips.csv", inputsDir)).Read()
-	wowheadDB := database.ParseWowheadDB(tools.ReadFile(fmt.Sprintf("%s/wowhead_gearplannerdb.txt", inputsDir)))
-	atlaslootDB := database.ReadDatabaseFromJson(tools.ReadFile(fmt.Sprintf("%s/atlasloot_db.json", inputsDir)))
-	wagoItems := database.ParseWagoDB(tools.ReadFile(fmt.Sprintf("%s/wago_db2_items.csv", inputsDir)))
-	turtleGearplannerDB := database.ParseTurtleGearplannerDB(tools.ReadFile(fmt.Sprintf("%s/turtle_gearplanner_items.json", inputsDir)))
+	// Parse Turtle WoW DBC
+	turtleItemsDB := database.ParseTurtleItemsDB(
+		tools.ReadFile(fmt.Sprintf("%s/Items.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/ItemDisplayInfo.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/Spell.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/Faction.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/ItemSet.csv", inputsDir)),
+	)
 	turtleSpells := database.ParseTurtleSpellDB(tools.ReadFile(fmt.Sprintf("%s/Spell.csv", inputsDir)), tools.ReadFile(fmt.Sprintf("%s/SpellIcon.csv", inputsDir)))
 
 	db := database.NewWowDatabase()
 	db.Encounters = core.PresetEncounters
 
-	// Try to filter out items reworked in SoD. We do this by storing the max ID for each item name in the map.
-	// This works in most cases because items typically don't share names, however one example of items where this fails is:
-	// https://www.wowhead.com/classic/item=23206/mark-of-the-champion and https://www.wowhead.com/classic/item=23207/mark-of-the-champion
-	// In this case, we can check the icon to see if they're the same or not.
-	// Ultimately we want to get rid of any item with the same name and icon, but a lower ID than another entry
-	/* itemNameMap := make(map[string]string, len(wowheadDB.Items))
-	for id, item := range wowheadDB.Items {
-		if _, ok := database.ItemDenyList[item.ID]; ok {
-			continue
-		}
-
-		otherId, hasEntry := itemNameMap[item.Name]
-		if !hasEntry {
-			itemNameMap[item.Name] = id
-			continue
-		}
-
-		idInt, _ := strconv.Atoi(id)
-		otherIdInt, _ := strconv.Atoi(otherId)
-		if otherIdInt < idInt {
-			itemNameMap[item.Name] = id
-		}
-	} */
-	filteredWHDBItems := core.FilterMap(wowheadDB.Items, func(_ string, item database.WowheadItem) bool {
-		// Just filter out anything with ID > 100000 for now, that's all SoM or SoD.
-		// If Blizzard adds new items to Classic² this will need to use more refined logic again.
-		return item.ID < 100000
-
-		/* id := itemNameMap[item.Name]
-
-		otherItem := wowheadDB.Items[id]
-
-		if _, ok := database.ItemAllowList[item.ID]; ok {
-			return true
-		}
-
-		if _, ok := database.ItemDenyList[item.ID]; ok {
-			return false
-		}
-
-		// Most new items follow this pattern:
-		// - Higher item ID (this is a given)
-		// - Same icon
-		// - If the items have a ClassMask they should match
-		// - Ilvl either the same or only slightly modified (use a 3 ilvl diff threshold)
-		// - Have a later game version
-		if otherItem.ID > item.ID &&
-			otherItem.Icon == item.Icon &&
-			(item.ClassMask == 0 || (otherItem.ClassMask&item.ClassMask) != 0) &&
-			math.Abs(float64(otherItem.Ilvl-item.Ilvl)) < 10 &&
-			otherItem.Version != item.Version {
-			return false
-		}
-
-		return true */
-	})
-
-	for _, response := range itemTooltips {
-		if response.IsEquippable() {
-			// Only included items that are in wowheads gearplanner db
-			// Wowhead doesn't seem to have a field/flag to signify 'not available / in game' but their gearplanner db has them filtered
-			item := response.ToItemProto()
-			if _, ok := filteredWHDBItems[strconv.Itoa(int(item.Id))]; ok {
-				db.MergeItem(item)
-			}
-		}
-	}
-	for _, wowheadItem := range filteredWHDBItems {
-		item := wowheadItem.ToProto()
-		if _, ok := db.Items[item.Id]; ok {
+	for _, item := range turtleItemsDB.Items {
+		if item.GetType() != proto.ItemType_ItemTypeUnknown {
 			db.MergeItem(item)
 		}
-	}
-	for _, item := range atlaslootDB.Items {
-		if _, ok := db.Items[item.Id]; ok {
-			db.MergeItem(item)
-		}
-	}
-	for _, item := range turtleGearplannerDB.Items {
-		db.MergeItem(item)
 	}
 
 	db.MergeItems(database.ItemOverrides)
 	db.MergeEnchants(database.EnchantOverrides)
 
 	ApplyGlobalFilters(db)
-	AttachFactionInformation(db, wagoItems)
-	AttachItemSetIDs(db, wagoItems)
 
 	leftovers := db.Clone()
 	ApplyNonSimmableFilters(leftovers)
@@ -179,68 +61,18 @@ func main() {
 	ApplySimmableFilters(db)
 	for _, enchant := range db.Enchants {
 		if enchant.ItemId != 0 {
-			db.AddItemIcon(enchant.ItemId, itemTooltips)
-		}
-		if enchant.SpellId != 0 {
-			db.AddSpellIcon(enchant.SpellId, spellTooltips)
+			db.MergeItemIcon(enchant.ItemId, turtleItemsDB.Items)
 		}
 	}
 
 	for _, itemID := range database.ExtraItemIcons {
-		db.AddItemIcon(itemID, itemTooltips)
-	}
-
-	for _, item := range db.Items {
-		for _, source := range item.Sources {
-			if crafted := source.GetCrafted(); crafted != nil {
-				db.AddSpellIcon(crafted.SpellId, spellTooltips)
-			}
-		}
-
-		for _, randomSuffixID := range item.RandomSuffixOptions {
-			if _, exists := db.RandomSuffixes[randomSuffixID]; !exists {
-				db.RandomSuffixes[randomSuffixID] = wowheadDB.RandomSuffixes[strconv.Itoa(int(randomSuffixID))].ToProto()
-			}
-		}
-
-		// Populate phase data
-		if item.Phase == 1 {
-			item.Phase = GetPhaseData(item)
-		}
-
-		// Tier and Dungeon 2 Set items don't all have class restrictions
-		// Let's pretend that they do for UI filtering
-		// Note: Dungeon 2 sets don't have quest source data, so we can't check Quest source here
-		if item.SetId > 0 && len(item.ClassAllowlist) == 0 {
-			item.ClassAllowlist = GetClassAllowList(item)
-		}
-	}
-
-	for _, spellId := range database.SharedSpellsIcons {
-		db.AddSpellIcon(spellId, spellTooltips)
+		db.MergeItemIcon(itemID, turtleItemsDB.Items)
 	}
 
 	// Add spells from Turtle WoW DBC
 	db.MergeSpellIcons(turtleSpells)
 
-	for _, spellIds := range GetAllTalentSpellIds(&inputsDir) {
-		for _, spellId := range spellIds {
-			db.AddSpellIcon(spellId, spellTooltips)
-		}
-	}
-
-	for _, spellIds := range GetAllRotationSpellIds() {
-		for _, spellId := range spellIds {
-			db.AddSpellIcon(spellId, spellTooltips)
-		}
-	}
-
 	db.MergeSpellIcons(database.SpellIconoverrides)
-
-	atlasDBProto := atlaslootDB.ToUIProto()
-	db.MergeZones(atlasDBProto.Zones)
-	db.MergeNpcs(atlasDBProto.Npcs)
-	db.MergeFactions(atlasDBProto.Factions)
 
 	db.WriteBinaryAndJson(fmt.Sprintf("%s/db.bin", dbDir), fmt.Sprintf("%s/db.json", dbDir))
 }
@@ -281,22 +113,6 @@ func ApplyGlobalFilters(db *database.WowDatabase) {
 	db.SpellIcons = core.FilterMap(db.SpellIcons, func(_ int32, icon *proto.IconData) bool {
 		return icon.Name != "" && icon.Icon != ""
 	})
-}
-
-// // AttachFactionInformation attaches faction information (faction restrictions) to the DB items.
-func AttachFactionInformation(db *database.WowDatabase, factionRestrictions map[int32]database.WagoDbItem) {
-	for _, item := range db.Items {
-		if item.FactionRestriction == proto.UIItem_FACTION_RESTRICTION_UNSPECIFIED {
-			item.FactionRestriction = factionRestrictions[item.Id].FactionRestriction
-		}
-	}
-}
-
-// AttachItemSetIDs attaches item set ids to the DB items.
-func AttachItemSetIDs(db *database.WowDatabase, wagoItems map[int32]database.WagoDbItem) {
-	for _, item := range db.Items {
-		item.SetId = wagoItems[item.Id].ItemSetID
-	}
 }
 
 // Filters out entities which shouldn't be included in the sim.
@@ -460,7 +276,7 @@ func GetAllRotationSpellIds() map[string][]int32 {
 		{Name: "mage", Raid: core.SinglePlayerRaidProto(core.WithSpec(&proto.Player{
 			Class:         proto.Class_ClassMage,
 			Equipment:     &proto.EquipmentSpec{},
-			TalentsString: "2352342212231531-5532323123233121-25221213122351351",
+			TalentsString: "2350550310033311251-50003",
 		}, &proto.Player_Mage{Mage: &proto.Mage{Options: &proto.Mage_Options{}}}), nil, nil, nil)},
 		{Name: "shadow", Raid: core.SinglePlayerRaidProto(core.WithSpec(&proto.Player{
 			Class:     proto.Class_ClassPriest,

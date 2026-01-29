@@ -156,36 +156,18 @@ func (db *WowDatabase) MergeFaction(src *proto.UIFaction) {
 	}
 }
 
-func (db *WowDatabase) AddItemIcon(id int32, tooltips map[int32]WowheadItemResponse) {
-	if tooltip, ok := tooltips[id]; ok {
-		if tooltip.GetName() == "" || tooltip.GetIcon() == "" {
+func (db *WowDatabase) MergeItemIcon(id int32, src map[int32]*proto.UIItem) {
+	if item, ok := src[id]; ok {
+		if item.GetName() == "" || item.GetIcon() == "" {
 			return
 		}
 		db.ItemIcons[id] = &proto.IconData{
 			Id:   id,
-			Name: tooltip.GetName(),
-			Icon: tooltip.GetIcon(),
+			Name: item.GetName(),
+			Icon: item.GetIcon(),
 		}
 	} else if id != 0 {
 		panic(fmt.Sprintf("No item tooltip with id %d", id))
-	}
-}
-
-func (db *WowDatabase) AddSpellIcon(id int32, tooltips map[int32]WowheadItemResponse) {
-	if tooltip, ok := tooltips[id]; ok {
-		if tooltip.GetName() == "" || tooltip.GetIcon() == "" {
-			return
-		}
-
-		db.SpellIcons[id] = &proto.IconData{
-			Id:      id,
-			Name:    tooltip.GetName(),
-			Icon:    tooltip.GetIcon(),
-			Rank:    int32(tooltip.GetSpellRank()),
-			HasBuff: tooltip.HasBuff(),
-		}
-	} else if id != 0 {
-		println(fmt.Sprintf("No spell tooltip with id %d", id))
 	}
 }
 
@@ -320,12 +302,4 @@ func (db *WowDatabase) WriteJson(jsonFilePath string) {
 
 	buffer.WriteString("}")
 	os.WriteFile(jsonFilePath, buffer.Bytes(), 0666)
-}
-
-func toSlice(stats Stats) []float64 {
-	return stats[:]
-}
-
-func weaponSkillsToSlice(weaponSkills WeaponSkills) []float64 {
-	return weaponSkills[:]
 }

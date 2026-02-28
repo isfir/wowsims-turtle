@@ -177,7 +177,7 @@ var CritPerIntAtLevel = map[proto.Class]float64{
 	proto.Class_ClassRogue:   0.0,
 	proto.Class_ClassPriest:  0.0168,
 	proto.Class_ClassShaman:  0.0169,
-	proto.Class_ClassMage:    0.0168,
+	proto.Class_ClassMage:    1 / 53.77,
 	proto.Class_ClassWarlock: 0.0165,
 	proto.Class_ClassDruid:   0.0167,
 }

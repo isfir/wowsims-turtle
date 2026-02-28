@@ -167,6 +167,8 @@ const (
 	MarkOfTheChampionSpell     = 23207
 	MisplacedServoArm          = 23221
 	JomGabbar                  = 23570
+	BindingsOfContainedMagic   = 55106
+	TrueBandOfSulfuras         = 58088
 )
 
 func init() {
@@ -3611,6 +3613,58 @@ func init() {
 		character.AddMajorCooldown(core.MajorCooldown{
 			Spell: spell,
 			Type:  core.CooldownTypeDPS,
+		})
+	})
+
+	// https://database.turtlecraft.gg/?item=55106
+	// Gives a chance when your harmful spells land to increase the damage of your spells and effects by up to 100 for 6 sec.
+	// (Proc chance: 10%, ICD: 18s)
+	core.NewItemEffect(BindingsOfContainedMagic, func(agent core.Agent) {
+		character := agent.GetCharacter()
+		buffAura := character.RegisterAura(core.Aura{
+			ActionID: core.ActionID{SpellID: 51060},
+			Label:    "Uncontained Magic",
+			Duration: time.Second * 6,
+			OnGain: func(aura *core.Aura, sim *core.Simulation) {
+				character.AddStatDynamic(sim, stats.SpellDamage, 100)
+			},
+			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+				character.AddStatDynamic(sim, stats.SpellDamage, -100)
+			},
+		})
+
+		core.MakeProcTriggerAura(&agent.GetCharacter().Unit, core.ProcTrigger{
+			Name:       "Uncontained Magic Passive",
+			Callback:   core.CallbackOnSpellHitDealt,
+			Outcome:    core.OutcomeLanded,
+			ProcMask:   core.ProcMaskSpellDamage,
+			ProcChance: 0.10,
+			ICD:        time.Second * 18,
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				buffAura.Activate(sim)
+			},
+		})
+	})
+
+	// https://database.turtlecraft.gg/?item=58088
+	// Your landing damaging spells have a 8% chance to increase your casting speed by 5% for 6 sec. Fire spells have a 50% increased chance to trigger this effect.
+	core.NewItemEffect(TrueBandOfSulfuras, func(agent core.Agent) {
+		character := agent.GetCharacter()
+		buffAura := character.RegisterAura(core.Aura{
+			ActionID: core.ActionID{SpellID: 42027},
+			Label:    "Sulfuron Blaze",
+			Duration: time.Second * 6,
+		}).AttachMultiplyCastSpeed(&character.Unit, 1.05)
+
+		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+			Name:       "Sulfuron Blaze Passive",
+			Callback:   core.CallbackOnSpellHitDealt,
+			Outcome:    core.OutcomeLanded,
+			ProcMask:   core.ProcMaskSpellDamage,
+			ProcChance: 0.08, //TODO: Different proc chance for fire spell school
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				buffAura.Activate(sim)
+			},
 		})
 	})
 

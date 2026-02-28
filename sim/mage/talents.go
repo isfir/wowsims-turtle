@@ -319,7 +319,7 @@ func (mage *Mage) applyResonanceCascade() {
 		return
 	}
 
-	procChance := float64(mage.Talents.ResonanceCascade) * 0.04
+	procChance := float64(mage.Talents.ResonanceCascade)*0.04 + 0.05 // TODO: Forced T3.5 bonus, need proper implementation with set
 
 	resonanceCascadeDamage := 0.0
 	resonanceCascadeProc := mage.RegisterSpell(core.SpellConfig{

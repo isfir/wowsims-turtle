@@ -327,7 +327,7 @@ func (mage *Mage) applyResonanceCascade() {
 		SpellSchool: core.SpellSchoolArcane,
 		DefenseType: core.DefenseTypeMagic,
 		ProcMask:    core.ProcMaskSpellProc,
-		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagPassiveSpell,
 
 		DamageMultiplier: 1,
 		ThreatMultiplier: 1,

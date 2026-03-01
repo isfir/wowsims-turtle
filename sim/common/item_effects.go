@@ -169,6 +169,7 @@ const (
 	JomGabbar                  = 23570
 	BindingsOfContainedMagic   = 55106
 	TrueBandOfSulfuras         = 58088
+	SigilOfAncientAccord       = 58244
 )
 
 func init() {
@@ -3664,6 +3665,44 @@ func init() {
 			ProcChance: 0.08, //TODO: Different proc chance for fire spell school
 			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 				buffAura.Activate(sim)
+			},
+		})
+	})
+
+	// https://database.turtlecraft.gg/?item=58244
+	// Your direct damaging spells have a 8% chance to detonate the surrounding magic, dealing 100 Arcane damage to the target and all targets within 0. The main target takes 300 additional Arcane damage.
+	core.NewItemEffect(SigilOfAncientAccord, func(agent core.Agent) {
+		character := agent.GetCharacter()
+
+		procSpell := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 44095},
+			SpellSchool: core.SpellSchoolArcane,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.BonusCoefficient = 0.15
+				spell.CalcAndDealDamage(sim, target, 300, spell.OutcomeMagicHitAndCrit)
+				spell.BonusCoefficient = 0.05
+				for _, aoeTarget := range sim.Encounter.TargetUnits {
+					spell.CalcAndDealDamage(sim, aoeTarget, 100, spell.OutcomeMagicHitAndCrit)
+				}
+			},
+		})
+
+		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+			Name:       "Ancient Accord Passive",
+			Callback:   core.CallbackOnSpellHitDealt,
+			Outcome:    core.OutcomeLanded,
+			ProcMask:   core.ProcMaskSpellDamage,
+			ProcChance: 0.08,
+			ICD:        time.Second * 2,
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				procSpell.Cast(sim, result.Target)
 			},
 		})
 	})

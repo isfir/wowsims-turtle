@@ -111,7 +111,7 @@ func (mage *Mage) getArcaneMissilesTickSpell(rank int) *core.Spell {
 		Flags:        SpellFlagMage,
 		MissileSpeed: 20,
 
-		Rank: 1,
+		Rank: rank,
 
 		DamageMultiplier: 1,
 		ThreatMultiplier: 1,

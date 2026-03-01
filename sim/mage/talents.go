@@ -252,7 +252,7 @@ func (mage *Mage) applyArcaneInstability() {
 		ActionID:    core.ActionID{SpellID: 51977},
 		SpellSchool: core.SpellSchoolArcane,
 		DefenseType: core.DefenseTypeMagic,
-		ProcMask:    core.ProcMaskSpellProc,
+		ProcMask:    core.ProcMaskEmpty,
 		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
 
 		DamageMultiplier: 1,

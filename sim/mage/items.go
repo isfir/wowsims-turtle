@@ -12,6 +12,10 @@ const (
 	MindQuickeningGem     = 19339
 	HazzarahsCharmOfMagic = 19959
 	JewelOfKajaro         = 19601
+	OverchargedBelt       = 61568
+	BeltOfArchaicPower    = 51784
+	NetherwindCord        = 47091
+	FrostfireCord         = 47104
 )
 
 func init() {
@@ -176,5 +180,43 @@ func init() {
 		})
 	})
 
+	core.NewItemEffect(OverchargedBelt, func(agent core.Agent) {
+		arcaneMissilesDurationEffect(agent)
+	})
+
+	core.NewItemEffect(BeltOfArchaicPower, func(agent core.Agent) {
+		arcaneMissilesDurationEffect(agent)
+	})
+
+	core.NewItemEffect(NetherwindCord, func(agent core.Agent) {
+		arcaneMissilesDurationEffect(agent)
+	})
+
+	core.NewItemEffect(FrostfireCord, func(agent core.Agent) {
+		arcaneMissilesDurationEffect(agent)
+	})
+
 	core.AddEffectsToTest = true
+}
+
+func arcaneMissilesDurationEffect(agent core.Agent) {
+	mage := agent.(MageAgent).GetMage()
+
+	mage.RegisterAura(core.Aura{
+		Label:    "Arcane Missiles +1",
+		Duration: core.NeverExpires,
+		OnInit: func(aura *core.Aura, sim *core.Simulation) {
+			for _, spell := range mage.ArcaneMissiles {
+				if spell == nil {
+					continue
+				}
+				for _, dot := range spell.Dots() {
+					if dot != nil {
+						dot.NumberOfTicks += 1
+						dot.RecomputeAuraDuration()
+					}
+				}
+			}
+		},
+	})
 }

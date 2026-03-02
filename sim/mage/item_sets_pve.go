@@ -444,3 +444,14 @@ var ItemSetFrostfireRegalia = core.NewItemSet(core.ItemSet{
 		},
 	},
 })
+
+var ItemSetVestmentsOfTheGuardian = core.NewItemSet(core.ItemSet{
+	Name: "Vestments of the Guardian",
+	ID:   685,
+	Bonuses: map[int32]core.ApplyEffect{
+		// Increases the chance for Resonance Cascade to trigger by 5%.
+		3: func(agent core.Agent) {
+			// Implemented in talents.go
+		},
+	},
+})

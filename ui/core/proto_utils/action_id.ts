@@ -354,6 +354,36 @@ export class ActionId {
 						break;
 				}
 				break;
+			case 'Arcane Missiles':
+				switch (this.spellId) {
+					case 5143:
+					case 5144:
+					case 5145:
+					case 8416:
+					case 8417:
+					case 10211:
+					case 10212:
+					case 25345:
+						name = `${name} (Channel)`;
+						break;
+					case 7268:
+					case 7269:
+					case 7270:
+					case 8419:
+					case 8418:
+					case 10273:
+					case 10274:
+					case 25346:
+						name = `${name} (Tick)`;
+						break;
+				}
+			case `Arcane Rupture`:
+			case `Arcane Explosion`:
+			case `Arcane Surge`:
+				if (this.tag > 0) {
+					name = `${name} (Resonance Cascade #${this.tag}) `
+				}
+				break;
 			default:
 				if (this.tag) {
 					name += ' (??)';

@@ -319,21 +319,31 @@ func (mage *Mage) applyResonanceCascade() {
 		return
 	}
 
-	procChance := float64(mage.Talents.ResonanceCascade)*0.04 + 0.05 // TODO: Forced T3.5 bonus, need proper implementation with set
+	procChance := float64(mage.Talents.ResonanceCascade) * 0.04
+
+	if mage.HasSetBonus(ItemSetVestmentsOfTheGuardian, 3) {
+		procChance += 0.05
+	}
 
 	resonanceCascadeDamage := 0.0
 	resonanceCascadeProc := mage.RegisterSpell(core.SpellConfig{
-		ActionID:    core.ActionID{SpellID: 51990},
 		SpellSchool: core.SpellSchoolArcane,
 		DefenseType: core.DefenseTypeMagic,
-		ProcMask:    core.ProcMaskSpellProc,
-		Flags:       core.SpellFlagIgnoreResists | core.SpellFlagIgnoreTargetModifiers | core.SpellFlagIgnoreAttackerModifiers | core.SpellFlagBinary | core.SpellFlagPassiveSpell,
+		ProcMask:    core.ProcMaskSpellDamage,
+		Flags:       SpellFlagMage,
 
 		DamageMultiplier: 1,
 		ThreatMultiplier: 1,
 
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-			spell.CalcAndDealDamage(sim, target, resonanceCascadeDamage, spell.OutcomeAlwaysHit)
+			result := spell.CalcDamage(sim, target, resonanceCascadeDamage, spell.OutcomeMagicHitAndCrit)
+			if spell.MissileSpeed != 0 {
+				spell.WaitTravelTime(sim, func(sim *core.Simulation) {
+					spell.DealDamage(sim, result)
+				})
+			} else {
+				spell.DealDamage(sim, result)
+			}
 		},
 	})
 
@@ -348,16 +358,22 @@ func (mage *Mage) applyResonanceCascade() {
 				return
 			}
 
-			duplicateDamage := result.Damage * 0.5
-			for range 5 {
-				if !sim.Proc(procChance, "Resonance Cascade") {
-					break
-				}
+			if spell.ActionID.Tag >= 5 {
+				return
+			}
 
-				resonanceCascadeDamage = duplicateDamage
+			if sim.Proc(procChance, "Resonance Cascade") {
+				resonanceCascadeProc.SpellCode = spell.SpellCode
+				resonanceCascadeProc.ActionID = spell.ActionID.WithTag(spell.ActionID.Tag + 1)
+				resonanceCascadeProc.MissileSpeed = spell.MissileSpeed
+				resonanceCascadeProc.Rank = spell.Rank
+				resonanceCascadeProc.DamageMultiplier = spell.DamageMultiplier
+				resonanceCascadeProc.ThreatMultiplier = spell.ThreatMultiplier
+				resonanceCascadeProc.BonusHitRating = spell.BonusHitRating
+				resonanceCascadeProc.BonusCritRating = spell.BonusCritRating
+				resonanceCascadeProc.CritDamageBonus = spell.CritDamageBonus
+				resonanceCascadeDamage = result.RawDamage() * 0.5
 				resonanceCascadeProc.Cast(sim, result.Target)
-
-				duplicateDamage *= 0.5
 			}
 		},
 	})
@@ -388,7 +404,7 @@ func (mage *Mage) applyTemporalConvergence() {
 				return
 			}
 
-			if spell.SpellCode != SpellCode_MageArcaneRupture {
+			if spell.SpellCode != SpellCode_MageArcaneRupture || spell.Cost == nil {
 				return
 			}
 

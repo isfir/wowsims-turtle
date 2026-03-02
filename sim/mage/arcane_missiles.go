@@ -104,7 +104,7 @@ func (mage *Mage) getArcaneMissilesTickSpell(rank int) *core.Spell {
 
 	return mage.RegisterSpell(core.SpellConfig{
 		SpellCode:    SpellCode_MageArcaneMissilesTick,
-		ActionID:     core.ActionID{SpellID: spellId}.WithTag(1),
+		ActionID:     core.ActionID{SpellID: spellId},
 		SpellSchool:  core.SpellSchoolArcane,
 		DefenseType:  core.DefenseTypeMagic,
 		ProcMask:     core.ProcMaskSpellDamage,

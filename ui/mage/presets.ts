@@ -119,4 +119,5 @@ export const OtherDefaults = {
 	profession1: Profession.Enchanting,
 	profession2: Profession.Engineering,
 	race: Race.RaceGnome,
+	channelClipDelay: 50,
 };

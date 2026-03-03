@@ -65,19 +65,7 @@ func (mage *Mage) getArcaneMissilesSpellConfig(rank int) core.SpellConfig {
 
 		Dot: core.DotConfig{
 			Aura: core.Aura{
-				Label: fmt.Sprintf("ArcaneMissiles-%d-%d", +rank, numTicks),
-				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					// TODO: This check is necessary to ensure the final tick occurs before
-					// Arcane Blast stacks are dropped. To fix this, ticks need to reliably
-					// occur before aura expirations.
-
-					//TODO: Test interaction in classic code without aura
-					dot := mage.ArcaneMissiles[rank].Dot(aura.Unit)
-					if dot.TickCount < dot.NumberOfTicks {
-						dot.TickCount++
-						dot.TickOnce(sim)
-					}
-				},
+				Label: fmt.Sprintf("Arcane Missiles (Rank %d)", rank),
 			},
 			NumberOfTicks:       numTicks,
 			TickLength:          tickLength,

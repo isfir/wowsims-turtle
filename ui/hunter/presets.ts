@@ -11,7 +11,6 @@ import {
 	Food,
 	HealthElixir,
 	IndividualBuffs,
-	ManaRegenElixir,
 	Potions,
 	Profession,
 	Race,
@@ -97,12 +96,10 @@ export const DefaultConsumes = Consumes.create({
 	attackPowerBuff: AttackPowerBuff.JujuMight,
 	defaultConjured: Conjured.ConjuredDemonicRune,
 	defaultPotion: Potions.MajorManaPotion,
-	dragonBreathChili: true,
 	flask: Flask.FlaskOfSupremePower,
 	food: Food.FoodSmokedDesertDumpling,
 	healthElixir: HealthElixir.ElixirOfFortitude,
 	mainHandImbue: WeaponImbue.Windfury,
-	manaRegenElixir: ManaRegenElixir.MagebloodPotion,
 	offHandImbue: WeaponImbue.ElementalSharpeningStone,
 	petAttackPowerConsumable: 1,
 	petAgilityConsumable: 1,
@@ -110,7 +107,6 @@ export const DefaultConsumes = Consumes.create({
 	sapperExplosive: SapperExplosive.SapperUnknown,
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
 	strengthBuff: StrengthBuff.JujuPower,
-	zanzaBuff: ZanzaBuff.GroundScorpokAssay,
 });
 
 export const DefaultRaidBuffs = RaidBuffs.create({

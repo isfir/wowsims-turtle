@@ -120,7 +120,6 @@ export const DefaultConsumes = Consumes.create({
 	boglingRoot: false,
 	defaultConjured: Conjured.ConjuredDemonicRune,
 	defaultPotion: Potions.MajorManaPotion,
-	dragonBreathChili: true,
 	fillerExplosive: Explosive.ExplosiveUnknown,
 	firePowerBuff: FirePowerBuff.ElixirOfGreaterFirepower,
 	food: Food.FoodBlessSunfruit,
@@ -129,7 +128,6 @@ export const DefaultConsumes = Consumes.create({
 	//offHandImbue: WeaponImbue.MagnificentTrollshine,
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
 	strengthBuff: StrengthBuff.JujuPower,
-	zanzaBuff: ZanzaBuff.ROIDS,
 });
 
 export const DefaultIndividualBuffs = IndividualBuffs.create({
@@ -155,7 +153,6 @@ export const DefaultRaidBuffs = RaidBuffs.create({
 	giftOfTheWild: TristateEffect.TristateEffectImproved,
 	sanctityAura: true,
 	leaderOfThePack: true,
-	moonkinAura: true,
 });
 
 export const DefaultDebuffs = Debuffs.create({

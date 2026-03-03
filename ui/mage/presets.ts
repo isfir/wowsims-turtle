@@ -1,5 +1,7 @@
 import * as PresetUtils from '../core/preset_utils';
 import {
+	Alcohol,
+	BlastedLandsBuff,
 	Conjured,
 	Consumes,
 	Debuffs,
@@ -7,8 +9,9 @@ import {
 	Flask,
 	Food,
 	FrostPowerBuff,
+	HealthElixir,
 	IndividualBuffs,
-	ManaRegenElixir,
+	MiscConsumes,
 	PartyBuffs,
 	Potions,
 	Profession,
@@ -68,32 +71,41 @@ export const DefaultOptions = MageOptions.create({
 });
 
 export const DefaultConsumes = Consumes.create({
+	defaultPotion: Potions.QuicknessPotion,
 	defaultConjured: Conjured.ConjuredDemonicRune,
-	defaultPotion: Potions.MajorManaPotion,
-	firePowerBuff: FirePowerBuff.ElixirOfGreaterFirepower,
+	nordanaarHerbalTea: true,
 	flask: Flask.FlaskOfSupremePower,
-	food: Food.FoodRunnTumTuberSurprise,
-	frostPowerBuff: FrostPowerBuff.ElixirOfFrostPower,
 	mainHandImbue: WeaponImbue.BrilliantWizardOil,
-	manaRegenElixir: ManaRegenElixir.MagebloodPotion,
-	sapperExplosive: SapperExplosive.SapperGoblinSapper,
+	food: Food.FoodDanonzosTelAbimMedley,
+	alcohol: Alcohol.AlcoholMedivhMerlotBlue,
+	healthElixir: HealthElixir.ElixirOfFortitude,
+	dreamshardElixir: true,
+	dreamtonic: true,
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
-	zanzaBuff: ZanzaBuff.CerebralCortexCompound,
+	firePowerBuff: FirePowerBuff.ElixirOfGreaterFirepower,
+	frostPowerBuff: FrostPowerBuff.ElixirOfGreaterFrostPower,
+	elixirOfGreaterArcanePower: true,
+	magebloodPotion: true,
+	zanzaBuff: ZanzaBuff.SpiritOfZanza,
+	blastedLandsBuff: BlastedLandsBuff.CerebralCortexCompound,
+	miscConsumes: MiscConsumes.create({ jujuFlurry: true }),
+	sapperExplosive: SapperExplosive.SapperGoblinSapper,
 });
 
 export const DefaultRaidBuffs = RaidBuffs.create({
+	emeraldBlessing: true,
 	arcaneBrilliance: true,
 	divineSpirit: true,
 	giftOfTheWild: TristateEffect.TristateEffectImproved,
 	powerWordFortitude: TristateEffect.TristateEffectImproved,
 	manaSpringTotem: TristateEffect.TristateEffectMissing,
-	moonkinAura: true,
 });
 
 export const DefaultPartyBuffs = PartyBuffs.create({
-	atieshMage: 1,
-	atieshDruid: 1,
-	atieshWarlock: 1,
+	atieshMage: true,
+	atieshDruid: true,
+	atieshWarlock: true,
+	moonkinAura: true,
 });
 
 export const DefaultIndividualBuffs = IndividualBuffs.create({
@@ -112,6 +124,7 @@ export const DefaultDebuffs = Debuffs.create({
 	judgementOfWisdom: true,
 	wintersChill: false,
 	curseOfShadow: true,
+	curseOfElements: true,
 });
 
 export const OtherDefaults = {

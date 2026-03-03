@@ -54,7 +54,6 @@ var DefaultConsumes = core.ConsumesCombo{
 		FrostPowerBuff:  proto.FrostPowerBuff_ElixirOfFrostPower,
 		Food:            proto.Food_FoodRunnTumTuberSurprise,
 		MainHandImbue:   proto.WeaponImbue_BrilliantWizardOil,
-		ManaRegenElixir: proto.ManaRegenElixir_MagebloodPotion,
 		SapperExplosive: proto.SapperExplosive_SapperGoblinSapper,
 		SpellPowerBuff:  proto.SpellPowerBuff_GreaterArcaneElixir,
 		ZanzaBuff:       proto.ZanzaBuff_CerebralCortexCompound,

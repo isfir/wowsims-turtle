@@ -183,6 +183,9 @@ var ExtraItemIcons = []int32{
 	13851,
 	21072,
 	12217,
+	60976,
+	60977,
+	60978,
 
 	// Flask IDs
 	13510,
@@ -234,10 +237,16 @@ var ExtraItemIcons = []int32{
 	5206, // Bogling Root
 
 	// SP
+	9155,
 	13454,
 	9264,
 	21546,
 	17708,
+	61224,
+	61423,
+	6373,
+	55046,
+	55048,
 
 	// Crystal
 	11564, // Armor
@@ -249,12 +258,16 @@ var ExtraItemIcons = []int32{
 	21114,
 	21151,
 	5342,
+	61174,
+	61175,
 
 	// Potions / In Battle Consumes
 	13444,
 	13443,
 	6149,
 	3827,
+	61181,
+	61675,
 
 	// Thistle Tea
 	7676,

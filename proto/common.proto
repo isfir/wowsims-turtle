@@ -322,7 +322,7 @@ enum Explosive {
 	ExplosiveGoblinLandMine = 4;
 }
 
-// NextIndex: 28
+// NextIndex: 24
 enum Potions {
 	UnknownPotion = 0;
 
@@ -357,6 +357,8 @@ enum Potions {
 	GreaterNatureProtectionPotion = 21;
 	GreaterShadowProtectionPotion = 22;
 
+	QuicknessPotion = 23;
+
 	LesserManaPotion = 1 [deprecated = true];
 }
 
@@ -386,6 +388,8 @@ enum Alcohol {
 	AlcoholRumseyRumDark = 3;
 	AlcoholRumseyRumLight = 4;
 	AlcoholKreegsStoutBeatdown = 5;
+	AlcoholMedivhMerlot = 6;
+	AlcoholMedivhMerlotBlue = 7;
 }
 
 enum AgilityElixir {
@@ -410,11 +414,6 @@ enum HealthElixir {
 	HealthElixirUnknown = 0;
 	ElixirOfFortitude = 1;
 	ElixirOfMinorFortitude = 2;
-}
-
-enum ManaRegenElixir {
-	ManaRegenElixirUnknown = 0;
-	MagebloodPotion = 1;
 }
 
 enum StrengthBuff {
@@ -452,6 +451,7 @@ enum FirePowerBuff {
 enum FrostPowerBuff {
 	FrostPowerBuffUnknown = 0;
 	ElixirOfFrostPower = 1;
+	ElixirOfGreaterFrostPower = 2;
 }
 
 enum ZanzaBuff {
@@ -459,12 +459,15 @@ enum ZanzaBuff {
 	SpiritOfZanza = 1;
 	SheenOfZanza = 2;
 	SwiftnessOfZanza = 3;
-	ROIDS = 4;
-	GroundScorpokAssay = 5;
-	CerebralCortexCompound = 6;
-	GizzardGum = 7;
-	LungJuiceCocktail = 8;
-	DarnassusGiftCollection = 9;
+}
+
+enum BlastedLandsBuff {
+	BlastedLandsBuffUnknown = 0;
+	ROIDS = 1;
+	GroundScorpokAssay = 2;
+	CerebralCortexCompound = 3;
+	GizzardGum = 4;
+	LungJuiceCocktail = 5;
 }
 
 enum HitConsumable {
@@ -531,7 +534,7 @@ enum WeaponImbue {
 	WoundPoison = 7;
 }
 
-// NextIndex: 13
+// NextIndex: 16
 enum Food {
 	FoodUnknown = 0;
 	FoodGrilledSquid = 1;
@@ -545,6 +548,10 @@ enum Food {
 	FoodTenderWolfSteak = 9;
 	FoodSmokedSagefish = 10;
 	FoodSagefishDelight = 11;
+	FoodDragonBreathChili = 12;
+	FoodDanonzosTelAbimDelight = 13;
+	FoodDanonzosTelAbimMedley = 14;
+	FoodDanonzosTelAbimSurprise = 15;
 }
 
 enum SaygesFortune {
@@ -557,13 +564,11 @@ enum SaygesFortune {
 }
 
 // Buffs that affect the entire raid.
-// NextIndex: 40
+// NextIndex: 36
 message RaidBuffs {
-	reserved 36, 37, 38, 39;
-	reserved "atiesh_druid", "atiesh_mage", "atiesh_priest", "atiesh_warlock";
-
 	// +Stats
 	TristateEffect gift_of_the_wild = 1;
+	bool emerald_blessing = 13;
 
 	// +Stam
 	TristateEffect power_word_fortitude = 2;
@@ -590,7 +595,6 @@ message RaidBuffs {
 
 	// Crit
 	bool leader_of_the_pack = 12;
-	bool moonkin_aura = 13;
 
 	// mp5
 	TristateEffect mana_spring_totem = 14;
@@ -626,13 +630,14 @@ message RaidBuffs {
 // Buffs that affect a single party.
 message PartyBuffs {
 	// Item Buffs
-	int32 atiesh_mage = 1;
-	int32 atiesh_warlock = 2;
-	int32 atiesh_druid = 4;
-	int32 atiesh_priest = 5;
+	bool atiesh_mage = 1;
+	bool atiesh_warlock = 2;
+	bool atiesh_druid = 4;
+	bool atiesh_priest = 5;
 
 	// Group buffs
 	int32 mana_tide_totems = 3;
+	bool moonkin_aura = 6;
 }
 
 // These are usually individual actions taken by other Characters.
@@ -667,7 +672,7 @@ message Consumes {
 	Flask flask = 1;
 	Food food = 2;
 	AgilityElixir agility_elixir = 3;
-	ManaRegenElixir mana_regen_elixir = 4;
+	bool mageblood_potion = 4;
 	StrengthBuff strength_buff = 5;
 	AttackPowerBuff attack_power_buff = 6;
 	SpellPowerBuff spell_power_buff = 7;
@@ -682,7 +687,7 @@ message Consumes {
 	bool bogling_root = 16 [deprecated=true];
 	int32 pet_agility_consumable = 17;
 	int32 pet_strength_consumable = 18;
-	bool dragon_breath_chili = 19;
+	bool nordanaar_herbal_tea = 19;
 	MiscConsumes misc_consumes = 20;
 	ZanzaBuff zanza_buff = 21;
 	ArmorElixir armor_elixir = 22;
@@ -692,6 +697,10 @@ message Consumes {
 	PetMiscConsumes pet_misc_consumes = 27;
 	SapperExplosive sapper_explosive = 28;
 	HitConsumable hit_consumable = 29;
+	bool elixir_of_greater_arcane_power = 30;
+	bool dreamshardElixir = 31;
+	bool dreamtonic = 32;
+	BlastedLandsBuff blasted_lands_buff = 33;
 }
 
 // NextIndex: 26

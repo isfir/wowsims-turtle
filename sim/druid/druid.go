@@ -111,13 +111,15 @@ func (druid *Druid) AddRaidBuffs(raidBuffs *proto.RaidBuffs) {
 		druid.AddStats(core.BuffSpellValues[core.MarkOfTheWild].Multiply(0.07 * float64(druid.Talents.ImprovedMarkOfTheWild)))
 	}
 
-	// TODO: These should really be aura attached to the actual forms
-	if druid.InForm(Moonkin) {
-		raidBuffs.MoonkinAura = true
-	}
-
 	if druid.InForm(Cat|Bear) && druid.Talents.LeaderOfThePack {
 		raidBuffs.LeaderOfThePack = true
+	}
+}
+
+func (druid *Druid) AddPartyBuffs(partyBuffs *proto.PartyBuffs) {
+	// TODO: These should really be aura attached to the actual forms
+	if druid.InForm(Moonkin) {
+		partyBuffs.MoonkinAura = true
 	}
 }
 

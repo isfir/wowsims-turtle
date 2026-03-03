@@ -5,6 +5,7 @@ import {
 	Alcohol,
 	ArmorElixir,
 	AttackPowerBuff,
+	BlastedLandsBuff,
 	Class,
 	Conjured,
 	Consumes,
@@ -17,7 +18,6 @@ import {
 	HealthElixir,
 	HitConsumable,
 	ItemSlot,
-	ManaRegenElixir,
 	Potions,
 	Profession,
 	SapperExplosive,
@@ -237,7 +237,7 @@ export const FlaskOfChromaticResistance: ConsumableInputConfig<Flask> = {
 export const FLASKS_CONFIG: ConsumableStatOption<Flask>[] = [
 	{ config: FlaskOfTheTitans, stats: [] },
 	{ config: FlaskOfDistilledWisdom, stats: [Stat.StatIntellect] },
-	{ config: FlaskOfSupremePower, stats: [Stat.StatMP5, Stat.StatSpellPower, Stat.StatSpellDamage] },
+	{ config: FlaskOfSupremePower, stats: [Stat.StatSpellDamage] },
 	{ config: FlaskOfChromaticResistance, stats: [] },
 ];
 
@@ -293,6 +293,22 @@ export const SmokedSagefish: ConsumableInputConfig<Food> = {
 	actionId: () => ActionId.fromItemId(21072),
 	value: Food.FoodSmokedSagefish,
 };
+export const DragonBreathChili: ConsumableInputConfig<Food> = {
+	actionId: () => ActionId.fromItemId(12217),
+	value: Food.FoodDragonBreathChili,
+};
+export const DanonzozTelAbimDelight: ConsumableInputConfig<Food> = {
+	actionId: () => ActionId.fromItemId(60977),
+	value: Food.FoodDanonzosTelAbimDelight,
+};
+export const DanonzozTelAbimMedley: ConsumableInputConfig<Food> = {
+	actionId: () => ActionId.fromItemId(60978),
+	value: Food.FoodDanonzosTelAbimMedley,
+};
+export const DanonzozTelAbimSurprise: ConsumableInputConfig<Food> = {
+	actionId: () => ActionId.fromItemId(60976),
+	value: Food.FoodDanonzosTelAbimSurprise,
+};
 
 // Ordered by level
 export const FOOD_CONFIG: ConsumableStatOption<Food>[] = [
@@ -307,14 +323,13 @@ export const FOOD_CONFIG: ConsumableStatOption<Food>[] = [
 	{ config: SagefishDelight, stats: [Stat.StatMP5] },
 	{ config: HotWolfRibs, stats: [Stat.StatSpirit] },
 	{ config: SmokedSagefish, stats: [Stat.StatMP5] },
+	{ config: DragonBreathChili, stats: [] },
+	{ config: DanonzozTelAbimDelight, stats: [Stat.StatSpellDamage] },
+	{ config: DanonzozTelAbimMedley, stats: [Stat.StatSpellHaste] },
+	{ config: DanonzozTelAbimSurprise, stats: [Stat.StatRangedAttackPower] },
 ];
 
 export const makeFoodInput = makeConsumeInputFactory({ consumesFieldName: 'food' });
-
-export const DragonBreathChili = makeBooleanConsumeInput({
-	actionId: () => ActionId.fromItemId(12217),
-	fieldName: 'dragonBreathChili',
-});
 
 export const RumseyRumBlackLabel: ConsumableInputConfig<Alcohol> = {
 	actionId: () => ActionId.fromItemId(21151),
@@ -336,6 +351,14 @@ export const KreegsStoutBeatdown: ConsumableInputConfig<Alcohol> = {
 	actionId: () => ActionId.fromItemId(18284),
 	value: Alcohol.AlcoholKreegsStoutBeatdown,
 };
+export const MedivhMerlot: ConsumableInputConfig<Alcohol> = {
+	actionId: () => ActionId.fromItemId(61174),
+	value: Alcohol.AlcoholMedivhMerlot,
+};
+export const MedivhMerlotBlue: ConsumableInputConfig<Alcohol> = {
+	actionId: () => ActionId.fromItemId(61175),
+	value: Alcohol.AlcoholMedivhMerlotBlue,
+};
 
 export const ALCOHOL_CONFIG: ConsumableStatOption<Alcohol>[] = [
 	{ config: RumseyRumBlackLabel, stats: [Stat.StatStamina] },
@@ -343,6 +366,8 @@ export const ALCOHOL_CONFIG: ConsumableStatOption<Alcohol>[] = [
 	{ config: RumseyRumDark, stats: [Stat.StatStamina] },
 	{ config: RumseyRumLight, stats: [Stat.StatStamina] },
 	{ config: KreegsStoutBeatdown, stats: [Stat.StatSpirit] },
+	{ config: MedivhMerlot, stats: [Stat.StatStamina] },
+	{ config: MedivhMerlotBlue, stats: [Stat.StatIntellect] },
 ];
 
 export const makeAlcoholInput = makeConsumeInputFactory({ consumesFieldName: 'alcohol' });
@@ -482,32 +507,6 @@ export const makeStrengthConsumeInput = makeConsumeInputFactory({ consumesFieldN
 //                                 Misc Throughput Consumes
 ///////////////////////////////////////////////////////////////////////////
 
-// Blasted Lands Consumes
-export const ROIDS: ConsumableInputConfig<ZanzaBuff> = {
-	actionId: () => ActionId.fromItemId(8410),
-	value: ZanzaBuff.ROIDS,
-};
-export const GroundScorpokAssay: ConsumableInputConfig<ZanzaBuff> = {
-	actionId: () => ActionId.fromItemId(8412),
-	value: ZanzaBuff.GroundScorpokAssay,
-};
-export const LungJuiceCocktail: ConsumableInputConfig<ZanzaBuff> = {
-	actionId: () => ActionId.fromItemId(8411),
-	value: ZanzaBuff.LungJuiceCocktail,
-};
-export const CerebralCortexCompound: ConsumableInputConfig<ZanzaBuff> = {
-	actionId: () => ActionId.fromItemId(8423),
-	value: ZanzaBuff.CerebralCortexCompound,
-};
-export const GizzardGum: ConsumableInputConfig<ZanzaBuff> = {
-	actionId: () => ActionId.fromItemId(8424),
-	value: ZanzaBuff.GizzardGum,
-};
-export const DarnassusGiftCollection: ConsumableInputConfig<ZanzaBuff> = {
-	actionId: () => ActionId.fromItemId(22133),
-	value: ZanzaBuff.DarnassusGiftCollection,
-};
-
 // Zanza Potions
 export const SpiritOfZanza: ConsumableInputConfig<ZanzaBuff> = {
 	actionId: () => ActionId.fromItemId(20079),
@@ -516,14 +515,39 @@ export const SpiritOfZanza: ConsumableInputConfig<ZanzaBuff> = {
 
 export const ZANZA_BUFF_CONSUMES_CONFIG: ConsumableStatOption<ZanzaBuff>[] = [
 	{ config: SpiritOfZanza, stats: [Stat.StatStamina, Stat.StatSpirit] },
+];
+export const makeZanzaBuffConsumesInput = makeConsumeInputFactory({ consumesFieldName: 'zanzaBuff' });
+
+// Blasted Lands Consumes
+export const ROIDS: ConsumableInputConfig<BlastedLandsBuff> = {
+	actionId: () => ActionId.fromItemId(8410),
+	value: BlastedLandsBuff.ROIDS,
+};
+export const GroundScorpokAssay: ConsumableInputConfig<BlastedLandsBuff> = {
+	actionId: () => ActionId.fromItemId(8412),
+	value: BlastedLandsBuff.GroundScorpokAssay,
+};
+export const LungJuiceCocktail: ConsumableInputConfig<BlastedLandsBuff> = {
+	actionId: () => ActionId.fromItemId(8411),
+	value: BlastedLandsBuff.LungJuiceCocktail,
+};
+export const CerebralCortexCompound: ConsumableInputConfig<BlastedLandsBuff> = {
+	actionId: () => ActionId.fromItemId(8423),
+	value: BlastedLandsBuff.CerebralCortexCompound,
+};
+export const GizzardGum: ConsumableInputConfig<BlastedLandsBuff> = {
+	actionId: () => ActionId.fromItemId(8424),
+	value: BlastedLandsBuff.GizzardGum,
+};
+
+export const BLASTED_LANDS_BUFF_CONSUMES_CONFIG: ConsumableStatOption<BlastedLandsBuff>[] = [
 	{ config: ROIDS, stats: [Stat.StatStrength] },
 	{ config: GroundScorpokAssay, stats: [Stat.StatAgility] },
 	{ config: LungJuiceCocktail, stats: [Stat.StatStamina] },
 	{ config: CerebralCortexCompound, stats: [Stat.StatIntellect] },
 	{ config: GizzardGum, stats: [Stat.StatSpirit] },
-	{ config: DarnassusGiftCollection, stats: [Stat.StatAgility] },
 ];
-export const makeZanzaBuffConsumesInput = makeConsumeInputFactory({ consumesFieldName: 'zanzaBuff' });
+export const makeBlastedLandsBuffConsumesInput = makeConsumeInputFactory({ consumesFieldName: 'blastedLandsBuff' });
 
 // Hit Consumables
 export const FireToastedBun: ConsumableInputConfig<HitConsumable> = {
@@ -551,7 +575,7 @@ export const RaptorPunch = makeBooleanMiscConsumeInput({
 });
 
 export const MISC_OFFENSIVE_CONSUMES_CONFIG: PickerStatOptions[] = [
-	{ config: JujuFlurry, picker: IconPicker, stats: [Stat.StatAttackPower] },
+	{ config: JujuFlurry, picker: IconPicker, stats: [Stat.StatMeleeHaste, Stat.StatSpellHaste] },
 	{ config: RaptorPunch, picker: IconPicker, stats: [Stat.StatIntellect] },
 	{ config: BoglingRoot, picker: IconPicker, stats: [Stat.StatAttackPower] },
 ];
@@ -685,6 +709,11 @@ export const RagePotion: ConsumableInputConfig<Potions> = {
 	showWhen: player => player.getClass() == Class.ClassWarrior,
 };
 
+export const QuicknessPotion: ConsumableInputConfig<Potions> = {
+	actionId: () => ActionId.fromItemId(61181),
+	value: Potions.QuicknessPotion,
+};
+
 export const MagicResistancePotion: ConsumableInputConfig<Potions> = {
 	actionId: () => ActionId.fromItemId(9036),
 	value: Potions.MagicResistancePotion,
@@ -738,6 +767,8 @@ export const POTIONS_CONFIG: ConsumableStatOption<Potions>[] = [
 	{ config: GreatRagePotion, stats: [] },
 	{ config: RagePotion, stats: [] },
 
+	{ config: QuicknessPotion, stats: [Stat.StatSpellHaste] },
+
 	// { config: MagicResistancePotion, stats: [] },
 	{ config: GreaterStoneshieldPotion, stats: [Stat.StatArmor] },
 	{ config: LesserStoneshieldPotion, stats: [Stat.StatArmor] },
@@ -745,11 +776,16 @@ export const POTIONS_CONFIG: ConsumableStatOption<Potions>[] = [
 
 export const makePotionsInput = makeConsumeInputFactory({ consumesFieldName: 'defaultPotion' });
 
+export const NordanaarHerbalTea = makeBooleanConsumeInput({
+	actionId: () => ActionId.fromItemId(61675),
+	fieldName: 'nordanaarHerbalTea',
+});
+
 ///////////////////////////////////////////////////////////////////////////
 //                                 SPELL DAMAGE CONSUMES
 ///////////////////////////////////////////////////////////////////////////
 
-// Arcane
+// SP
 export const GreaterArcaneElixir: ConsumableInputConfig<SpellPowerBuff> = {
 	actionId: () => ActionId.fromItemId(13454),
 	value: SpellPowerBuff.GreaterArcaneElixir,
@@ -760,11 +796,25 @@ export const ArcaneElixir: ConsumableInputConfig<SpellPowerBuff> = {
 };
 
 export const SPELL_POWER_CONFIG: ConsumableStatOption<SpellPowerBuff>[] = [
-	{ config: GreaterArcaneElixir, stats: [Stat.StatSpellPower, Stat.StatSpellDamage] },
-	{ config: ArcaneElixir, stats: [Stat.StatSpellPower, Stat.StatSpellDamage] },
+	{ config: GreaterArcaneElixir, stats: [Stat.StatSpellDamage] },
+	{ config: ArcaneElixir, stats: [Stat.StatSpellDamage] },
 ];
 
 export const makeSpellPowerConsumeInput = makeConsumeInputFactory({ consumesFieldName: 'spellPowerBuff' });
+
+// Dreamshard
+export const DreamshardElixir = makeBooleanConsumeInput({
+	actionId: () => ActionId.fromItemId(61224),
+	fieldName: 'dreamshardElixir',
+	showWhen: (player: Player<any>) => player.getEpWeights().getStat(Stat.StatSpellDamage) > 0,
+});
+
+// Dreamtonic
+export const Dreamtonic = makeBooleanConsumeInput({
+	actionId: () => ActionId.fromItemId(61423),
+	fieldName: 'dreamtonic',
+	showWhen: (player: Player<any>) => player.getEpWeights().getStat(Stat.StatSpellDamage) > 0,
+});
 
 // Fire
 // Original lvl 40 not obtainable in Phase 3
@@ -785,12 +835,19 @@ export const FIRE_POWER_CONFIG: ConsumableStatOption<FirePowerBuff>[] = [
 export const makeFirePowerConsumeInput = makeConsumeInputFactory({ consumesFieldName: 'firePowerBuff' });
 
 // Frost
+export const ElixirOfGreaterFrostPower: ConsumableInputConfig<FrostPowerBuff> = {
+	actionId: () => ActionId.fromItemId(55046),
+	value: FrostPowerBuff.ElixirOfGreaterFrostPower,
+};
 export const ElixirOfFrostPower: ConsumableInputConfig<FrostPowerBuff> = {
 	actionId: () => ActionId.fromItemId(17708),
 	value: FrostPowerBuff.ElixirOfFrostPower,
 };
 
-export const FROST_POWER_CONFIG: ConsumableStatOption<FrostPowerBuff>[] = [{ config: ElixirOfFrostPower, stats: [Stat.StatFrostPower] }];
+export const FROST_POWER_CONFIG: ConsumableStatOption<FrostPowerBuff>[] = [
+	{ config: ElixirOfGreaterFrostPower, stats: [Stat.StatFrostPower] },
+	{ config: ElixirOfFrostPower, stats: [Stat.StatFrostPower] },
+];
 
 export const makeFrostPowerConsumeInput = makeConsumeInputFactory({ consumesFieldName: 'frostPowerBuff' });
 
@@ -804,15 +861,20 @@ export const SHADOW_POWER_CONFIG: ConsumableStatOption<ShadowPowerBuff>[] = [{ c
 
 export const makeShadowPowerConsumeInput = makeConsumeInputFactory({ consumesFieldName: 'shadowPowerBuff' });
 
+// Arcane
+export const ElixirOfGreaterArcanePower = makeBooleanConsumeInput({
+	actionId: () => ActionId.fromItemId(55048),
+	fieldName: 'elixirOfGreaterArcanePower',
+	showWhen: (player: Player<any>) => player.getEpWeights().getStat(Stat.StatArcanePower) > 0,
+});
+
 // MP5
-export const MagebloodPotion: ConsumableInputConfig<ManaRegenElixir> = {
+export const MagebloodPotion = makeBooleanConsumeInput({
 	actionId: () => ActionId.fromItemId(20007),
-	value: ManaRegenElixir.MagebloodPotion,
-};
+	fieldName: 'magebloodPotion',
+	showWhen: (player: Player<any>) => player.getEpWeights().getStat(Stat.StatIntellect) > 0, // TODO: Copy/use relevantStatOptions instead
+});
 
-export const MP5_CONFIG: ConsumableStatOption<ManaRegenElixir>[] = [{ config: MagebloodPotion, stats: [Stat.StatMP5] }];
-
-export const makeMp5ConsumeInput = makeConsumeInputFactory({ consumesFieldName: 'manaRegenElixir' });
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Weapon Imbues

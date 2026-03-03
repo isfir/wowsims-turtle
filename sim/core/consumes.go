@@ -24,6 +24,7 @@ func applyConsumeEffects(agent Agent) {
 	applyPhysicalBuffConsumes(character, consumes)
 	applySpellBuffConsumes(character, consumes)
 	applyZanzaBuffConsumes(character, consumes)
+	applyBlastedLandsBuffConsumes(character, consumes)
 	applyHitConsumableConsumes(character, consumes)
 	applyMiscConsumes(character, consumes.MiscConsumes)
 
@@ -54,7 +55,7 @@ func applyFlaskConsumes(character *Character, consumes *proto.Consumes) {
 		})
 	case proto.Flask_FlaskOfSupremePower:
 		character.AddStats(stats.Stats{
-			stats.SpellPower: 150,
+			stats.SpellDamage: 150,
 		})
 	case proto.Flask_FlaskOfTheTitans:
 		character.AddStats(stats.Stats{
@@ -356,6 +357,21 @@ func applyFoodConsumes(character *Character, consumes *proto.Consumes) {
 			character.AddStats(stats.Stats{
 				stats.Strength: 10,
 			})
+		case proto.Food_FoodDragonBreathChili:
+			MakePermanent(DragonBreathChiliAura(character))
+		case proto.Food_FoodDanonzosTelAbimDelight:
+			character.AddStats(stats.Stats{
+				stats.SpellDamage: 22,
+			})
+		case proto.Food_FoodDanonzosTelAbimMedley:
+			character.AddStats(stats.Stats{
+				stats.SpellHaste: 2,
+			})
+			character.PseudoStats.CastSpeedMultiplier *= 1.02
+		case proto.Food_FoodDanonzosTelAbimSurprise:
+			character.AddStats(stats.Stats{
+				stats.RangedAttackPower: 45,
+			})
 		}
 	}
 
@@ -382,11 +398,15 @@ func applyFoodConsumes(character *Character, consumes *proto.Consumes) {
 				stats.Spirit:    25,
 				stats.Intellect: -5,
 			})
+		case proto.Alcohol_AlcoholMedivhMerlot:
+			character.AddStats(stats.Stats{
+				stats.Stamina: 25,
+			})
+		case proto.Alcohol_AlcoholMedivhMerlotBlue:
+			character.AddStats(stats.Stats{
+				stats.Intellect: 15,
+			})
 		}
-	}
-
-	if consumes.DragonBreathChili {
-		MakePermanent(DragonBreathChiliAura(character))
 	}
 }
 
@@ -556,6 +576,19 @@ func applySpellBuffConsumes(character *Character, consumes *proto.Consumes) {
 		}
 	}
 
+	if consumes.DreamshardElixir {
+		character.AddStats(stats.Stats{
+			stats.SpellCrit:  2,
+			stats.SpellPower: 15,
+		})
+	}
+
+	if consumes.Dreamtonic {
+		character.AddStats(stats.Stats{
+			stats.SpellDamage: 35,
+		})
+	}
+
 	if consumes.FirePowerBuff != proto.FirePowerBuff_FirePowerBuffUnknown {
 		switch consumes.FirePowerBuff {
 		case proto.FirePowerBuff_ElixirOfFirepower:
@@ -584,21 +617,28 @@ func applySpellBuffConsumes(character *Character, consumes *proto.Consumes) {
 			character.AddStats(stats.Stats{
 				stats.FrostPower: 15,
 			})
+		case proto.FrostPowerBuff_ElixirOfGreaterFrostPower:
+			character.AddStats(stats.Stats{
+				stats.FrostPower: 40,
+			})
 		}
 	}
 
-	if consumes.ManaRegenElixir != proto.ManaRegenElixir_ManaRegenElixirUnknown {
-		switch consumes.ManaRegenElixir {
-		case proto.ManaRegenElixir_MagebloodPotion:
-			character.AddStats(stats.Stats{
-				stats.MP5: 12,
-			})
-		}
+	if consumes.ElixirOfGreaterArcanePower {
+		character.AddStats(stats.Stats{
+			stats.ArcanePower: 40,
+		})
+	}
+
+	if consumes.MagebloodPotion {
+		character.AddStats(stats.Stats{
+			stats.MP5: 12,
+		})
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
-//                             Zanza-esque Consumes
+//                             Zanza Consumes
 ///////////////////////////////////////////////////////////////////////////
 
 func applyZanzaBuffConsumes(character *Character, consumes *proto.Consumes) {
@@ -612,29 +652,38 @@ func applyZanzaBuffConsumes(character *Character, consumes *proto.Consumes) {
 			stats.Stamina: 50,
 			stats.Spirit:  50,
 		})
-	case proto.ZanzaBuff_ROIDS:
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+//                             Blasted Lands Consumes
+///////////////////////////////////////////////////////////////////////////
+
+func applyBlastedLandsBuffConsumes(character *Character, consumes *proto.Consumes) {
+	if consumes.BlastedLandsBuff == proto.BlastedLandsBuff_BlastedLandsBuffUnknown {
+		return
+	}
+
+	switch consumes.BlastedLandsBuff {
+	case proto.BlastedLandsBuff_ROIDS:
 		character.AddStats(stats.Stats{
 			stats.Strength: 25,
 		})
-	case proto.ZanzaBuff_GroundScorpokAssay:
+	case proto.BlastedLandsBuff_GroundScorpokAssay:
 		character.AddStats(stats.Stats{
 			stats.Agility: 25,
 		})
-	case proto.ZanzaBuff_CerebralCortexCompound:
+	case proto.BlastedLandsBuff_CerebralCortexCompound:
 		character.AddStats(stats.Stats{
 			stats.Intellect: 25,
 		})
-	case proto.ZanzaBuff_GizzardGum:
+	case proto.BlastedLandsBuff_GizzardGum:
 		character.AddStats(stats.Stats{
 			stats.Spirit: 25,
 		})
-	case proto.ZanzaBuff_LungJuiceCocktail:
+	case proto.BlastedLandsBuff_LungJuiceCocktail:
 		character.AddStats(stats.Stats{
 			stats.Stamina: 25,
-		})
-	case proto.ZanzaBuff_DarnassusGiftCollection:
-		character.AddStats(stats.Stats{
-			stats.Agility: 30,
 		})
 	}
 }
@@ -688,7 +737,7 @@ func applyMiscConsumes(character *Character, miscConsumes *proto.MiscConsumes) {
 		character.AddStat(stats.FrostResistance, 15)
 	}
 
-	if miscConsumes.JujuFlurry && character.AutoAttacks.enabled {
+	if miscConsumes.JujuFlurry {
 		actionID := ActionID{SpellID: 16322}
 		// In Vanilla Juju Flurry was bugged to act like Seal of the Crusader where it gave attack speed but also reduced damage done.
 		jujuFlurryAura := character.RegisterAura(Aura{
@@ -697,13 +746,13 @@ func applyMiscConsumes(character *Character, miscConsumes *proto.MiscConsumes) {
 			Duration: time.Second * 20,
 			OnGain: func(aura *Aura, sim *Simulation) {
 				aura.Unit.MultiplyMeleeSpeed(sim, 1.03)
-				aura.Unit.AutoAttacks.MHAuto().DamageMultiplier /= 1.03
-				aura.Unit.AutoAttacks.OHAuto().DamageMultiplier /= 1.03
+				aura.Unit.MultiplyRangedSpeed(sim, 1.03)
+				aura.Unit.MultiplyCastSpeed(1.03)
 			},
 			OnExpire: func(aura *Aura, sim *Simulation) {
 				aura.Unit.MultiplyMeleeSpeed(sim, 1/1.03)
-				aura.Unit.AutoAttacks.MHAuto().DamageMultiplier *= 1.03
-				aura.Unit.AutoAttacks.OHAuto().DamageMultiplier *= 1.03
+				aura.Unit.MultiplyRangedSpeed(sim, 1/1.03)
+				aura.Unit.MultiplyCastSpeed(1 / 1.03)
 			},
 		})
 		jujuFlurrySpell := character.RegisterSpell(SpellConfig{
@@ -1161,6 +1210,29 @@ func makeRageConsumableMCD(itemId int32, character *Character, cdTimer *Timer) M
 	}
 }
 
+func makeQuicknessPotionMCD(character *Character, cdTimer *Timer) MajorCooldown {
+	actionID := ActionID{ItemID: 61181}
+	cdDuration := time.Minute * 2
+
+	aura := character.NewTemporaryStatsAura("Potion Of Quickness", actionID, stats.Stats{stats.SpellHaste: 5}, time.Second*30)
+	return MajorCooldown{
+		Type: CooldownTypeSurvival,
+		Spell: character.GetOrRegisterSpell(SpellConfig{
+			ActionID: actionID,
+			Flags:    SpellFlagNoOnCastComplete,
+			Cast: CastConfig{
+				CD: Cooldown{
+					Timer:    cdTimer,
+					Duration: cdDuration,
+				},
+			},
+			ApplyEffects: func(sim *Simulation, _ *Unit, _ *Spell) {
+				aura.Activate(sim)
+			},
+		}),
+	}
+}
+
 func makePotionActivationInternal(potionType proto.Potions, character *Character, potionCD *Timer) MajorCooldown {
 	if potionType == proto.Potions_UnknownPotion {
 		return MajorCooldown{}
@@ -1195,6 +1267,9 @@ func makePotionActivationInternal(potionType proto.Potions, character *Character
 		return makeRageConsumableMCD(5633, character, potionCD)
 	case proto.Potions_MightyRagePotion:
 		return makeRageConsumableMCD(13442, character, potionCD)
+
+	case proto.Potions_QuicknessPotion:
+		return makeQuicknessPotionMCD(character, potionCD)
 
 	case proto.Potions_LesserStoneshieldPotion:
 		return makeArmorConsumableMCD(4623, character, potionCD)

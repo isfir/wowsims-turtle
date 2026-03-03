@@ -6,7 +6,6 @@ import {
 	Flask,
 	Food,
 	IndividualBuffs,
-	ManaRegenElixir,
 	PartyBuffs,
 	Potions,
 	Profession,
@@ -85,10 +84,8 @@ export const DefaultConsumes = Consumes.create({
 	flask: Flask.FlaskOfSupremePower,
 	food: Food.FoodRunnTumTuberSurprise,
 	mainHandImbue: WeaponImbue.BrilliantWizardOil,
-	manaRegenElixir: ManaRegenElixir.MagebloodPotion,
 
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
-	zanzaBuff: ZanzaBuff.CerebralCortexCompound,
 });
 
 export const DefaultRaidBuffs = RaidBuffs.create({
@@ -98,7 +95,6 @@ export const DefaultRaidBuffs = RaidBuffs.create({
 	fireResistanceTotem: true,
 	giftOfTheWild: TristateEffect.TristateEffectImproved,
 	manaSpringTotem: TristateEffect.TristateEffectRegular,
-	moonkinAura: true,
 });
 
 export const DefaultIndividualBuffs = IndividualBuffs.create({

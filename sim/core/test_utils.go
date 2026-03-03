@@ -65,7 +65,6 @@ var FullRaidBuffs = &proto.RaidBuffs{
 	GraceOfAirTotem:       proto.TristateEffect_TristateEffectImproved,
 	LeaderOfThePack:       true,
 	ManaSpringTotem:       proto.TristateEffect_TristateEffectImproved,
-	MoonkinAura:           true,
 	NatureResistanceTotem: true,
 	PowerWordFortitude:    proto.TristateEffect_TristateEffectImproved,
 	RetributionAura:       proto.TristateEffect_TristateEffectImproved,

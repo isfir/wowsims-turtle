@@ -108,7 +108,6 @@ export const DefaultConsumes = Consumes.create({
 	healthElixir: HealthElixir.ElixirOfFortitude,
 	armorElixir: ArmorElixir.ElixirOfSuperiorDefense,
 	defaultPotion: Potions.GreaterStoneshieldPotion,
-	dragonBreathChili: true,
 	food: Food.FoodTenderWolfSteak,
 	flask: Flask.FlaskOfTheTitans,
 	firePowerBuff: FirePowerBuff.ElixirOfGreaterFirepower,
@@ -118,7 +117,6 @@ export const DefaultConsumes = Consumes.create({
 
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
 	strengthBuff: StrengthBuff.JujuPower,
-	zanzaBuff: ZanzaBuff.ROIDS,
 	attackPowerBuff: AttackPowerBuff.JujuMight,
 	defaultConjured: Conjured.ConjuredDemonicRune,
 	alcohol: Alcohol.AlcoholRumseyRumBlackLabel,

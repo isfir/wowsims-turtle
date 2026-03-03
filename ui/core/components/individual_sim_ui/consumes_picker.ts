@@ -46,7 +46,11 @@ export class ConsumesPicker extends Component {
 		const potionsOptions = ConsumablesInputs.makePotionsInput(relevantStatOptions(ConsumablesInputs.POTIONS_CONFIG, this.simUI), 'Potions');
 		const conjuredOptions = ConsumablesInputs.makeConjuredInput(relevantStatOptions(ConsumablesInputs.CONJURED_CONFIG, this.simUI));
 
-		const pickers = [buildIconInput(potionsElem, this.simUI.player, potionsOptions), buildIconInput(potionsElem, this.simUI.player, conjuredOptions)];
+		const pickers = [
+			buildIconInput(potionsElem, this.simUI.player, potionsOptions),
+			buildIconInput(potionsElem, this.simUI.player, conjuredOptions),
+			buildIconInput(potionsElem, this.simUI.player, ConsumablesInputs.NordanaarHerbalTea),
+		];
 
 		TypedEvent.onAny([this.simUI.player.professionChangeEmitter]).on(() => this.updateRow(row, pickers));
 		this.updateRow(row, pickers);
@@ -113,7 +117,6 @@ export class ConsumesPicker extends Component {
 
 		const pickers = [
 			buildIconInput(foodsElem, this.simUI.player, foodOptions),
-			buildIconInput(foodsElem, this.simUI.player, ConsumablesInputs.DragonBreathChili),
 			buildIconInput(foodsElem, this.simUI.player, alcoholOptions),
 		];
 
@@ -211,14 +214,16 @@ export class ConsumesPicker extends Component {
 			relevantStatOptions(ConsumablesInputs.SHADOW_POWER_CONFIG, this.simUI),
 			'Shadow Damage',
 		);
-		const mp5BuffOptions = ConsumablesInputs.makeMp5ConsumeInput(relevantStatOptions(ConsumablesInputs.MP5_CONFIG, this.simUI), 'Mana Regen');
-
 		const pickers = [
+			buildIconInput(spellsCnsumesElem, this.simUI.player, ConsumablesInputs.DreamshardElixir),
+			buildIconInput(spellsCnsumesElem, this.simUI.player, ConsumablesInputs.Dreamtonic),
 			buildIconInput(spellsCnsumesElem, this.simUI.player, spBuffOptions),
 			buildIconInput(spellsCnsumesElem, this.simUI.player, fireBuffOptions),
 			buildIconInput(spellsCnsumesElem, this.simUI.player, frostBuffOptions),
 			buildIconInput(spellsCnsumesElem, this.simUI.player, shadowBuffOptions),
-			buildIconInput(spellsCnsumesElem, this.simUI.player, mp5BuffOptions),
+			buildIconInput(spellsCnsumesElem, this.simUI.player, shadowBuffOptions),
+			buildIconInput(spellsCnsumesElem, this.simUI.player, ConsumablesInputs.ElixirOfGreaterArcanePower),
+			buildIconInput(spellsCnsumesElem, this.simUI.player, ConsumablesInputs.MagebloodPotion),
 		];
 
 		this.updateRow(row, pickers);
@@ -240,11 +245,16 @@ export class ConsumesPicker extends Component {
 			relevantStatOptions(ConsumablesInputs.ZANZA_BUFF_CONSUMES_CONFIG, this.simUI),
 			'Zanza Buffs',
 		);
+		const blastedLandsBuffOptions = ConsumablesInputs.makeBlastedLandsBuffConsumesInput(
+			relevantStatOptions(ConsumablesInputs.BLASTED_LANDS_BUFF_CONSUMES_CONFIG, this.simUI),
+			'Blasted Lands Buffs',
+		);
 		const miscOffensiveConsumesOptions = relevantStatOptions(ConsumablesInputs.MISC_OFFENSIVE_CONSUMES_CONFIG, this.simUI);
 		const miscDefensiveConsumesOptions = relevantStatOptions(ConsumablesInputs.MISC_DEFENSIVE_CONSUMES_CONFIG, this.simUI);
 
 		const pickers = [
 			buildIconInput(miscConsumesElem, this.simUI.player, zanzaBuffOptions),
+			buildIconInput(miscConsumesElem, this.simUI.player, blastedLandsBuffOptions),
 			ConsumablesInputs.makeMiscOffensiveConsumesInput(miscConsumesElem, this.simUI.player, this.simUI, miscOffensiveConsumesOptions),
 			ConsumablesInputs.makeMiscDefensiveConsumesInput(miscConsumesElem, this.simUI.player, this.simUI, miscDefensiveConsumesOptions),
 		];

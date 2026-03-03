@@ -13,7 +13,6 @@ import {
 	Food,
 	HealthElixir,
 	IndividualBuffs,
-	ManaRegenElixir,
 	Potions,
 	Profession,
 	RaidBuffs,
@@ -99,16 +98,13 @@ export const DefaultConsumes = Consumes.create({
 	attackPowerBuff: AttackPowerBuff.JujuMight,
 	defaultConjured: Conjured.ConjuredDemonicRune,
 	defaultPotion: Potions.MajorManaPotion,
-	dragonBreathChili: true,
 	firePowerBuff: FirePowerBuff.ElixirOfFirepower,
 	flask: Flask.FlaskOfTheTitans,
 	food: Food.FoodBlessSunfruit,
 	healthElixir: HealthElixir.ElixirOfFortitude,
 	mainHandImbue: WeaponImbue.RockbiterWeapon,
-	manaRegenElixir: ManaRegenElixir.MagebloodPotion,
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
 	strengthBuff: StrengthBuff.JujuPower,
-	zanzaBuff: ZanzaBuff.ROIDS,
 });
 
 export const DefaultRaidBuffs = RaidBuffs.create({

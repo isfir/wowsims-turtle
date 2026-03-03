@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"math"
 	"time"
 
@@ -272,8 +271,15 @@ func applyBuffEffects(agent Agent, playerFaction proto.Faction, raidBuffs *proto
 		ThornsAura(character, GetTristateValueInt32(raidBuffs.Thorns, 0, 3))
 	}
 
-	if raidBuffs.MoonkinAura {
+	if partyBuffs.MoonkinAura {
 		character.AddStat(stats.SpellCrit, 3*SpellCritRatingPerCritChance)
+	}
+
+	if raidBuffs.EmeraldBlessing {
+		character.AddStats(stats.Stats{
+			stats.SpellHit: 1,
+		})
+		character.PseudoStats.SpiritRegenRateCasting += .05
 	}
 
 	if raidBuffs.LeaderOfThePack {
@@ -420,28 +426,17 @@ func applyBuffEffects(agent Agent, playerFaction proto.Faction, raidBuffs *proto
 	registerManaTideTotemCD(agent, partyBuffs.ManaTideTotems)
 	registerInnervateCD(agent, individualBuffs.Innervates)
 
-	if partyBuffs.AtieshMage > 0 {
-		for idx := int32(1); idx <= partyBuffs.AtieshMage; idx++ {
-			AtieshSpellCritEffect(&character.Unit, idx)
-		}
+	if partyBuffs.AtieshMage {
+		AtieshSpellCritEffect(&character.Unit)
 	}
-
-	if partyBuffs.AtieshWarlock > 0 {
-		for idx := int32(1); idx <= partyBuffs.AtieshWarlock; idx++ {
-			AtieshSpellPowerEffect(&character.Unit, idx)
-		}
+	if partyBuffs.AtieshWarlock {
+		AtieshSpellPowerEffect(&character.Unit)
 	}
-
-	if partyBuffs.AtieshPriest > 0 {
-		for idx := int32(1); idx <= partyBuffs.AtieshPriest; idx++ {
-			AtieshHealingEffect(&character.Unit, idx)
-		}
+	if partyBuffs.AtieshPriest {
+		AtieshHealingEffect(&character.Unit)
 	}
-
-	if partyBuffs.AtieshDruid > 0 {
-		for idx := int32(1); idx <= partyBuffs.AtieshDruid; idx++ {
-			AtieshMp5Effect(&character.Unit, idx)
-		}
+	if partyBuffs.AtieshDruid {
+		AtieshHasteEffect(&character.Unit)
 	}
 }
 
@@ -1821,27 +1816,28 @@ func ApplySaygesFortunes(character *Character, fortune proto.SaygesFortune) {
 }
 
 // Equip: Restore 11 mana per 5 seconds to all party members within 30 yards by 2%.
-func AtieshMp5Effect(unit *Unit, idx int32) *Aura {
-	label := fmt.Sprintf("Atiesh Greatstaff of the Guardian (MP5) %d", idx)
+func AtieshHasteEffect(unit *Unit) *Aura {
+	label := "Atiesh Greatstaff of the Guardian (Haste)"
 
 	if unit.HasAura(label) {
 		return unit.GetAura(label)
 	}
 
 	stats := stats.Stats{
-		stats.MP5: 11,
+		stats.MeleeHaste: 2,
+		stats.SpellHaste: 2,
 	}
 
 	return MakePermanent(unit.RegisterAura(Aura{
-		ActionID:   ActionID{SpellID: 28145}.WithTag(idx),
+		ActionID:   ActionID{SpellID: 28145},
 		Label:      label,
 		BuildPhase: CharacterBuildPhaseBuffs,
-	}).AttachStatsBuff(stats))
+	}).AttachStatsBuff(stats).AttachMultiplyCastSpeed(unit, 1.02).AttachMultiplyAttackSpeed(unit, 1.02))
 }
 
 // Equip: Increases healing done by up to 62 and damage done by up to 19 for all magical spells and effects of all party members within 30.
-func AtieshHealingEffect(unit *Unit, idx int32) *Aura {
-	label := fmt.Sprintf("Atiesh Greatstaff of the Guardian (Healing) %d", idx)
+func AtieshHealingEffect(unit *Unit) *Aura {
+	label := "Atiesh Greatstaff of the Guardian (Healing)"
 
 	if unit.HasAura(label) {
 		return unit.GetAura(label)
@@ -1852,15 +1848,15 @@ func AtieshHealingEffect(unit *Unit, idx int32) *Aura {
 	}
 
 	return MakePermanent(unit.RegisterAura(Aura{
-		ActionID:   ActionID{SpellID: 28144}.WithTag(idx),
+		ActionID:   ActionID{SpellID: 28144},
 		Label:      label,
 		BuildPhase: CharacterBuildPhaseBuffs,
 	}).AttachStatsBuff(stats))
 }
 
 // Equip: Increases the spell critical chance of all party members within 30 yards by 2%.
-func AtieshSpellCritEffect(unit *Unit, idx int32) *Aura {
-	label := fmt.Sprintf("Atiesh Greatstaff of the Guardian (Mage) %d", idx)
+func AtieshSpellCritEffect(unit *Unit) *Aura {
+	label := "Atiesh Greatstaff of the Guardian (Spell Crit)"
 
 	if unit.HasAura(label) {
 		return unit.GetAura(label)
@@ -1869,15 +1865,15 @@ func AtieshSpellCritEffect(unit *Unit, idx int32) *Aura {
 	stats := stats.Stats{stats.SpellCrit: 2 * SpellCritRatingPerCritChance}
 
 	return MakePermanent(unit.RegisterAura(Aura{
-		ActionID:   ActionID{SpellID: 28142}.WithTag(idx),
+		ActionID:   ActionID{SpellID: 28142},
 		Label:      label,
 		BuildPhase: CharacterBuildPhaseBuffs,
 	}).AttachBuildPhaseStatsBuff(stats))
 }
 
 // Equip: Increases damage and healing done by magical spells and effects of all party members within 30 yards by up to 33.
-func AtieshSpellPowerEffect(unit *Unit, idx int32) *Aura {
-	label := fmt.Sprintf("Atiesh Greatstaff of the Guardian (Warlock) %d", idx)
+func AtieshSpellPowerEffect(unit *Unit) *Aura {
+	label := "Atiesh Greatstaff of the Guardian (Spell Power)"
 
 	if unit.HasAura(label) {
 		return unit.GetAura(label)
@@ -1886,7 +1882,7 @@ func AtieshSpellPowerEffect(unit *Unit, idx int32) *Aura {
 	stats := stats.Stats{stats.SpellPower: 33}
 
 	return MakePermanent(unit.RegisterAura(Aura{
-		ActionID:   ActionID{SpellID: 28143}.WithTag(idx),
+		ActionID:   ActionID{SpellID: 28143},
 		Label:      label,
 		BuildPhase: CharacterBuildPhaseBuffs,
 	}).AttachBuildPhaseStatsBuff(stats))

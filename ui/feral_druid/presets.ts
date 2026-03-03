@@ -9,7 +9,6 @@ import {
 	Flask,
 	Food,
 	IndividualBuffs,
-	ManaRegenElixir,
 	Potions,
 	Profession,
 	RaidBuffs,
@@ -101,11 +100,9 @@ export const DefaultConsumes = Consumes.create({
 	attackPowerBuff: AttackPowerBuff.JujuMight,
 	defaultConjured: Conjured.ConjuredDemonicRune,
 	defaultPotion: Potions.MajorManaPotion,
-	dragonBreathChili: true,
 	flask: Flask.FlaskOfDistilledWisdom,
 	food: Food.FoodGrilledSquid,
 	strengthBuff: StrengthBuff.JujuPower,
-	zanzaBuff: ZanzaBuff.GroundScorpokAssay,
 	sapperExplosive: SapperExplosive.SapperGoblinSapper,
 });
 

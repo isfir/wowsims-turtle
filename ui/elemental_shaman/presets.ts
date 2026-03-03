@@ -10,7 +10,6 @@ import {
 	Food,
 	FrostPowerBuff,
 	IndividualBuffs,
-	ManaRegenElixir,
 	Potions,
 	Profession,
 	RaidBuffs,
@@ -107,10 +106,8 @@ export const DefaultConsumes = Consumes.create({
 	food: Food.FoodRunnTumTuberSurprise,
 	// Not available until Phase 4
 	// mainHandImbue: WeaponImbue.BrilliantWizardOil,
-	manaRegenElixir: ManaRegenElixir.MagebloodPotion,
 	spellPowerBuff: SpellPowerBuff.GreaterArcaneElixir,
 	strengthBuff: StrengthBuff.JujuPower,
-	zanzaBuff: ZanzaBuff.CerebralCortexCompound,
 });
 
 export const DefaultRaidBuffs = RaidBuffs.create({
@@ -118,7 +115,6 @@ export const DefaultRaidBuffs = RaidBuffs.create({
 	divineSpirit: true,
 	giftOfTheWild: TristateEffect.TristateEffectImproved,
 	manaSpringTotem: TristateEffect.TristateEffectRegular,
-	moonkinAura: true,
 	powerWordFortitude: TristateEffect.TristateEffectImproved,
 });
 

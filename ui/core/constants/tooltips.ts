@@ -1,5 +1,7 @@
-export const BUFFS_SECTION =
-	'Buffs provided by other party/raid members. Note only the highest available buff rank will be applied, if possible, based on level selected';
+export const PARTY_BUFFS_SECTION =
+	'Buffs provided by other party members. Note only the highest available buff rank will be applied, if possible, based on level selected';
+export const RAID_BUFFS_SECTION =
+	'Buffs provided by other raid members. Note only the highest available buff rank will be applied, if possible, based on level selected';
 export const WORLD_BUFFS_SECTION = 'World Buffs obtained from various sources across Azeroth.';
 export const DEBUFFS_SECTION = 'Debuffs applied by other raid members.';
 export const COOLDOWNS_SECTION =

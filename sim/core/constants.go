@@ -29,6 +29,10 @@ const AverageMagicPartialResistPerLevelMultiplier = 0.02
 
 // IDs for items used in core
 const (
+	ItemIDAtieshMage            = 22589
+	ItemIDAtieshWarlock         = 22630
+	ItemIDAtieshPriest          = 22631
+	ItemIDAtieshDruid           = 22632
 	ItemIDBraidedEterniumChain  = 24114
 	ItemIDChainOfTheTwilightOwl = 24121
 	ItemIDEyeOfTheNight         = 24116

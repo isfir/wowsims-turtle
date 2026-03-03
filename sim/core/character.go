@@ -430,23 +430,16 @@ func (character *Character) GetBaseStats() stats.Stats {
 func (character *Character) AddRaidBuffs(_ *proto.RaidBuffs) {
 }
 
-const (
-	AtieshGreatstaffMage    = 22589
-	AtieshGreatstaffWarlock = 22630
-	AtieshGreatstaffPriest  = 22631
-	AtieshGreatstaffDruid   = 22632
-)
-
 func (character *Character) AddPartyBuffs(partyBuffs *proto.PartyBuffs) {
 	switch character.MainHand().ID {
-	case AtieshGreatstaffMage:
-		partyBuffs.AtieshMage += 1
-	case AtieshGreatstaffWarlock:
-		partyBuffs.AtieshWarlock += 1
-	case AtieshGreatstaffPriest:
-		partyBuffs.AtieshPriest += 1
-	case AtieshGreatstaffDruid:
-		partyBuffs.AtieshDruid += 1
+	case ItemIDAtieshMage:
+		partyBuffs.AtieshMage = true
+	case ItemIDAtieshWarlock:
+		partyBuffs.AtieshWarlock = true
+	case ItemIDAtieshPriest:
+		partyBuffs.AtieshPriest = true
+	case ItemIDAtieshDruid:
+		partyBuffs.AtieshDruid = true
 	}
 }
 

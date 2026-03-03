@@ -48,7 +48,12 @@ export function relevantStatOptions<T, OptionsType extends ItemStatOptions<T> | 
 			!simUI.individualConfig.excludeBuffDebuffInputs.includes(option.config) &&
 			// Compare EP stats
 			(option.stats.length == 0 ||
-				option.stats.some(stat => simUI.individualConfig.displayStats.includes(stat) || GLOBAL_DISPLAY_STATS.includes(stat)) ||
+				option.stats.some(
+					stat =>
+						simUI.individualConfig.displayStats.includes(stat) ||
+						GLOBAL_DISPLAY_STATS.includes(stat) ||
+						simUI.individualConfig.epStats.includes(stat),
+				) ||
 				// Check included options
 				simUI.individualConfig.includeBuffDebuffInputs.includes(option.config)),
 	);

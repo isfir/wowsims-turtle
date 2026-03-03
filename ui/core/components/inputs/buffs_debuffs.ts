@@ -4,10 +4,10 @@ import { ActionId } from '../../proto_utils/action_id';
 import {
 	makeBooleanDebuffInput,
 	makeBooleanIndividualBuffInput,
+	makeBooleanPartyBuffInput,
 	makeBooleanRaidBuffInput,
 	makeEnumIndividualBuffInput,
 	makeMultistateIndividualBuffInput,
-	makeMultistatePartyBuffInput,
 	makeMultistateRaidBuffInput,
 	makeTristateDebuffInput,
 	makeTristateIndividualBuffInput,
@@ -22,6 +22,8 @@ import { ItemStatOption, PickerStatOptions } from './stat_options';
 ///////////////////////////////////////////////////////////////////////////
 //                                 RAID BUFFS
 ///////////////////////////////////////////////////////////////////////////
+
+export const EmeraldBlessing = withLabel(makeBooleanRaidBuffInput({ actionId: () => ActionId.fromSpellId(57108), fieldName: 'emeraldBlessing' }), 'Emerald Blessing');
 
 export const AllStatsBuff = withLabel(
 	makeTristateRaidBuffInput({
@@ -247,29 +249,40 @@ export const MeleeCritBuff = withLabel(
 	'Leader of the Pack',
 );
 
-export const SpellCritBuff = withLabel(makeBooleanRaidBuffInput({ actionId: () => ActionId.fromSpellId(24907), fieldName: 'moonkinAura' }), 'Moonkin Aura');
+export const SpellCritBuff = withLabel(makeBooleanPartyBuffInput({ actionId: () => ActionId.fromSpellId(24907), fieldName: 'moonkinAura' }), 'Moonkin Aura');
 
 // Misc Buffs
-export const AtieshMageBuff = makeMultistatePartyBuffInput({
-	actionId: () => ActionId.fromSpellId(28142),
-	fieldName: 'atieshMage',
-	numStates: 5,
-});
-export const AtieshWarlockBuff = makeMultistatePartyBuffInput({
-	actionId: () => ActionId.fromSpellId(28143),
-	fieldName: 'atieshWarlock',
-	numStates: 5,
-});
-export const AtieshPriestBuff = makeMultistatePartyBuffInput({
-	actionId: () => ActionId.fromSpellId(28144),
-	fieldName: 'atieshPriest',
-	numStates: 5,
-});
-export const AtieshDruidBuff = makeMultistatePartyBuffInput({
-	actionId: () => ActionId.fromSpellId(28145),
-	fieldName: 'atieshDruid',
-	numStates: 5,
-});
+export const AtieshMageBuff = withLabel(
+	makeBooleanPartyBuffInput({
+		actionId: () => ActionId.fromSpellId(28142),
+		fieldName: 'atieshMage',
+	}),
+	'Mage Atiesh'
+);
+
+export const AtieshWarlockBuff = withLabel(
+	makeBooleanPartyBuffInput({
+		actionId: () => ActionId.fromSpellId(28143),
+		fieldName: 'atieshWarlock',
+	}),
+	'Warlock Atiesh'
+);
+
+export const AtieshPriestBuff = withLabel(
+	makeBooleanPartyBuffInput({
+		actionId: () => ActionId.fromSpellId(28144),
+		fieldName: 'atieshPriest',
+	}),
+	'Priest Atiesh'
+);
+
+export const AtieshDruidBuff = withLabel(
+	makeBooleanPartyBuffInput({
+		actionId: () => ActionId.fromSpellId(28145),
+		fieldName: 'atieshDruid',
+	}),
+	'Druid Atiesh'
+);
 
 export const RetributionAura = makeTristateRaidBuffInput({
 	actionId: () => ActionId.fromSpellId(10301),
@@ -290,17 +303,14 @@ export const Thorns = makeTristateRaidBuffInput({
 	fieldName: 'thorns',
 });
 
-export const Innervate = makeMultistateIndividualBuffInput({
-	actionId: () => ActionId.fromSpellId(29166),
-	numStates: 11,
-	fieldName: 'innervates',
-});
-
-export const PowerInfusion = makeMultistateIndividualBuffInput({
-	actionId: () => ActionId.fromSpellId(10060),
-	numStates: 11,
-	fieldName: 'powerInfusions',
-});
+export const Innervate = withLabel(
+	makeMultistateIndividualBuffInput({
+		actionId: () => ActionId.fromSpellId(29166),
+		numStates: 11,
+		fieldName: 'innervates',
+	}),
+	'Innervates'
+);
 
 export const BattleSquawkBuff = makeMultistateRaidBuffInput({
 	actionId: () => ActionId.fromSpellId(23060),
@@ -507,17 +517,21 @@ export const SpellShadowWeavingDebuff = withLabel(
 	'Shadow Weaving',
 );
 
-export const CurseOfElements = makeBooleanDebuffInput({
-	actionId: () => ActionId.fromSpellId(11722),
-	fieldName: 'curseOfElements',
-});
+export const CurseOfElements = withLabel(
+	makeBooleanDebuffInput({
+		actionId: () => ActionId.fromSpellId(11722),
+		fieldName: 'curseOfElements',
+	}),
+	"Curse of the Elements",
+);
 
-export const CurseOfShadow = makeBooleanDebuffInput({
-	actionId: () => ActionId.fromSpellId(17937),
-	fieldName: 'curseOfShadow',
-});
-
-export const WarlockCursesConfig = InputHelpers.makeMultiIconInput({ values: [CurseOfElements, CurseOfShadow], label: 'Warlock Curses' });
+export const CurseOfShadow = withLabel(
+	makeBooleanDebuffInput({
+		actionId: () => ActionId.fromSpellId(17937),
+		fieldName: 'curseOfShadow',
+	}),
+	"Curse of Shadow",
+);
 
 export const HuntersMark = withLabel(
 	makeTristateDebuffInput({
@@ -564,8 +578,41 @@ export const CrystalYield = makeBooleanDebuffInput({
 //                                 CONFIGS
 ///////////////////////////////////////////////////////////////////////////
 
+export const PARTY_BUFFS_CONFIG = [
+	{
+		config: SpellCritBuff,
+		picker: IconPicker,
+		stats: [Stat.StatSpellCrit],
+	},
+	{
+		config: AtieshMageBuff,
+		picker: IconPicker,
+		stats: [Stat.StatSpellCrit],
+	},
+	{
+		config: AtieshWarlockBuff,
+		picker: IconPicker,
+		stats: [Stat.StatSpellPower],
+	},
+	{
+		config: AtieshPriestBuff,
+		picker: IconPicker,
+		stats: [Stat.StatHealingPower],
+	},
+	{
+		config: AtieshDruidBuff,
+		picker: IconPicker,
+		stats: [Stat.StatMeleeHaste, Stat.StatSpellHaste],
+	},
+] as PickerStatOptions[];
+
 export const RAID_BUFFS_CONFIG = [
 	// Core Stat Buffs
+	{
+		config: EmeraldBlessing,
+		picker: IconPicker,
+		stats: [],
+	},
 	{
 		config: AllStatsBuff,
 		picker: IconPicker,
@@ -654,11 +701,6 @@ export const RAID_BUFFS_CONFIG = [
 
 	// Spell Damage Buffs
 	{
-		config: SpellCritBuff,
-		picker: IconPicker,
-		stats: [Stat.StatSpellCrit],
-	},
-	{
 		config: BlessingOfWisdom,
 		picker: IconPicker,
 		stats: [Stat.StatMP5],
@@ -668,29 +710,8 @@ export const RAID_BUFFS_CONFIG = [
 		picker: IconPicker,
 		stats: [Stat.StatMP5],
 	},
-] as PickerStatOptions[];
 
-export const MISC_BUFFS_CONFIG = [
-	{
-		config: AtieshMageBuff,
-		picker: IconPicker,
-		stats: [Stat.StatSpellCrit],
-	},
-	{
-		config: AtieshWarlockBuff,
-		picker: IconPicker,
-		stats: [Stat.StatSpellPower, Stat.StatSpellDamage],
-	},
-	{
-		config: AtieshPriestBuff,
-		picker: IconPicker,
-		stats: [Stat.StatHealingPower],
-	},
-	{
-		config: AtieshDruidBuff,
-		picker: IconPicker,
-		stats: [Stat.StatMP5],
-	},
+	// Misc Buffs
 	{
 		config: Thorns,
 		picker: IconPicker,
@@ -710,11 +731,6 @@ export const MISC_BUFFS_CONFIG = [
 		config: Innervate,
 		picker: IconPicker,
 		stats: [Stat.StatMP5],
-	},
-	{
-		config: PowerInfusion,
-		picker: IconPicker,
-		stats: [Stat.StatMP5, Stat.StatSpellPower, Stat.StatSpellDamage],
 	},
 	{
 		config: BattleSquawkBuff,
@@ -839,8 +855,13 @@ export const DEBUFFS_CONFIG = [
 		stats: [Stat.StatShadowPower],
 	},
 	{
-		config: WarlockCursesConfig,
-		picker: MultiIconPicker,
+		config: CurseOfShadow,
+		picker: IconPicker,
+		stats: [Stat.StatSpellPower, Stat.StatSpellDamage],
+	},
+	{
+		config: CurseOfElements,
+		picker: IconPicker,
 		stats: [Stat.StatSpellPower, Stat.StatSpellDamage],
 	},
 

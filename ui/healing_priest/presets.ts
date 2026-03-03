@@ -47,7 +47,6 @@ export const DefaultRaidBuffs = RaidBuffs.create({
 	strengthOfEarthTotem: TristateEffect.TristateEffectRegular,
 	arcaneBrilliance: true,
 	divineSpirit: true,
-	moonkinAura: true,
 });
 
 export const DefaultIndividualBuffs = IndividualBuffs.create({

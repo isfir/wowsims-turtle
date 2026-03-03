@@ -77,7 +77,8 @@ export class SettingsTab extends SimTab {
 			this.buildStormstrikeSettings();
 
 			if (!this.simUI.isWithinRaidSim) {
-				this.buildBuffsSettings();
+				this.buildPartyBuffsSettings();
+				this.buildRaidBuffsSettings();
 				this.buildWorldBuffsSettings();
 				this.buildDebuffsSettings();
 				this.buildPresetConfigurationPicker();
@@ -241,30 +242,30 @@ export class SettingsTab extends SimTab {
 		}
 	}
 
-	private buildBuffsSettings() {
-		const buffOptions = relevantStatOptions(BuffDebuffInputs.RAID_BUFFS_CONFIG, this.simUI);
-		const miscBuffOptions = relevantStatOptions(BuffDebuffInputs.MISC_BUFFS_CONFIG, this.simUI);
-
-		const contentBlock = new ContentBlock(this.column3, 'buffs-settings', {
-			header: { title: 'Raid Buffs', tooltip: Tooltips.BUFFS_SECTION },
+	private buildPartyBuffsSettings() {
+		const contentBlock = new ContentBlock(this.column3, 'party-buffs-settings', {
+			header: { title: 'Party Buffs', tooltip: Tooltips.PARTY_BUFFS_SECTION },
 		});
 
+		const partyBuffOptions = relevantStatOptions(BuffDebuffInputs.PARTY_BUFFS_CONFIG, this.simUI);
 		this.configureIconSection(
 			contentBlock.bodyElement,
-			buffOptions.map(options => options.picker && new options.picker(contentBlock.bodyElement, this.simUI.player, options.config as any, this.simUI)),
+			partyBuffOptions.map(
+				options => options.picker && new options.picker(contentBlock.bodyElement, this.simUI.player, options.config as any, this.simUI),
+			),
 		);
+	}
 
-		if (miscBuffOptions.length) {
-			new MultiIconPicker(
-				contentBlock.bodyElement,
-				this.simUI.player,
-				{
-					values: miscBuffOptions.map(options => options.config) as Array<MultiIconPickerItemConfig<Player<Spec>>>,
-					label: 'Misc Buffs',
-				},
-				this.simUI,
-			);
-		}
+	private buildRaidBuffsSettings() {
+		const contentBlock = new ContentBlock(this.column3, 'raid-buffs-settings', {
+			header: { title: 'Raid Buffs', tooltip: Tooltips.RAID_BUFFS_SECTION },
+		});
+
+		const raidBuffOptions = relevantStatOptions(BuffDebuffInputs.RAID_BUFFS_CONFIG, this.simUI);
+		this.configureIconSection(
+			contentBlock.bodyElement,
+			raidBuffOptions.map(options => options.picker && new options.picker(contentBlock.bodyElement, this.simUI.player, options.config as any, this.simUI)),
+		);
 	}
 
 	private buildWorldBuffsSettings() {

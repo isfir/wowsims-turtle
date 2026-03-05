@@ -158,17 +158,13 @@ export default class ItemList<T extends ItemListType> {
 						</button>
 					</h6>
 					<h6 className="favorite-label" />
-					<h6 ref={compareLabelRef} className="compare-label hide" />
+					<h6 ref={compareLabelRef} className="compare-label" />
 				</div>
 				<ul ref={modalListRef} className="selector-modal-list" />
 			</div>
 		);
 
 		parent.appendChild(this.tabContent);
-
-		if (this.label === SelectorModalTabs.Items) {
-			this.bindToggleCompare(compareLabelRef.value!);
-		}
 
 		tippy(epButtonRef.value!, {
 			content: EP_TOOLTIP,
@@ -451,7 +447,7 @@ export default class ItemList<T extends ItemListType> {
 						<i ref={favoriteIconElem} className="far fa-star fa-xl" />
 					</button>
 				</div>
-				<div ref={compareContainer} className="selector-modal-list-item-compare-container hide">
+				<div ref={compareContainer} className="selector-modal-list-item-compare-container">
 					<button className="selector-modal-list-item-compare btn btn-link p-0" ref={compareButton}>
 						<i className="fas fa-arrow-right-arrow-left fa-xl" />
 					</button>
@@ -515,7 +511,6 @@ export default class ItemList<T extends ItemListType> {
 		if (this.label === SelectorModalTabs.Items) {
 			const batchSimTooltip = tippy(compareButton.value!);
 
-			this.bindToggleCompare(compareContainer.value!);
 			const simUI = this.simUI instanceof IndividualSimUI ? this.simUI : null;
 			if (simUI) {
 				const checkHasItem = () => simUI.bt.hasItem(ItemSpec.create({ id: itemData.id }));
@@ -709,14 +704,6 @@ export default class ItemList<T extends ItemListType> {
 			}
 		}
 		return <></>;
-	}
-
-	private bindToggleCompare(element: Element) {
-		const toggleCompare = () => element.classList[!this.player.sim.getShowExperimental() ? 'add' : 'remove']('hide');
-		toggleCompare();
-		this.player.sim.showExperimentalChangeEmitter.on(() => {
-			toggleCompare();
-		});
 	}
 
 	private getDropSourceIcon(): Element {

@@ -80,19 +80,19 @@ var ItemSetConfessorsRaiment = core.NewItemSet(core.ItemSet{
 //                            Classic Phase 5 Item Sets - AQ
 ///////////////////////////////////////////////////////////////////////////
 
-var ItemSetGarmentsOfTheOracle = core.NewItemSet(core.ItemSet{
-	Name: "Garments of the Oracle",
-	Bonuses: map[int32]core.ApplyEffect{
-		// 20% chance that your heals on others will also heal you 10% of the amount healed.
-		3: func(agent core.Agent) {
-			// Nothing to do
-		},
-		// Increases the duration of your Renew spell by 3 sec.
-		5: func(agent core.Agent) {
-			// Nothing to do
-		},
-	},
-})
+// var ItemSetGarmentsOfTheOracle = core.NewItemSet(core.ItemSet{
+// 	Name: "Garments of the Oracle",
+// 	Bonuses: map[int32]core.ApplyEffect{
+// 		// 20% chance that your heals on others will also heal you 10% of the amount healed.
+// 		3: func(agent core.Agent) {
+// 			// Nothing to do
+// 		},
+// 		// Increases the duration of your Renew spell by 3 sec.
+// 		5: func(agent core.Agent) {
+// 			// Nothing to do
+// 		},
+// 	},
+// })
 
 ///////////////////////////////////////////////////////////////////////////
 //                            Classic Phase 6 Item Sets - Naxx

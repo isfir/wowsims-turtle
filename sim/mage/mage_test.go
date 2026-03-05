@@ -22,7 +22,7 @@ func TestMage(t *testing.T) {
 
 			Talents:     DefaultTalents,
 			GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "bis"),
-			Rotation:    core.GetAplRotation("../../ui/mage/apls", "default"),
+			Rotation:    core.GetAplRotation("../../ui/mage/apls", "ST"),
 			Buffs:       core.FullBuffs,
 			Consumes:    DefaultConsumes,
 			SpecOptions: core.SpecOptionsCombo{Label: "Arcane", SpecOptions: PlayerOptions},
@@ -56,7 +56,6 @@ var DefaultConsumes = core.ConsumesCombo{
 		MainHandImbue:   proto.WeaponImbue_BrilliantWizardOil,
 		SapperExplosive: proto.SapperExplosive_SapperGoblinSapper,
 		SpellPowerBuff:  proto.SpellPowerBuff_GreaterArcaneElixir,
-		ZanzaBuff:       proto.ZanzaBuff_CerebralCortexCompound,
 	},
 }
 

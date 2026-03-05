@@ -10,46 +10,46 @@ import (
 ///////////////////////////////////////////////////////////////////////////
 
 // https://www.wowhead.com/classic/item-set=362/lieutenant-commanders-pursuit
-var ItemSetLieutenantCommandersPursuit = core.NewItemSet(core.ItemSet{
-	Name: "Lieutenant Commander's Pursuit",
-	Bonuses: map[int32]core.ApplyEffect{
-		// Increases your chance to parry an attack by 1%.
-		2: func(agent core.Agent) {
-			c := agent.GetCharacter()
-			c.AddStat(stats.Parry, 1*core.ParryRatingPerParryChance)
-		},
-		// Reduces the cooldown of your Concussive Shot by 1 sec.
-		4: func(agent core.Agent) {
-			// Nothing to do
-		},
-		// +15 Stamina.
-		6: func(agent core.Agent) {
-			c := agent.GetCharacter()
-			c.AddStat(stats.Stamina, 15)
-		},
-	},
-})
+// var ItemSetLieutenantCommandersPursuit = core.NewItemSet(core.ItemSet{
+// 	Name: "Lieutenant Commander's Pursuit",
+// 	Bonuses: map[int32]core.ApplyEffect{
+// 		// Increases your chance to parry an attack by 1%.
+// 		2: func(agent core.Agent) {
+// 			c := agent.GetCharacter()
+// 			c.AddStat(stats.Parry, 1*core.ParryRatingPerParryChance)
+// 		},
+// 		// Reduces the cooldown of your Concussive Shot by 1 sec.
+// 		4: func(agent core.Agent) {
+// 			// Nothing to do
+// 		},
+// 		// +15 Stamina.
+// 		6: func(agent core.Agent) {
+// 			c := agent.GetCharacter()
+// 			c.AddStat(stats.Stamina, 15)
+// 		},
+// 	},
+// })
 
 // https://www.wowhead.com/classic/item-set=361/champions-pursuit
-var ItemSetChampionsPursuit = core.NewItemSet(core.ItemSet{
-	Name: "Champion's Pursuit",
-	Bonuses: map[int32]core.ApplyEffect{
-		// Increases your chance to parry an attack by 1%.
-		2: func(agent core.Agent) {
-			c := agent.GetCharacter()
-			c.AddStat(stats.Parry, 1*core.ParryRatingPerParryChance)
-		},
-		// Reduces the cooldown of your Concussive Shot by 1 sec.
-		4: func(agent core.Agent) {
-			// Nothing to do
-		},
-		// +15 Stamina.
-		6: func(agent core.Agent) {
-			c := agent.GetCharacter()
-			c.AddStat(stats.Stamina, 15)
-		},
-	},
-})
+// var ItemSetChampionsPursuit = core.NewItemSet(core.ItemSet{
+// 	Name: "Champion's Pursuit",
+// 	Bonuses: map[int32]core.ApplyEffect{
+// 		// Increases your chance to parry an attack by 1%.
+// 		2: func(agent core.Agent) {
+// 			c := agent.GetCharacter()
+// 			c.AddStat(stats.Parry, 1*core.ParryRatingPerParryChance)
+// 		},
+// 		// Reduces the cooldown of your Concussive Shot by 1 sec.
+// 		4: func(agent core.Agent) {
+// 			// Nothing to do
+// 		},
+// 		// +15 Stamina.
+// 		6: func(agent core.Agent) {
+// 			c := agent.GetCharacter()
+// 			c.AddStat(stats.Stamina, 15)
+// 		},
+// 	},
+// })
 
 // https://www.wowhead.com/classic/item-set=543/champions-pursuance
 var ItemSetChampionsPursuance = core.NewItemSet(core.ItemSet{

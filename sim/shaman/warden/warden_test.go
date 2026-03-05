@@ -44,17 +44,16 @@ var DefaultTalents = "5203015-0505000145503151"
 var Phase1Consumes = core.ConsumesCombo{
 	Label: "P1-Consumes",
 	Consumes: &proto.Consumes{
-		AttackPowerBuff:   proto.AttackPowerBuff_JujuMight,
-		AgilityElixir:     proto.AgilityElixir_ElixirOfTheMongoose,
-		DefaultConjured:   proto.Conjured_ConjuredDemonicRune,
-		DefaultPotion:     proto.Potions_MajorManaPotion,
-		DragonBreathChili: true,
-		FirePowerBuff:     proto.FirePowerBuff_ElixirOfGreaterFirepower,
-		Flask:             proto.Flask_FlaskOfTheTitans,
-		Food:              proto.Food_FoodBlessSunfruit,
-		MainHandImbue:     proto.WeaponImbue_RockbiterWeapon,
-		SpellPowerBuff:    proto.SpellPowerBuff_GreaterArcaneElixir,
-		StrengthBuff:      proto.StrengthBuff_JujuPower,
+		AttackPowerBuff: proto.AttackPowerBuff_JujuMight,
+		AgilityElixir:   proto.AgilityElixir_ElixirOfTheMongoose,
+		DefaultConjured: proto.Conjured_ConjuredDemonicRune,
+		DefaultPotion:   proto.Potions_MajorManaPotion,
+		FirePowerBuff:   proto.FirePowerBuff_ElixirOfGreaterFirepower,
+		Flask:           proto.Flask_FlaskOfTheTitans,
+		Food:            proto.Food_FoodBlessSunfruit,
+		MainHandImbue:   proto.WeaponImbue_RockbiterWeapon,
+		SpellPowerBuff:  proto.SpellPowerBuff_GreaterArcaneElixir,
+		StrengthBuff:    proto.StrengthBuff_JujuPower,
 	},
 }
 

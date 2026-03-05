@@ -5,8 +5,8 @@ import (
 	"github.com/isfir/wowsims-turtle/sim/core/stats"
 )
 
-var ItemSetFeralheartRaiment = core.NewItemSet(core.ItemSet{
-	Name: "Feralheart Raiment",
+var ItemSetMoonheartRaiment = core.NewItemSet(core.ItemSet{
+	Name: "Moonheart Raiment",
 	Bonuses: map[int32]core.ApplyEffect{
 		// (2) Set : +8 All Resistances.
 		2: func(agent core.Agent) {

@@ -5,39 +5,39 @@ import (
 	"github.com/isfir/wowsims-turtle/sim/core/stats"
 )
 
-var ItemSetChampionsEarthshaker = core.NewItemSet(core.ItemSet{
-	Name: "Champion's Earthshaker",
-	Bonuses: map[int32]core.ApplyEffect{
-		// +40 Attack Power.
-		2: func(agent core.Agent) {
-			c := agent.GetCharacter()
-			c.AddStats(stats.Stats{
-				stats.AttackPower:       40,
-				stats.RangedAttackPower: 40,
-			})
-		},
-		// Improves your chance to get a critical strike with all Shock spells by 2%.
-		4: func(agent core.Agent) {
-			shaman := agent.(ShamanAgent).GetShaman()
-			shaman.GetOrRegisterAura(core.Aura{
-				Label:    "Shaman Shock Crit Bonus",
-				ActionID: core.ActionID{SpellID: 22804},
-				OnInit: func(aura *core.Aura, sim *core.Simulation) {
-					for _, spell := range core.Flatten([][]*core.Spell{shaman.EarthShock, shaman.FlameShock, shaman.FrostShock}) {
-						if spell != nil {
-							spell.BonusCritRating += 2 * core.CritRatingPerCritChance
-						}
-					}
-				},
-			})
-		},
-		// +15 Stamina.
-		6: func(agent core.Agent) {
-			c := agent.GetCharacter()
-			c.AddStat(stats.Stamina, 15)
-		},
-	},
-})
+// var ItemSetChampionsEarthshaker = core.NewItemSet(core.ItemSet{
+// 	Name: "Champion's Earthshaker",
+// 	Bonuses: map[int32]core.ApplyEffect{
+// 		// +40 Attack Power.
+// 		2: func(agent core.Agent) {
+// 			c := agent.GetCharacter()
+// 			c.AddStats(stats.Stats{
+// 				stats.AttackPower:       40,
+// 				stats.RangedAttackPower: 40,
+// 			})
+// 		},
+// 		// Improves your chance to get a critical strike with all Shock spells by 2%.
+// 		4: func(agent core.Agent) {
+// 			shaman := agent.(ShamanAgent).GetShaman()
+// 			shaman.GetOrRegisterAura(core.Aura{
+// 				Label:    "Shaman Shock Crit Bonus",
+// 				ActionID: core.ActionID{SpellID: 22804},
+// 				OnInit: func(aura *core.Aura, sim *core.Simulation) {
+// 					for _, spell := range core.Flatten([][]*core.Spell{shaman.EarthShock, shaman.FlameShock, shaman.FrostShock}) {
+// 						if spell != nil {
+// 							spell.BonusCritRating += 2 * core.CritRatingPerCritChance
+// 						}
+// 					}
+// 				},
+// 			})
+// 		},
+// 		// +15 Stamina.
+// 		6: func(agent core.Agent) {
+// 			c := agent.GetCharacter()
+// 			c.AddStat(stats.Stamina, 15)
+// 		},
+// 	},
+// })
 
 var ItemSetChampionsStormcaller = core.NewItemSet(core.ItemSet{
 	Name: "Champion's Stormcaller",

@@ -8,42 +8,42 @@ import (
 )
 
 const (
-	KnightLieutenantsChainGauntlets = 16403
-	BloodGuardsChainGauntlets       = 16530
-	MarshalsChainGrips              = 16463
-	GeneralsChainGloves             = 16571
-	RenatakisCharmofBeasts          = 19953
-	DevilsaurEye                    = 19991
-	DevilsaurTooth                  = 19992
-	KnightLieutenantsChainVices     = 23279
-	BloodGuardsChainVices           = 22862
+	// KnightLieutenantsChainGauntlets = 16403
+	// BloodGuardsChainGauntlets       = 16530
+	MarshalsChainGrips          = 16463
+	GeneralsChainGloves         = 16571
+	RenatakisCharmofBeasts      = 19953
+	DevilsaurEye                = 19991
+	DevilsaurTooth              = 19992
+	KnightLieutenantsChainVices = 23279
+	BloodGuardsChainVices       = 22862
 )
 
 func init() {
 	// Equip: Reduces the mana cost of your Arcane Shot by 15.
-	core.NewItemEffect(KnightLieutenantsChainGauntlets, func(agent core.Agent) {
-		hunter := agent.(HunterAgent).GetHunter()
-		core.MakePermanent(hunter.RegisterAura(core.Aura{
-			Label: "Arcane Shot Mana Reduction",
-			OnInit: func(aura *core.Aura, sim *core.Simulation) {
-				if hunter.ArcaneShot != nil {
-					hunter.ArcaneShot.Cost.FlatModifier -= 15.0
-				}
-			},
-		}))
-	})
+	// core.NewItemEffect(KnightLieutenantsChainGauntlets, func(agent core.Agent) {
+	// 	hunter := agent.(HunterAgent).GetHunter()
+	// 	core.MakePermanent(hunter.RegisterAura(core.Aura{
+	// 		Label: "Arcane Shot Mana Reduction",
+	// 		OnInit: func(aura *core.Aura, sim *core.Simulation) {
+	// 			if hunter.ArcaneShot != nil {
+	// 				hunter.ArcaneShot.Cost.FlatModifier -= 15.0
+	// 			}
+	// 		},
+	// 	}))
+	// })
 	// Equip: Reduces the mana cost of your Arcane Shot by 15.
-	core.NewItemEffect(BloodGuardsChainGauntlets, func(agent core.Agent) {
-		hunter := agent.(HunterAgent).GetHunter()
-		core.MakePermanent(hunter.RegisterAura(core.Aura{
-			Label: "Arcane Shot Mana Reduction",
-			OnInit: func(aura *core.Aura, sim *core.Simulation) {
-				if hunter.ArcaneShot != nil {
-					hunter.ArcaneShot.Cost.FlatModifier -= 15.0
-				}
-			},
-		}))
-	})
+	// core.NewItemEffect(BloodGuardsChainGauntlets, func(agent core.Agent) {
+	// 	hunter := agent.(HunterAgent).GetHunter()
+	// 	core.MakePermanent(hunter.RegisterAura(core.Aura{
+	// 		Label: "Arcane Shot Mana Reduction",
+	// 		OnInit: func(aura *core.Aura, sim *core.Simulation) {
+	// 			if hunter.ArcaneShot != nil {
+	// 				hunter.ArcaneShot.Cost.FlatModifier -= 15.0
+	// 			}
+	// 		},
+	// 	}))
+	// })
 
 	// Equip: Increases the damage done by your Multi-Shot by 4%
 	core.NewItemEffect(MarshalsChainGrips, func(agent core.Agent) {

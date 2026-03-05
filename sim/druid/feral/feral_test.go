@@ -73,16 +73,15 @@ var PlayerOptionsFlowerCatAoe = &proto.Player_FeralDruid{
 var P1Consumes = core.ConsumesCombo{
 	Label: "P1-Consumes",
 	Consumes: &proto.Consumes{
-		AgilityElixir:     proto.AgilityElixir_ElixirOfTheMongoose,
-		AttackPowerBuff:   proto.AttackPowerBuff_JujuMight,
-		DefaultConjured:   proto.Conjured_ConjuredDemonicRune,
-		DefaultPotion:     proto.Potions_MajorManaPotion,
-		DragonBreathChili: true,
-		Flask:             proto.Flask_FlaskOfDistilledWisdom,
-		Food:              proto.Food_FoodSmokedDesertDumpling,
-		MainHandImbue:     proto.WeaponImbue_ElementalSharpeningStone,
-		MiscConsumes:      &proto.MiscConsumes{},
-		StrengthBuff:      proto.StrengthBuff_JujuPower,
+		AgilityElixir:   proto.AgilityElixir_ElixirOfTheMongoose,
+		AttackPowerBuff: proto.AttackPowerBuff_JujuMight,
+		DefaultConjured: proto.Conjured_ConjuredDemonicRune,
+		DefaultPotion:   proto.Potions_MajorManaPotion,
+		Flask:           proto.Flask_FlaskOfDistilledWisdom,
+		Food:            proto.Food_FoodSmokedDesertDumpling,
+		MainHandImbue:   proto.WeaponImbue_ElementalSharpeningStone,
+		MiscConsumes:    &proto.MiscConsumes{},
+		StrengthBuff:    proto.StrengthBuff_JujuPower,
 	},
 }
 

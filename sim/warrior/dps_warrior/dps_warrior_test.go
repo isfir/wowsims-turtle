@@ -42,14 +42,13 @@ var P1Talents = "30305001302-05050005525010051"
 var P1Consumes = core.ConsumesCombo{
 	Label: "P1-Consumes",
 	Consumes: &proto.Consumes{
-		AgilityElixir:     proto.AgilityElixir_ElixirOfTheMongoose,
-		AttackPowerBuff:   proto.AttackPowerBuff_JujuMight,
-		DefaultPotion:     proto.Potions_MightyRagePotion,
-		DragonBreathChili: true,
-		Food:              proto.Food_FoodSmokedDesertDumpling,
-		MainHandImbue:     proto.WeaponImbue_Windfury,
-		OffHandImbue:      proto.WeaponImbue_ElementalSharpeningStone,
-		StrengthBuff:      proto.StrengthBuff_JujuPower,
+		AgilityElixir:   proto.AgilityElixir_ElixirOfTheMongoose,
+		AttackPowerBuff: proto.AttackPowerBuff_JujuMight,
+		DefaultPotion:   proto.Potions_MightyRagePotion,
+		Food:            proto.Food_FoodSmokedDesertDumpling,
+		MainHandImbue:   proto.WeaponImbue_Windfury,
+		OffHandImbue:    proto.WeaponImbue_ElementalSharpeningStone,
+		StrengthBuff:    proto.StrengthBuff_JujuPower,
 	},
 }
 

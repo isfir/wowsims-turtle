@@ -6,7 +6,7 @@ character_stats_results: {
   final_stats: 333.27
   final_stats: 250.7
   final_stats: 247.25
-  final_stats: 332
+  final_stats: 182
   final_stats: 0
   final_stats: 0
   final_stats: 0
@@ -42,8 +42,8 @@ character_stats_results: {
   final_stats: 70
   final_stats: 60
   final_stats: 384
-  final_stats: 146
-  final_stats: 35
+  final_stats: 0
+  final_stats: 185
   final_stats: 0
  }
 }
@@ -111,17 +111,10 @@ dps_results: {
  }
 }
 dps_results: {
- key: "TestP1Balance-Phase1-AllItems-FeralheartRaiment"
- value: {
-  dps: 293.3344
-  tps: 307.65641
- }
-}
-dps_results: {
  key: "TestP1Balance-Phase1-AllItems-FieldMarshal'sSanctuary"
  value: {
-  dps: 235.92375
-  tps: 250.17825
+  dps: 236.00472
+  tps: 250.25922
  }
 }
 dps_results: {
@@ -148,43 +141,43 @@ dps_results: {
 dps_results: {
  key: "TestP1Balance-Phase1-AllItems-SymbolsofUnendingLife"
  value: {
-  dps: 256.02294
-  tps: 270.39099
+  dps: 256.16519
+  tps: 270.53324
  }
 }
 dps_results: {
  key: "TestP1Balance-Phase1-AllItems-TheDefiler'sPurpose"
  value: {
-  dps: 235.63713
-  tps: 249.99854
+  dps: 235.69752
+  tps: 250.05893
  }
 }
 dps_results: {
  key: "TestP1Balance-Phase1-AllItems-TheDefiler'sWill"
  value: {
-  dps: 269.77946
-  tps: 284.21438
+  dps: 268.81775
+  tps: 282.76081
  }
 }
 dps_results: {
  key: "TestP1Balance-Phase1-AllItems-TheHighlander'sPurpose"
  value: {
-  dps: 235.63713
-  tps: 249.99854
+  dps: 235.69752
+  tps: 250.05893
  }
 }
 dps_results: {
  key: "TestP1Balance-Phase1-AllItems-TheHighlander'sWill"
  value: {
-  dps: 269.77946
-  tps: 284.21438
+  dps: 268.81775
+  tps: 282.76081
  }
 }
 dps_results: {
  key: "TestP1Balance-Phase1-AllItems-Warlord'sSanctuary"
  value: {
-  dps: 235.92375
-  tps: 250.17825
+  dps: 236.00472
+  tps: 250.25922
  }
 }
 dps_results: {

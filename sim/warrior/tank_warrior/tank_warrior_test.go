@@ -53,14 +53,13 @@ var warriorOptions = &proto.TankWarrior_Options{
 var P1Consumes = core.ConsumesCombo{
 	Label: "P1-Consumes",
 	Consumes: &proto.Consumes{
-		AgilityElixir:     proto.AgilityElixir_ElixirOfTheMongoose,
-		AttackPowerBuff:   proto.AttackPowerBuff_JujuMight,
-		DefaultPotion:     proto.Potions_MightyRagePotion,
-		DragonBreathChili: true,
-		Flask:             proto.Flask_FlaskOfTheTitans,
-		Food:              proto.Food_FoodSmokedDesertDumpling,
-		MainHandImbue:     proto.WeaponImbue_Windfury,
-		StrengthBuff:      proto.StrengthBuff_JujuPower,
+		AgilityElixir:   proto.AgilityElixir_ElixirOfTheMongoose,
+		AttackPowerBuff: proto.AttackPowerBuff_JujuMight,
+		DefaultPotion:   proto.Potions_MightyRagePotion,
+		Flask:           proto.Flask_FlaskOfTheTitans,
+		Food:            proto.Food_FoodSmokedDesertDumpling,
+		MainHandImbue:   proto.WeaponImbue_Windfury,
+		StrengthBuff:    proto.StrengthBuff_JujuPower,
 	},
 }
 

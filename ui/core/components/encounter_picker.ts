@@ -29,14 +29,14 @@ export class EncounterPicker extends Component {
 		// Need to wait so that the encounter and target presets will be loaded.
 		modEncounter.sim.waitForInit().then(() => {
 			const presetTargets = modEncounter.sim.db.getAllPresetTargets();
-
+			const presetEncounters = modEncounter.sim.db.getAllPresetEncounters();
 			new EnumPicker<Encounter>(this.rootElem, modEncounter, {
-				id: 'encounter-npc',
+				id: 'encounter-preset-encouter',
 				extraCssClasses: ['damage-metrics', 'npc-picker'],
-				label: 'NPC',
-				labelTooltip: 'Selects a preset NPC configuration.',
+				label: 'Encounter',
+				labelTooltip: 'Selects a preset encounter configuration.',
 				values: [{ name: 'Custom', value: -1 }].concat(
-					presetTargets.map((pe, i) => {
+					presetEncounters.map((pe, i) => {
 						return {
 							name: pe.path,
 							value: i,
@@ -44,10 +44,10 @@ export class EncounterPicker extends Component {
 					}),
 				),
 				changedEvent: (encounter: Encounter) => encounter.changeEmitter,
-				getValue: (encounter: Encounter) => presetTargets.findIndex(pe => equalTargetsIgnoreInputs(encounter.primaryTarget, pe.target)),
+				getValue: (encounter: Encounter) => presetEncounters.findIndex(pe => encounter.matchesPreset(pe)),
 				setValue: (eventID: EventID, encounter: Encounter, newValue: number) => {
 					if (newValue != -1) {
-						encounter.applyPresetTarget(eventID, presetTargets[newValue], 0);
+						encounter.applyPreset(eventID, presetEncounters[newValue]);
 					}
 				},
 			});

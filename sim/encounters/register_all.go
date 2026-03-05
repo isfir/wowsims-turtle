@@ -7,7 +7,8 @@ import (
 func init() {
 	// TODO: Classic encounters?
 	// naxxramas.Register()
-	addLevel60("Classic")
+	addDefaultRaidBoss()
+	addDefaultTrash()
 	addVaelastraszTheCorrupt("Classic")
 }
 

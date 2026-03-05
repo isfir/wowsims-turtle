@@ -171,5 +171,20 @@
 	"33": "Scope (+3 Damage)",
 	"663": "Scope (+5 Damage)",
 	"664": "Scope (+7 Damage)",
-	"2523": "+3% Hit"
+	"2523": "+3% Hit",
+	"3025": "Healing and Spell Damage +9",
+	"3012": "Vampirism +2%",
+	"3017": "Haste +2%",
+	"432": "Spell Damage +12",
+	"3011": "Vampirism +1%",
+	"3001": "Arcane Damage +20",
+	"3002": "Nature Damage +20",
+	"2160": "Fire Damage +9",
+	"3052": "Intellect +10",
+	"96": "Intellect +6",
+	"104": "Stamina +6",
+	"426": "Spell Power +5",
+	"2082": "Arcane Power +6",
+	"2158": "Fire Power +6",
+	"2236": "Frost Power +9"
 }

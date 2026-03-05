@@ -414,6 +414,11 @@ func parseItemSpellEffects(row []string, colIdx map[string]int, spellEffects map
 				}
 			}
 		}
+		if bonuses[proto.Stat_StatSpellDamage] > 0 && bonuses[proto.Stat_StatSpellDamage] == bonuses[proto.Stat_StatHealingPower] {
+			bonuses[proto.Stat_StatSpellPower] += bonuses[proto.Stat_StatSpellDamage]
+			bonuses[proto.Stat_StatSpellDamage] = 0
+			bonuses[proto.Stat_StatHealingPower] = 0
+		}
 	}
 
 	return bonuses, weaponSkills, bonusPhysicalDamage
@@ -588,7 +593,7 @@ func spellSchoolMaskToStats(mask int32) ([]proto.Stat, bool) {
 	hasPhysical := mask&1 != 0
 
 	if mask == 124 || mask == 126 || mask == 127 {
-		return []proto.Stat{proto.Stat_StatSpellPower}, hasPhysical
+		return []proto.Stat{proto.Stat_StatSpellDamage}, hasPhysical
 	}
 
 	var stats []proto.Stat
@@ -612,7 +617,7 @@ func spellSchoolMaskToStats(mask int32) ([]proto.Stat, bool) {
 	}
 
 	if len(stats) == 0 && mask != 0 && !hasPhysical {
-		stats = append(stats, proto.Stat_StatSpellPower)
+		stats = append(stats, proto.Stat_StatSpellDamage)
 	}
 
 	return stats, hasPhysical

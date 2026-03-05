@@ -18,6 +18,7 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 1843, ItemId: 15564, SpellId: 19057, Name: "Rugged Armor Kit", Quality: proto.ItemQuality_ItemQualityCommon, Stats: stats.Stats{stats.BonusArmor: 40}.ToFloatArray(), Type: proto.ItemType_ItemTypeChest, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeLegs, proto.ItemType_ItemTypeHands, proto.ItemType_ItemTypeFeet}, EnchantType: proto.EnchantType_EnchantTypeKit},
 	// Drops in MC
 	{EffectId: 2503, ItemId: 18251, SpellId: 22725, Name: "Core Armor Kit", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.Defense: 3}.ToFloatArray(), Type: proto.ItemType_ItemTypeChest, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeLegs, proto.ItemType_ItemTypeHands, proto.ItemType_ItemTypeFeet}, EnchantType: proto.EnchantType_EnchantTypeKit},
+	{EffectId: 3025, ItemId: 61183, SpellId: 57135, Name: "Enchanted Armor Kit", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.SpellPower: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeChest, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeLegs, proto.ItemType_ItemTypeHands, proto.ItemType_ItemTypeFeet}, EnchantType: proto.EnchantType_EnchantTypeKit},
 
 	// Arcanums
 	// Lvl 50 Burning Steppes Quest
@@ -70,6 +71,8 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 2717, ItemId: 23548, SpellId: 29483, Name: "Might of the Scourge", Quality: proto.ItemQuality_ItemQualityEpic, Stats: stats.Stats{stats.AttackPower: 26, stats.MeleeCrit: 1 * core.CritRatingPerCritChance}.ToFloatArray(), Type: proto.ItemType_ItemTypeShoulder, Phase: 6},
 	{EffectId: 2716, ItemId: 23549, SpellId: 29480, Name: "Fortitude of the Scourge", Quality: proto.ItemQuality_ItemQualityEpic, Stats: stats.Stats{stats.Stamina: 16, stats.BonusArmor: 100}.ToFloatArray(), Type: proto.ItemType_ItemTypeShoulder, Phase: 6},
 	{EffectId: 2721, ItemId: 23545, SpellId: 29467, Name: "Power of the Scourge", Quality: proto.ItemQuality_ItemQualityEpic, Stats: stats.Stats{stats.SpellPower: 15, stats.SpellCrit: 1 * core.SpellCritRatingPerCritChance}.ToFloatArray(), Type: proto.ItemType_ItemTypeShoulder, Phase: 6},
+	{EffectId: 3012, ItemId: 61436, SpellId: 57155, Name: "Sigil of Leeching", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeShoulder},
+	{EffectId: 3017, ItemId: 61437, SpellId: 57156, Name: "Sigil of Quickness", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.SpellHaste: 2 * core.HasteRatingPerHastePercent}.ToFloatArray(), Type: proto.ItemType_ItemTypeShoulder},
 
 	// Back
 	{EffectId: 2, SpellId: 7454, Name: "Enchant Cloak - Minor Resistance", Quality: proto.ItemQuality_ItemQualityCommon, Stats: stats.Stats{stats.ArcaneResistance: 1, stats.FrostResistance: 1, stats.FireResistance: 1, stats.NatureResistance: 1, stats.ShadowResistance: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeBack},
@@ -140,6 +143,8 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 1885, SpellId: 20010, Name: "Enchant Bracer - Superior Strength", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Strength: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
 	{EffectId: 2566, SpellId: 23802, Name: "Enchant Bracer - Healing Power", Quality: proto.ItemQuality_ItemQualityCommon, Stats: stats.Stats{stats.HealingPower: 24}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
 	{EffectId: 1886, SpellId: 20011, Name: "Enchant Bracer - Superior Stamina", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
+	{EffectId: 432, SpellId: 57028, Name: "Enchant Bracer - Spell Power", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.SpellDamage: 12}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
+	{EffectId: 3011, SpellId: 57146, Name: "Enchant Bracer - Vampirism", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
 
 	// Hands
 	{EffectId: 846, SpellId: 13620, Name: "Enchant Gloves - Fishing", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands},
@@ -161,6 +166,8 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 2614, SpellId: 25073, Name: "Enchant Gloves - Shadow Power", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.ShadowPower: 20}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands, Phase: 5},
 	{EffectId: 2564, SpellId: 25080, Name: "Enchant Gloves - Superior Agility", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.Agility: 15}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands, Phase: 5},
 	{EffectId: 2613, SpellId: 25072, Name: "Enchant Gloves - Threat", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands, Phase: 5},
+	{EffectId: 3001, SpellId: 46601, Name: "Enchant Gloves - Arcane Power", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.ArcanePower: 20}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands},
+	{EffectId: 3002, SpellId: 46602, Name: "Enchant Gloves - Nature Power", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.NaturePower: 20}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands},
 
 	// Feet
 	{EffectId: 247, SpellId: 7867, Name: "Enchant Boots - Minor Agility", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Agility: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
@@ -174,6 +181,35 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 929, SpellId: 20020, Name: "Enchant Boots - Greater Stamina", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 7}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
 	{EffectId: 851, SpellId: 20024, Name: "Enchant Boots - Spirit", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Spirit: 5}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
 	{EffectId: 1887, SpellId: 20023, Name: "Enchant Boots - Greater Agility", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Agility: 7}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
+	{EffectId: 3011, SpellId: 57148, Name: "Enchant Boots - Vampirism", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
+
+	// Waist
+	{EffectId: 71, ItemId: 61779, SpellId: 57164, Name: "Copper Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+	{EffectId: 72, ItemId: 61780, SpellId: 57167, Name: "Bronze Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 2}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+	{EffectId: 28, ItemId: 61783, SpellId: 57176, Name: "Thorium Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+	{EffectId: 2160, ItemId: 67, SpellId: 41, Name: "Dragonscale Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FirePower: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+	{EffectId: 3052, ItemId: 61785, SpellId: 57182, Name: "Dreamsteel Belt Buckle", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.Intellect: 10}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+	{EffectId: 3054, ItemId: 61810, SpellId: 57186, Name: "Bloody Belt Buckle", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+
+	// Neck
+	{EffectId: 92, ItemId: 56008, SpellId: 51035, Name: "Brilliant Opal Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Agility: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 96, ItemId: 56007, SpellId: 51034, Name: "Shining Sapphire Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Intellect: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 104, ItemId: 56017, SpellId: 51039, Name: "Tempered Azerothian Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 107, ItemId: 56056, SpellId: 51031, Name: "Burning Star Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Strength: 5}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 108, ItemId: 56015, SpellId: 51042, Name: "Azerothian Ruby Gemstone", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.Strength: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 225, ItemId: 56018, SpellId: 51037, Name: "Enchanted Emerald Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.NaturePower: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 345, ItemId: 56076, SpellId: 51048, Name: "Resilient Arcane Gemstone", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.BonusArmor: 40}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 426, ItemId: 56016, SpellId: 51043, Name: "Arcane Emerald Gemstone", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.SpellDamage: 5}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 440, ItemId: 56010, SpellId: 51038, Name: "Beautiful Diamond Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.HealingPower: 12}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 763, ItemId: 61818, SpellId: 51077, Name: "Gorgeous Mountain Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 1250, ItemId: 56011, SpellId: 51040, Name: "Unstable Arcane Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.ArcaneResistance: 8}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 1342, ItemId: 56012, SpellId: 51041, Name: "Gloomy Diamond Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FireResistance: 8}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 1388, ItemId: 56009, SpellId: 51036, Name: "Elegant Emerald Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.NatureResistance: 8}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 1434, ItemId: 56075, SpellId: 51047, Name: "Dreary Opal Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.ShadowResistance: 8}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 2082, ItemId: 56058, SpellId: 51030, Name: "Pure Shining Moonstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.ArcanePower: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 2158, ItemId: 56004, SpellId: 51028, Name: "Radiant Ember", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FirePower: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 2236, ItemId: 56057, SpellId: 51033, Name: "Glittering Sapphire Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FrostPower: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 3008, ItemId: 56074, SpellId: 51046, Name: "Graceful Agate Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.SpellPenetration: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
 
 	// Weapon
 	{EffectId: 36, SpellId: 6296, Name: "Fiery Blaze Enchantment", Quality: proto.ItemQuality_ItemQualityCommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWeapon},

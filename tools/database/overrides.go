@@ -97,6 +97,12 @@ var ItemOverrides = []*proto.UIItem{
 	// Crafted
 	{Id: 22191, Phase: 5},
 	{Id: 22195, Phase: 5},
+
+	// Atiesh class restriction
+	{Id: 22589, ClassAllowlist: []proto.Class{proto.Class_ClassMage}},
+	{Id: 22630, ClassAllowlist: []proto.Class{proto.Class_ClassWarlock}},
+	{Id: 22631, ClassAllowlist: []proto.Class{proto.Class_ClassPriest}},
+	{Id: 22632, ClassAllowlist: []proto.Class{proto.Class_ClassDruid}},
 }
 
 // Keep these sorted by item ID.

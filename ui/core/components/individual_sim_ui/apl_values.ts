@@ -20,7 +20,7 @@ import {
 	APLValueCompare_ComparisonOperator as ComparisonOperator,
 	APLValueConst,
 	APLValueCurrentAttackPower,
-	APLValueCurrentCastSpeedMultiplier,
+	APLValueCurrentSpellHaste,
 	APLValueCurrentComboPoints,
 	APLValueCurrentEnergy,
 	APLValueCurrentHealth,
@@ -700,11 +700,11 @@ const valueKindFactories: { [f in NonNullable<APLValueKind>]: ValueKindConfig<AP
 		newValue: APLValueCurrentAttackPower.create,
 		fields: [],
 	}),
-	currentCastSpeedMultiplier: inputBuilder({
-		label: 'Current Cast Speed Multiplier',
+	currentSpellHaste: inputBuilder({
+		label: 'Current Spell Haste',
 		submenu: ['Stats'],
-		shortDescription: 'Current Cast Speed Multiplier includuing temporary bonuses.',
-		newValue: APLValueCurrentCastSpeedMultiplier.create,
+		shortDescription: 'Current Spell Haste includuing temporary bonuses.',
+		newValue: APLValueCurrentSpellHaste.create,
 		fields: [],
 	}),
 

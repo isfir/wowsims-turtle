@@ -1,0 +1,9 @@
+{
+	"type": "TypeAPL",
+	"priorityList": [
+        {"action":{"condition":{"cmp":{"op":"OpLe","lhs":{"currentManaPercent":{}},"rhs":{"const":{"val":"30%"}}}},"castSpell":{"spellId":{"itemId":8008}}}},
+        {"action":{"castSpell":{"spellId":{"otherId":"OtherActionOffensiveEquip"}}}},
+        {"action":{"condition":{"cmp":{"op":"OpLe","lhs":{"numberTargets":{}},"rhs":{"const":{"val":"3"}}}},"castSpell":{"spellId":{"spellId":51936,"rank":4}}}},
+        {"action":{"castSpell":{"spellId":{"spellId":10202,"rank":6}}}}
+	]
+}

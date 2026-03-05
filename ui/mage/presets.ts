@@ -26,7 +26,8 @@ import {
 } from '../core/proto/common';
 import { Mage_Options as MageOptions, Mage_Options_ArmorType as ArmorType } from '../core/proto/mage';
 import { SavedTalents } from '../core/proto/ui';
-import DEFAULTAPL from './apls/default.apl.json';
+import STAPL from './apls/ST.apl.json';
+import MultiAPL from './apls/Multi.apl.json';
 import BISGear from './gear_sets/bis.gear.json';
 
 ///////////////////////////////////////////////////////////////////////////
@@ -43,11 +44,12 @@ export const DefaultGear = GearBIS;
 //                                 APL Presets
 ///////////////////////////////////////////////////////////////////////////
 
-export const APLPDEFAULT = PresetUtils.makePresetAPLRotation('Arcane', DEFAULTAPL);
+export const APLST = PresetUtils.makePresetAPLRotation('Arcane ST', STAPL);
+export const APLMulti = PresetUtils.makePresetAPLRotation('Arcane Multi', MultiAPL);
 
-export const APLPresets = [APLPDEFAULT];
+export const APLPresets = [APLST, APLMulti];
 
-export const DefaultAPL = APLPDEFAULT;
+export const DefaultAPL = APLST;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Talent Presets

@@ -118,7 +118,7 @@ message APLValue {
 
         // Stats
         APLValueCurrentAttackPower current_attack_power = 77;
-        APLValueCurrentCastSpeedMultiplier current_cast_speed_multiplier = 78;
+        APLValueCurrentSpellHaste current_spell_haste = 78;
 
         // GCD values
         APLValueGCDIsReady gcd_is_ready = 17;
@@ -397,7 +397,7 @@ message APLValueEnergyThreshold {
 }
 
 message APLValueCurrentAttackPower {}
-message APLValueCurrentCastSpeedMultiplier {}
+message APLValueCurrentSpellHaste {}
 
 message APLValueGCDIsReady {}
 message APLValueGCDTimeToReady {}

@@ -25,22 +25,22 @@ func (value *APLValueCurrentAttackPower) String() string {
 	return "Current Attack Power"
 }
 
-type APLValueCurrentCastSpeedMultiplier struct {
+type APLValueCurrentSpellHaste struct {
 	DefaultAPLValueImpl
 	unit *Unit
 }
 
-func (rot *APLRotation) newValueCurrentCastSpeedMultiplier(_ *proto.APLValueCurrentCastSpeedMultiplier) APLValue {
-	return &APLValueCurrentCastSpeedMultiplier{
+func (rot *APLRotation) newValueCurrentSpellHaste(_ *proto.APLValueCurrentSpellHaste) APLValue {
+	return &APLValueCurrentSpellHaste{
 		unit: rot.unit,
 	}
 }
-func (value *APLValueCurrentCastSpeedMultiplier) Type() proto.APLValueType {
+func (value *APLValueCurrentSpellHaste) Type() proto.APLValueType {
 	return proto.APLValueType_ValueTypeFloat
 }
-func (value *APLValueCurrentCastSpeedMultiplier) GetFloat(_ *Simulation) float64 {
+func (value *APLValueCurrentSpellHaste) GetFloat(_ *Simulation) float64 {
 	return value.unit.PseudoStats.CastSpeedMultiplier
 }
-func (value *APLValueCurrentCastSpeedMultiplier) String() string {
-	return "Current Cast Speed Multiplier"
+func (value *APLValueCurrentSpellHaste) String() string {
+	return "Current Spell Haste"
 }

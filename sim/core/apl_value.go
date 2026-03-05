@@ -121,8 +121,8 @@ func (rot *APLRotation) newAPLValue(config *proto.APLValue) APLValue {
 	// Stats
 	case *proto.APLValue_CurrentAttackPower:
 		return rot.newValueCurrentAttackPower(config.GetCurrentAttackPower())
-	case *proto.APLValue_CurrentCastSpeedMultiplier:
-		return rot.newValueCurrentCastSpeedMultiplier(config.GetCurrentCastSpeedMultiplier())
+	case *proto.APLValue_CurrentSpellHaste:
+		return rot.newValueCurrentSpellHaste(config.GetCurrentSpellHaste())
 
 	// GCD
 	case *proto.APLValue_GcdIsReady:

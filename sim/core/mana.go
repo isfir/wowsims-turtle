@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"math"
 	"time"
 
 	"github.com/isfir/wowsims-turtle/sim/core/proto"
@@ -166,7 +167,7 @@ func (unit *Unit) ManaRegenPerSecondWhileCasting() float64 {
 	if unit.PseudoStats.SpiritRegenRateCasting != 0 || unit.PseudoStats.ForceFullSpiritRegen {
 		spiritRegenRate = spiritRegen * unit.PseudoStats.SpiritRegenMultiplier
 		if !unit.PseudoStats.ForceFullSpiritRegen {
-			spiritRegenRate *= unit.PseudoStats.SpiritRegenRateCasting
+			spiritRegenRate *= math.Min(unit.PseudoStats.SpiritRegenRateCasting, 1.0)
 		}
 	}
 	regenRate += spiritRegenRate

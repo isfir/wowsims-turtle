@@ -14,10 +14,11 @@ func (mage *Mage) ApplyTalents() {
 }
 
 func (mage *Mage) applyArcaneTalents() {
-	mage.applyMagicAbsorption()
+	mage.applyAcceleratedArcana()
 	mage.applyArcaneConcentration()
 	mage.applyArcaneInstability()
-	mage.applyAcceleratedArcana()
+	mage.applyArcaneMeditation()
+	mage.applyMagicAbsorption()
 	mage.applyResonanceCascade()
 	mage.applyTemporalConvergence()
 	mage.registerPresenceOfMindCD()
@@ -53,10 +54,6 @@ func (mage *Mage) applyArcaneTalents() {
 			}
 		})
 	}
-
-	// Arcane Meditation
-	// TODO: Implement turtle version properly
-	mage.PseudoStats.SpiritRegenRateCasting += 0.05 * float64(mage.Talents.ArcaneMeditation)
 
 	// Arcane Potency
 	if mage.Talents.ArcanePotency > 0 {
@@ -279,6 +276,57 @@ func (mage *Mage) applyArcaneInstability() {
 				mage.SpendMana(sim, mage.BaseMana*0.02, manaMetrics)
 				arcaneInstabilityProc.Cast(sim, result.Target)
 			}
+		},
+	})
+}
+
+func (mage *Mage) applyArcaneMeditation() {
+	if mage.Talents.ArcaneMeditation == 0 {
+		return
+	}
+
+	basePercent := []float64{0.07, 0.14, 0.20}[mage.Talents.ArcaneMeditation-1]
+
+	mage.PseudoStats.SpiritRegenRateCasting += basePercent
+	extraPercent := 2 * basePercent
+
+	var extraActive bool
+	var pa *core.PendingAction
+	mage.RegisterAura(core.Aura{
+		Label:    "Arcane Meditation",
+		Duration: core.NeverExpires,
+		OnReset: func(aura *core.Aura, sim *core.Simulation) {
+			extraActive = false
+			aura.Activate(sim)
+		},
+		OnGain: func(aura *core.Aura, sim *core.Simulation) {
+			pa = core.NewPeriodicAction(sim, core.PeriodicActionOptions{
+				Period: time.Second * 1,
+				OnAction: func(s *core.Simulation) {
+					currentManaPercent := mage.CurrentManaPercent()
+					if currentManaPercent < 0.35 && !extraActive {
+						mage.PseudoStats.SpiritRegenRateCasting += extraPercent
+						extraActive = true
+						mage.UpdateManaRegenRates()
+					} else if currentManaPercent >= 0.35 && extraActive {
+						mage.PseudoStats.SpiritRegenRateCasting -= extraPercent
+						extraActive = false
+						mage.UpdateManaRegenRates()
+					}
+					if sim.Log != nil {
+						sim.Log("Current Mana: %f, Current Spirit Regen Rate Casting: %f", mage.CurrentManaPercent(), mage.PseudoStats.SpiritRegenRateCasting)
+					}
+				},
+			})
+			sim.AddPendingAction(pa)
+		},
+		OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+			if extraActive {
+				mage.PseudoStats.SpiritRegenRateCasting -= extraPercent
+				extraActive = false
+				mage.UpdateManaRegenRates()
+			}
+			pa.Cancel(sim)
 		},
 	})
 }

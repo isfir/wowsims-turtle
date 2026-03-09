@@ -26,8 +26,8 @@ import {
 } from '../core/proto/common';
 import { Mage_Options as MageOptions, Mage_Options_ArmorType as ArmorType } from '../core/proto/mage';
 import { SavedTalents } from '../core/proto/ui';
-import STAPL from './apls/ST.apl.json';
 import MultiAPL from './apls/Multi.apl.json';
+import STAPL from './apls/ST.apl.json';
 import BISGear from './gear_sets/bis.gear.json';
 
 ///////////////////////////////////////////////////////////////////////////

@@ -100,7 +100,11 @@ func (unit *Unit) SpendMana(sim *Simulation, amount float64, metrics *ResourceMe
 		panic("Trying to spend negative mana!")
 	}
 
-	newMana := unit.CurrentMana() - amount
+	newMana := unit.CurrentMana()
+	if !unit.InfiniteMana {
+		newMana -= amount
+	}
+
 	metrics.AddEvent(-amount, -amount)
 
 	if sim.Log != nil {

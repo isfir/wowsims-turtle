@@ -240,6 +240,7 @@ export class Player<SpecType extends Spec> {
 	private specOptions: SpecOptions<SpecType>;
 	private reactionTime = 0;
 	private channelClipDelay = 0;
+	private infiniteMana = false;
 	private inFrontOfTarget = false;
 	private distanceFromTarget = 0;
 	private healingModel: HealingModel = HealingModel.create();
@@ -937,6 +938,17 @@ export class Player<SpecType extends Spec> {
 		this.miscOptionsChangeEmitter.emit(eventID);
 	}
 
+	getInfiniteMana(): boolean {
+		return this.infiniteMana;
+	}
+
+	setInfiniteMana(eventID: EventID, newInfiniteMana: boolean) {
+		if (newInfiniteMana === this.infiniteMana) return;
+
+		this.infiniteMana = newInfiniteMana;
+		this.miscOptionsChangeEmitter.emit(eventID);
+	}
+
 	getInFrontOfTarget(): boolean {
 		return this.inFrontOfTarget;
 	}
@@ -1393,6 +1405,7 @@ export class Player<SpecType extends Spec> {
 				profession2: this.getProfession2(),
 				reactionTimeMs: this.getReactionTime(),
 				channelClipDelayMs: this.getChannelClipDelay(),
+				infiniteMana: this.getInfiniteMana(),
 				inFrontOfTarget: this.getInFrontOfTarget(),
 				distanceFromTarget: this.getDistanceFromTarget(),
 				healingModel: this.getHealingModel(),
@@ -1452,6 +1465,7 @@ export class Player<SpecType extends Spec> {
 				this.setProfession2(eventID, proto.profession2);
 				this.setReactionTime(eventID, proto.reactionTimeMs);
 				this.setChannelClipDelay(eventID, proto.channelClipDelayMs);
+				this.setInfiniteMana(eventID, proto.infiniteMana);
 				this.setInFrontOfTarget(eventID, proto.inFrontOfTarget);
 				this.setDistanceFromTarget(eventID, proto.distanceFromTarget);
 				this.setHealingModel(eventID, proto.healingModel || HealingModel.create());

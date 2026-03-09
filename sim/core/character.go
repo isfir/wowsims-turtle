@@ -114,6 +114,7 @@ func NewCharacter(party *Party, partyIndex int, player *proto.Player) Character 
 
 			ReactionTime:            max(0, time.Duration(player.ReactionTimeMs)*time.Millisecond),
 			ChannelClipDelay:        max(0, time.Duration(player.ChannelClipDelayMs)*time.Millisecond),
+			InfiniteMana:            player.InfiniteMana,
 			DistanceFromTarget:      player.DistanceFromTarget,
 			StartDistanceFromTarget: player.DistanceFromTarget,
 		},

@@ -135,4 +135,5 @@ export const OtherDefaults = {
 	profession2: Profession.Engineering,
 	race: Race.RaceGnome,
 	channelClipDelay: 50,
+	infiniteMana: true,
 };

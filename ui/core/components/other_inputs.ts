@@ -367,3 +367,15 @@ export const InspirationUptime = {
 		player.setHealingModel(eventID, healingModel);
 	},
 };
+
+export const InfiniteMana = {
+	id: 'infiniteMana',
+	type: 'boolean' as const,
+	label: 'Infinite Mana',
+	labelTooltip: 'Spells use no mana.',
+	changedEvent: (player: Player<any>) => player.miscOptionsChangeEmitter,
+	getValue: (player: Player<any>) => player.getInfiniteMana(),
+	setValue: (eventID: EventID, player: Player<any>, newValue: boolean) => {
+		player.setInfiniteMana(eventID, newValue);
+	},
+};

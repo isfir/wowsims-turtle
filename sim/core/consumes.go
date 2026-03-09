@@ -30,6 +30,7 @@ func applyConsumeEffects(agent Agent) {
 
 	registerPotionCD(agent, consumes)
 	registerConjuredCD(agent, consumes)
+	registerNordanaarHerbalTeaCD(agent, consumes)
 	registerExplosivesCD(agent, consumes)
 }
 
@@ -1323,5 +1324,54 @@ func registerConjuredCD(agent Agent, consumes *proto.Consumes) {
 		return
 	}
 
+	character.AddMajorCooldown(mcd)
+}
+
+func registerNordanaarHerbalTeaCD(agent Agent, consumes *proto.Consumes) {
+	character := agent.GetCharacter()
+
+	if !consumes.NordanaarHerbalTea {
+		return
+	}
+
+	cdTimer := character.NewTimer()
+	cdDuration := time.Minute * 2
+
+	actionID := ActionID{ItemID: 61675}
+	healthMetrics := character.NewHealthMetrics(actionID)
+	manaMetrics := character.NewManaMetrics(actionID)
+
+	minHealth := 525.0
+	maxHealth := 876.0
+	minMana := 810.0
+	maxMana := 1351.0
+
+	mcd := MajorCooldown{
+		Type: CooldownTypeSurvival | CooldownTypeMana,
+		ShouldActivate: func(sim *Simulation, character *Character) bool {
+			totalRegen := character.ManaRegenPerSecondWhileCasting() * 2
+			return ((character.MaxHealth()-character.CurrentHealth() >= maxHealth) ||
+				(character.MaxMana()-(character.CurrentMana()+totalRegen) >= maxMana)) && !character.IsShapeshifted()
+		},
+		Spell: character.GetOrRegisterSpell(SpellConfig{
+			ActionID: actionID,
+			Flags:    SpellFlagNoOnCastComplete,
+			Cast: CastConfig{
+				CD: Cooldown{
+					Timer:    cdTimer,
+					Duration: cdDuration,
+				},
+				ModifyCast: func(sim *Simulation, _ *Spell, _ *Cast) {
+					character.CancelShapeshift(sim)
+				},
+			},
+			ApplyEffects: func(sim *Simulation, _ *Unit, _ *Spell) {
+				healthGain := sim.RollWithLabel(minHealth, maxHealth, "Nordanaar Herbal Tea Health")
+				character.GainHealth(sim, healthGain, healthMetrics)
+				manaGain := sim.RollWithLabel(minMana, maxMana, "Nordanaar Herbal Tea Mana")
+				character.AddMana(sim, manaGain, manaMetrics)
+			},
+		}),
+	}
 	character.AddMajorCooldown(mcd)
 }

@@ -167,6 +167,11 @@ func (mage *Mage) applyMagicAbsorption() {
 
 	mage.AddResistances(magicAbsorptionBonus)
 
+	icd := core.Cooldown{
+		Timer:    mage.NewTimer(),
+		Duration: time.Second * 2,
+	}
+
 	mage.RegisterAura(core.Aura{
 		Label:    "Magic Absorption",
 		ActionID: core.ActionID{SpellID: spellID},
@@ -179,7 +184,12 @@ func (mage *Mage) applyMagicAbsorption() {
 				return
 			}
 
+			if !icd.IsReady(sim) {
+				return
+			}
+
 			if result.DidResist() {
+				icd.Use(sim)
 				mage.AddMana(sim, mage.MaxMana()*float64(mage.Talents.MagicAbsorption)/100, manaMetrics)
 			}
 		},

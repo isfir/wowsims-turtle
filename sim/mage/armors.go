@@ -67,14 +67,14 @@ func (mage *Mage) applyMageArmor() {
 		40: 5,
 		50: 10,
 		60: 15,
-	}[mage.Level]
+	}[mage.Level] + 15 // Improved mage armor modifier
 
 	mage.MageArmorAura = core.MakePermanent(mage.RegisterAura(core.Aura{
 		Label:      "Mage Armor",
 		ActionID:   core.ActionID{SpellID: spellID},
 		BuildPhase: core.CharacterBuildPhaseBuffs,
 		OnGain: func(aura *core.Aura, sim *core.Simulation) {
-			mage.PseudoStats.SpiritRegenRateCasting += .3
+			mage.PseudoStats.SpiritRegenRateCasting += (.3 + .15) // Improved mage armor modifier
 
 			if aura.Unit.Env.MeasuringStats && aura.Unit.Env.State != core.Finalized {
 				mage.AddResistances(spellRes)
@@ -83,7 +83,7 @@ func (mage *Mage) applyMageArmor() {
 			}
 		},
 		OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-			mage.PseudoStats.SpiritRegenRateCasting -= .3
+			mage.PseudoStats.SpiritRegenRateCasting -= (.3 + .15) // Improved mage armor modifier
 
 			if aura.Unit.Env.MeasuringStats && aura.Unit.Env.State != core.Finalized {
 				mage.AddResistances(-1 * spellRes)

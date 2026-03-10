@@ -373,12 +373,10 @@ export abstract class IndividualSimUI<SpecType extends Spec> extends SimUI {
 		// TODO: Classic
 		this.simHeader.addImportLink('JSON', new IndividualJsonImporter(this.rootElem, this), true);
 		this.simHeader.addImportLink('60U SoD', new Individual60UImporter(this.rootElem, this), true);
-		//this.simHeader.addImportLink('WoWHead', new IndividualWowheadGearPlannerImporter(this.rootElem, this), false);
 		this.simHeader.addImportLink('Addon', new IndividualAddonImporter(this.rootElem, this), true);
 
 		this.simHeader.addExportLink('Link', new IndividualLinkExporter(this.rootElem, this), false);
 		this.simHeader.addExportLink('JSON', new IndividualJsonExporter(this.rootElem, this), true);
-		//this.simHeader.addExportLink('WoWHead', new IndividualWowheadGearPlannerExporter(this.rootElem, this), false);
 		this.simHeader.addExportLink('60U SoD EP', new Individual60UEPExporter(this.rootElem, this), false);
 		this.simHeader.addExportLink('Pawn EP', new IndividualPawnEPExporter(this.rootElem, this), false);
 		//this.simHeader.addExportLink("CLI", new IndividualCLIExporter(this.rootElem, this), true);

@@ -160,8 +160,8 @@ var ItemDenyList = map[int32]struct{}{
 	14550: {},
 }
 
-// Item icons to include in the DB, so they don't need to be separately loaded in the UI.
-var ExtraItemIcons = []int32{
+// Consumables to include in the DB
+var Consumables = []int32{
 	// Demonic Rune
 	12662,
 

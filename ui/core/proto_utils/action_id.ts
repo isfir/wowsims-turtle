@@ -1,10 +1,11 @@
-import { getWowheadLanguagePrefix } from '../constants/lang';
+import { TooltipManager } from '../components/tooltip_manager';
+
 import { MAX_CHARACTER_LEVEL } from '../constants/mechanics';
 import { BASE_PATH } from '../constants/other.js';
 import { ResourceType } from '../proto/api';
 import { ActionID as ActionIdProto, ItemRandomSuffix, OtherAction } from '../proto/common';
 import { IconData, UIItem as Item } from '../proto/ui';
-import { buildWowheadTooltipDataset, WowheadTooltipItemParams, WowheadTooltipSpellParams } from '../wowhead';
+import { ItemTooltipContext, SpellTooltipContext } from '../tooltip_context';
 import { Database } from './database';
 
 // Used to filter action IDs by level
@@ -165,12 +166,6 @@ export class ActionId {
 	static makeSpellUrl(id: number): string {
 		return `https://database.turtlecraft.gg/?spell=${id}`;
 	}
-	static async makeItemTooltipData(id: number, params?: Omit<WowheadTooltipItemParams, 'itemId'>) {
-		return buildWowheadTooltipDataset({ itemId: id, ...params });
-	}
-	static async makeSpellTooltipData(id: number, params?: Omit<WowheadTooltipSpellParams, 'spellId'>) {
-		return buildWowheadTooltipDataset({ spellId: id, ...params });
-	}
 	static makeQuestUrl(id: number): string {
 		return `https://database.turtlecraft.gg/?quest=${id}`;
 	}
@@ -178,11 +173,11 @@ export class ActionId {
 		return `https://database.turtlecraft.gg/?npc=${id}`;
 	}
 	static makeZoneUrl(id: number): string {
-		const langPrefix = getWowheadLanguagePrefix();
-		return `https://wowhead.com/${langPrefix}zone=${id}`;
+		return `https://database.turtlecraft.gg/?zone=${id}`;
 	}
 
-	setWowheadHref(elem: HTMLAnchorElement) {
+	// Sets href to Turtlecraft database (https://database.turtlecraft.gg/)
+	setDatabaseHref(elem: HTMLAnchorElement) {
 		if (this.itemId) {
 			elem.href = ActionId.makeItemUrl(this.itemId, this.randomSuffixId);
 		} else if (this.spellId) {
@@ -190,28 +185,25 @@ export class ActionId {
 		}
 	}
 
-	async setWowheadDataset(elem: HTMLElement, params?: Omit<WowheadTooltipItemParams, 'itemId'> | Omit<WowheadTooltipSpellParams, 'spellId'>) {
-		(this.itemId
-			? ActionId.makeItemTooltipData(this.itemId, params)
-			: ActionId.makeSpellTooltipData(this.spellIdTooltipOverride || this.spellId, params)
-		).then(url => {
-			if (elem) elem.dataset.wowhead = url;
-		});
+	async attachTooltip(elem: HTMLElement, tooltipContext?: Omit<ItemTooltipContext, 'itemId'> | Omit<SpellTooltipContext, 'spellId'>) {
+		TooltipManager.attachTooltip(elem, this, tooltipContext);
 	}
 
-	setBackgroundAndHref(elem: HTMLAnchorElement) {
+	applyToAnchor(
+		elem: HTMLAnchorElement,
+		tooltipContext?: Omit<ItemTooltipContext, 'itemId'> | Omit<SpellTooltipContext, 'spellId'>,
+	) {
 		this.setBackground(elem);
-		this.setWowheadHref(elem);
+		this.setDatabaseHref(elem);
+		this.attachTooltip(elem, tooltipContext);
 	}
 
-	async fillAndSet(elem: HTMLAnchorElement, setHref: boolean, setBackground: boolean): Promise<ActionId> {
+	async fillAndApplyToAnchor(
+		elem: HTMLAnchorElement,
+		tooltipContext?: Omit<ItemTooltipContext, 'itemId'> | Omit<SpellTooltipContext, 'spellId'>,
+	): Promise<ActionId> {
 		const filled = await this.fill();
-		if (setHref) {
-			filled.setWowheadHref(elem);
-		}
-		if (setBackground) {
-			filled.setBackground(elem);
-		}
+		filled.applyToAnchor(elem, tooltipContext);
 		return filled;
 	}
 
@@ -381,7 +373,7 @@ export class ActionId {
 			case `Arcane Explosion`:
 			case `Arcane Surge`:
 				if (this.tag > 0) {
-					name = `${name} (Resonance Cascade #${this.tag}) `
+					name = `${name} (Resonance Cascade #${this.tag}) `;
 				}
 				break;
 			default:
@@ -632,7 +624,6 @@ const petNameToActionId: Record<string, ActionId> = {
 	Shadowfiend: ActionId.fromSpellId(401977),
 };
 
-// https://wowhead.com/hunter-pets
 const petNameToIcon: Record<string, string> = {
 	Bat: `${BASE_PATH}assets/icons/ability_hunter_pet_bat.jpg`,
 	Bear: `${BASE_PATH}assets/icons/ability_hunter_pet_bear.jpg`,

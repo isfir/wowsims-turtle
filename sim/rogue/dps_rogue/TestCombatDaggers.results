@@ -127,8 +127,8 @@ dps_results: {
 dps_results: {
  key: "TestCombatDaggers-Phase5-AllItems-EmblemsofVeiledShadows"
  value: {
-  dps: 1058.71678
-  tps: 751.68891
+  dps: 1050.88356
+  tps: 746.12732
  }
 }
 dps_results: {

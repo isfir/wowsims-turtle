@@ -251,22 +251,14 @@ export class APLActionIDPicker extends DropdownPicker<Player<any>, ActionID, Act
 			setOptionContent: (button, valueConfig) => {
 				const actionId = valueConfig.value;
 				const iconRef = ref<HTMLAnchorElement>();
-				const isAuraType = ['auras', 'stackable_auras', 'icd_auras', 'exclusive_effect_auras'].includes(config.actionIdSet);
 				button.appendChild(
 					<>
-						<a
-							ref={iconRef}
-							className="apl-actionid-item-icon"
-							dataset={{
-								whtticon: false,
-							}}
-						/>
+						<a ref={iconRef} className="apl-actionid-item-icon" />
 						{actionId.name}
 					</>,
 				);
 
-				actionId.setBackgroundAndHref(iconRef.value!);
-				actionId.setWowheadDataset(iconRef.value!, { useBuffAura: isAuraType });
+				actionId.applyToAnchor(iconRef.value!);
 			},
 			createMissingValue: value => {
 				if (value.anyId() == 0) {
@@ -333,9 +325,9 @@ export class APLRunePicker extends DropdownPicker<Player<any>, ActionID, null> {
 				const actionId = ActionId.fromSpellId(0);
 				const iconElem = document.createElement('a');
 				iconElem.classList.add('apl-actionid-item-icon');
-				iconElem.dataset.whtticon = 'false';
+
 				iconElem.classList.add('apl-actionid-item-icon');
-				actionId.fillAndSet(iconElem, true, true);
+				actionId.fillAndApplyToAnchor(iconElem);
 				button.appendChild(iconElem);
 
 				const textElem = document.createTextNode('');

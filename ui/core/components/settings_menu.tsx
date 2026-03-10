@@ -1,7 +1,6 @@
 import tippy from 'tippy.js';
 import { ref } from 'tsx-vanilla';
 
-import { wowheadSupportedLanguages } from '../constants/lang.js';
 import { Sim } from '../sim.js';
 import { SimUI } from '../sim_ui.js';
 import { EventID, TypedEvent } from '../typed_event.js';
@@ -21,7 +20,6 @@ export class SettingsMenu extends BaseModal {
 		const restoreDefaultsButton = ref<HTMLButtonElement>();
 		const fixedRngSeed = ref<HTMLDivElement>();
 		const lastUsedRngSeed = ref<HTMLDivElement>();
-		const language = ref<HTMLDivElement>();
 		const showThreatMetrics = ref<HTMLDivElement>();
 		const showExperimental = ref<HTMLDivElement>();
 		const showQuickSwap = ref<HTMLDivElement>();
@@ -41,7 +39,6 @@ export class SettingsMenu extends BaseModal {
 							</span>
 						</div>
 					</div>
-					<div ref={language} className="language-picker within-raid-sim-hide"></div>
 				</div>
 				<div ref={showThreatMetrics} className="show-threat-metrics-picker w-50 pe-2"></div>
 				<div ref={showExperimental} className="show-experimental-picker w-50 pe-2"></div>
@@ -96,32 +93,6 @@ export class SettingsMenu extends BaseModal {
 			this.simUI.sim.lastUsedRngSeedChangeEmitter.on(() => {
 				if (lastUsedRngSeed.value) lastUsedRngSeed.value.textContent = String(this.simUI.sim.getLastUsedRngSeed());
 			});
-		}
-
-		if (language.value) {
-			const langs = Object.keys(wowheadSupportedLanguages);
-			const defaultLang = langs.indexOf('en');
-			const languagePicker = new EnumPicker(language.value, this.simUI.sim, {
-				id: 'simui-language-picker',
-				label: 'Language',
-				labelTooltip: 'Controls the language for Wowhead tooltips.',
-				values: langs.map((lang, i) => {
-					return {
-						name: wowheadSupportedLanguages[lang],
-						value: i,
-					};
-				}),
-				changedEvent: (sim: Sim) => sim.languageChangeEmitter,
-				getValue: (sim: Sim) => {
-					const idx = langs.indexOf(sim.getLanguage());
-					return idx == -1 ? defaultLang : idx;
-				},
-				setValue: (eventID: EventID, sim: Sim, newValue: number) => {
-					sim.setLanguage(eventID, langs[newValue] || 'en');
-				},
-			});
-			// Refresh page after language change, to apply the changes.
-			languagePicker.changeEmitter.on(() => setTimeout(() => location.reload(), 100));
 		}
 
 		if (showThreatMetrics.value)

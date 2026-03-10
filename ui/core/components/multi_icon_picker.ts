@@ -47,8 +47,6 @@ export class MultiIconPicker<ModObject> extends Component {
 				role="button"
 				data-bs-toggle="dropdown"
 				aria-expanded="false"
-				data-disable-wowhead-touch-tooltip="true"
-				data-whtticon="false"
 			></a>
 			<ul class="dropdown-menu"></ul>
 			<label class="multi-icon-picker-label form-label"></label>
@@ -141,14 +139,14 @@ export class MultiIconPicker<ModObject> extends Component {
 		if (this.currentValue) {
 			this.buttonElem.classList.add('active');
 			if (this.config.categoryId != null) {
-				this.config.categoryId.fillAndSet(this.buttonElem, false, true);
+				this.config.categoryId.fillAndApplyToAnchor(this.buttonElem);
 			} else {
-				this.currentValue.fillAndSet(this.buttonElem, false, true);
+				this.currentValue.fillAndApplyToAnchor(this.buttonElem);
 			}
 		} else {
 			this.buttonElem.classList.remove('active');
 			if (this.config.categoryId != null) {
-				this.config.categoryId.fillAndSet(this.buttonElem, false, true);
+				this.config.categoryId.fillAndApplyToAnchor(this.buttonElem);
 			} else {
 				this.buttonElem.style.backgroundImage = '';
 			}

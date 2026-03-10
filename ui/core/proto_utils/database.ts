@@ -1,7 +1,7 @@
 import { MAX_CHARACTER_LEVEL } from '../constants/mechanics.js';
 import { BASE_PATH, REPO_NAME } from '../constants/other.js';
 import { Class, EquipmentSpec, ItemRandomSuffix, ItemSlot, ItemSpec, ItemSwap, PresetEncounter, PresetTarget, SimDatabase } from '../proto/common.js';
-import { IconData, UIDatabase, UIEnchant as Enchant, UIFaction as Faction, UIItem as Item, UINPC as Npc, UIZone as Zone } from '../proto/ui.js';
+import { IconData, UIDatabase, UIEnchant as Enchant, UIFaction as Faction, UIItem as Item, UISpell as Spell, UINPC as Npc, UIZone as Zone, UIItemSet as ItemSet } from '../proto/ui.js';
 import { distinct } from '../utils.js';
 import { EquippedItem } from './equipped_item.js';
 import { Gear, ItemSwapGear } from './gear.js';
@@ -63,13 +63,16 @@ export class Database {
 	}
 
 	private readonly items = new Map<number, Item>();
+	private readonly spells = new Map<number, Spell>();
 	private readonly randomSuffixes = new Map<number, ItemRandomSuffix>();
+	private readonly enchantsByEffectId = new Map<number, Enchant>();
 	private readonly enchantsBySlot: Partial<Record<ItemSlot, Enchant[]>> = {};
 	private readonly zones = new Map<number, Zone>();
 	private readonly npcs = new Map<number, Npc>();
 	private readonly factions = new Map<number, Faction>();
 	private readonly presetEncounters = new Map<string, PresetEncounter>();
 	private readonly presetTargets = new Map<string, PresetTarget>();
+	private readonly itemSets = new Map<number, ItemSet>();
 	private readonly itemIcons: Record<number, Promise<IconData>> = {};
 	private readonly spellIcons: Record<number, Promise<IconData>> = {};
 	private loadedLeftovers = false;
@@ -81,8 +84,11 @@ export class Database {
 	// Add all data from the db proto into this database.
 	private loadProto(db: UIDatabase) {
 		db.items.forEach(item => this.items.set(item.id, item));
+		db.consumables.forEach(item => this.items.set(item.id, item));
+		db.spells.forEach(spell => this.spells.set(spell.id, spell));
 		db.randomSuffixes.forEach(randomSuffix => this.randomSuffixes.set(randomSuffix.id, randomSuffix));
 		db.enchants.forEach(enchant => {
+			this.enchantsByEffectId.set(enchant.effectId, enchant);
 			const slots = getEligibleEnchantSlots(enchant);
 			slots.forEach(slot => {
 				if (!this.enchantsBySlot[slot]) {
@@ -91,29 +97,20 @@ export class Database {
 				this.enchantsBySlot[slot]!.push(enchant);
 			});
 		});
-
 		db.npcs.forEach(npc => this.npcs.set(npc.id, npc));
 		db.zones.forEach(zone => this.zones.set(zone.id, zone));
 		db.factions.forEach(faction => this.factions.set(faction.id, faction));
 		db.encounters.forEach(encounter => this.presetEncounters.set(encounter.path, encounter));
+		db.itemSets.forEach(itemSet => this.itemSets.set(itemSet.id, itemSet));
+
 		db.encounters
 			.map(e => e.targets)
 			.flat()
 			.forEach(target => this.presetTargets.set(target.path, target));
 
-		db.items.forEach(
-			item =>
-			(this.itemIcons[item.id] = Promise.resolve(
-				IconData.create({
-					id: item.id,
-					name: item.name,
-					icon: item.icon,
-				}),
-			)),
-		);
-
-		db.itemIcons.forEach(data => (this.itemIcons[data.id] = Promise.resolve(data)));
-		db.spellIcons.forEach(data => (this.spellIcons[data.id] = Promise.resolve(data)));
+		this.seedItemIcons(db.items);
+		this.seedItemIcons(db.consumables);
+		this.seedSpellIcons(db.spells);
 	}
 
 	getAllItems(): Array<Item> {
@@ -126,6 +123,14 @@ export class Database {
 
 	getItemById(id: number): Item | undefined {
 		return this.items.get(id);
+	}
+
+	getSpellById(id: number): Spell | undefined {
+		return this.spells.get(id);
+	}
+
+	getEnchantByEffectId(effectId: number): Enchant | null {
+		return this.enchantsByEffectId.get(effectId) ?? null;
 	}
 
 	getRandomSuffixById(id: number): ItemRandomSuffix | undefined {
@@ -144,6 +149,9 @@ export class Database {
 	}
 	getFaction(factionId: number): Faction | null {
 		return this.factions.get(factionId) || null;
+	}
+	getItemSetById(id: number): ItemSet | null {
+		return this.itemSets.get(id) || null;
 	}
 
 	lookupItemSpec(itemSpec: ItemSpec): EquippedItem | null {
@@ -222,7 +230,7 @@ export class Database {
 	static async getItemIconData(itemId: number): Promise<IconData> {
 		const db = await Database.get();
 		if (!db.itemIcons[itemId]) {
-			db.itemIcons[itemId] = Database.getWowheadItemTooltipData(itemId);
+			db.itemIcons[itemId] = Database.createMissingItemIconData(itemId);
 		}
 		return await db.itemIcons[itemId];
 	}
@@ -230,7 +238,7 @@ export class Database {
 	static async getSpellIconData(spellId: number): Promise<IconData> {
 		const db = await Database.get();
 		if (!db.spellIcons[spellId]) {
-			db.spellIcons[spellId] = Database.getWowheadSpellTooltipData(spellId);
+			db.spellIcons[spellId] = Database.createMissingSpellIconData(spellId);
 		}
 		return await db.spellIcons[spellId];
 	}
@@ -238,26 +246,51 @@ export class Database {
 	static async getSpellRankData(spellId: number): Promise<IconData> {
 		const db = await Database.get();
 		if (!db.spellIcons[spellId]) {
-			db.spellIcons[spellId] = Database.getWowheadSpellTooltipData(spellId);
+			db.spellIcons[spellId] = Database.createMissingSpellIconData(spellId);
 		}
 		return await db.spellIcons[spellId];
 	}
 
-	private static async getWowheadItemTooltipData(id: number): Promise<IconData> {
-		return Database.getWowheadTooltipData(id, 'item');
+
+	private static createIconData(id: number, name: string, icon: string, rank = 0): IconData {
+		return IconData.create({
+			id,
+			name: name || '',
+			icon: icon || 'question-mark',
+			rank,
+		});
 	}
-	private static async getWowheadSpellTooltipData(id: number): Promise<IconData> {
-		return Database.getWowheadTooltipData(id, 'spell');
+
+	private seedItemIcons(items: Array<Item>) {
+		items.forEach(item => {
+			this.itemIcons[item.id] = Promise.resolve(
+				Database.createIconData(item.id, item.name, item.icon),
+			);
+		});
 	}
-	private static async getWowheadTooltipData(id: number, tooltipPostfix: string): Promise<IconData> {
+
+	private seedSpellIcons(spells: Array<Spell>) {
+		spells.forEach(spell => {
+			this.spellIcons[spell.id] = Promise.resolve(
+				Database.createIconData(spell.id, spell.name, spell.icon, spell.rank),
+			);
+		});
+	}
+
+	private static async createMissingItemIconData(id: number): Promise<IconData> {
+		return Database.createMissingIconData(id, 'item');
+	}
+	private static async createMissingSpellIconData(id: number): Promise<IconData> {
+		return Database.createMissingIconData(id, 'spell');
+	}
+	private static async createMissingIconData(id: number, type: string): Promise<IconData> {
 		if (id === 0) return IconData.create();
 
-		console.warn(`Wowhead tooltip data requested for ${tooltipPostfix} ${id}; returning default icon.`);
+		console.warn(`Missing icon data for ${type} ${id}; returning default icon.`);
 		return IconData.create({
 			id: id,
 			name: '',
 			icon: 'question-mark',
-			hasBuff: false,
 			rank: 0,
 		});
 	}

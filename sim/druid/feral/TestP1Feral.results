@@ -141,8 +141,8 @@ dps_results: {
 dps_results: {
  key: "TestP1Feral-Phase1-AllItems-SymbolsofUnendingLife"
  value: {
-  dps: 559.87875
-  tps: 397.51391
+  dps: 556.69916
+  tps: 395.25641
  }
 }
 dps_results: {

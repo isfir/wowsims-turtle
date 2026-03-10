@@ -652,8 +652,7 @@ export class Timeline extends ResultComponent {
 		};
 		const event = this.hiddenIdsChangeEmitter.on(updateHidden);
 		updateHidden();
-		actionId.setBackgroundAndHref(labelIcon.value!);
-		actionId.setWowheadDataset(labelIcon.value!, { useBuffAura: isAura });
+		actionId.applyToAnchor(labelIcon.value!);
 
 		this.addOnResetCallback(() => {
 			hideElem.value?.removeEventListener('click', onClickHandler);
@@ -702,7 +701,7 @@ export class Timeline extends ResultComponent {
 					<span className="rotation-label-text">{labelText}</span>
 				</div>
 			);
-			filledActionId.setBackgroundAndHref(labelIcon.value!);
+			filledActionId.applyToAnchor(labelIcon.value!);
 			iconElem.appendChild(labelElem);
 		});
 

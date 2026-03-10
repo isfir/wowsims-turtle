@@ -45,8 +45,8 @@ export const APLPresets = {
 //                                 Talent Presets
 ///////////////////////////////////////////////////////////////////////////
 
-// Default talents. Uses the wowhead calculator format, make the talents on
-// https://wowhead.com/talent-calc and copy the numbers in the url.
+// Default talents. Uses the talent string format (numeric), make the talents on
+// a talent calculator and copy the numbers in the url.
 
 export const StandardTalents = {
 	name: 'Standard',

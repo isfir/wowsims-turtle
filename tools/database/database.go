@@ -37,8 +37,9 @@ type WowDatabase struct {
 	Npcs     map[int32]*proto.UINPC
 	Factions map[int32]*proto.UIFaction
 
-	ItemIcons  map[int32]*proto.IconData
-	SpellIcons map[int32]*proto.IconData
+	Consumables map[int32]*proto.UIItem
+	Spells      map[int32]*proto.UISpell
+	ItemSets    map[int32]*proto.UIItemSet
 
 	Encounters []*proto.PresetEncounter
 }
@@ -56,8 +57,9 @@ func NewWowDatabase() *WowDatabase {
 		Npcs:           make(map[int32]*proto.UINPC),
 		Factions:       make(map[int32]*proto.UIFaction),
 
-		ItemIcons:  make(map[int32]*proto.IconData),
-		SpellIcons: make(map[int32]*proto.IconData),
+		Consumables: make(map[int32]*proto.UIItem),
+		Spells:      make(map[int32]*proto.UISpell),
+		ItemSets:    make(map[int32]*proto.UIItemSet),
 	}
 }
 
@@ -70,8 +72,9 @@ func (db *WowDatabase) Clone() *WowDatabase {
 		Npcs:           maps.Clone(db.Npcs),
 		Factions:       maps.Clone(db.Factions),
 
-		ItemIcons:  maps.Clone(db.ItemIcons),
-		SpellIcons: maps.Clone(db.SpellIcons),
+		Consumables: maps.Clone(db.Consumables),
+		Spells:      maps.Clone(db.Spells),
+		ItemSets:    maps.Clone(db.ItemSets),
 	}
 }
 
@@ -156,32 +159,37 @@ func (db *WowDatabase) MergeFaction(src *proto.UIFaction) {
 	}
 }
 
-func (db *WowDatabase) MergeItemIcon(id int32, src map[int32]*proto.UIItem) {
+func (db *WowDatabase) MergeConsumable(id int32, src map[int32]*proto.UIItem) {
 	if item, ok := src[id]; ok {
-		if item.GetName() == "" || item.GetIcon() == "" {
-			return
-		}
-		db.ItemIcons[id] = &proto.IconData{
-			Id:   id,
-			Name: item.GetName(),
-			Icon: item.GetIcon(),
-		}
+		db.Consumables[id] = item
 	} else if id != 0 {
-		panic(fmt.Sprintf("No item tooltip with id %d", id))
+		panic(fmt.Sprintf("No item found with id %d", id))
 	}
 }
 
-func (db *WowDatabase) MergeSpellIcons(arr []*proto.IconData) {
-	for _, item := range arr {
-		db.MergeSpellIcon(item)
+func (db *WowDatabase) MergeSpells(arr []*proto.UISpell) {
+	for _, spell := range arr {
+		db.MergeSpell(spell)
 	}
 }
-func (db *WowDatabase) MergeSpellIcon(src *proto.IconData) {
-	if dst, ok := db.SpellIcons[src.Id]; ok {
-		// googleproto.Merge concatenates lists, but we want replacement, so do them manually.
+func (db *WowDatabase) MergeSpell(src *proto.UISpell) {
+	if dst, ok := db.Spells[src.Id]; ok {
 		googleProto.Merge(dst, src)
 	} else {
-		db.SpellIcons[src.Id] = src
+		db.Spells[src.Id] = src
+	}
+}
+
+func (db *WowDatabase) MergeItemSets(arr []*proto.UIItemSet) {
+	for _, itemSet := range arr {
+		db.MergeItemSet(itemSet)
+	}
+}
+func (db *WowDatabase) MergeItemSet(src *proto.UIItemSet) {
+	if dst, ok := db.ItemSets[src.Id]; ok {
+		googleProto.Merge(dst, src)
+	} else {
+		db.ItemSets[src.Id] = src
 	}
 }
 
@@ -220,8 +228,9 @@ func (db *WowDatabase) ToUIProto() *proto.UIDatabase {
 		Zones:          mapToSlice(db.Zones),
 		Npcs:           mapToSlice(db.Npcs),
 		Factions:       mapToSlice(db.Factions),
-		ItemIcons:      mapToSlice(db.ItemIcons),
-		SpellIcons:     mapToSlice(db.SpellIcons),
+		Consumables:    mapToSlice(db.Consumables),
+		Spells:         mapToSlice(db.Spells),
+		ItemSets:       mapToSlice(db.ItemSets),
 	}
 }
 
@@ -251,8 +260,9 @@ func ReadDatabaseFromJson(jsonStr string) *WowDatabase {
 		Zones:          sliceToMap(dbProto.Zones),
 		Npcs:           sliceToMap(dbProto.Npcs),
 		Factions:       sliceToMap(dbProto.Factions),
-		ItemIcons:      sliceToMap(dbProto.ItemIcons),
-		SpellIcons:     sliceToMap(dbProto.SpellIcons),
+		Consumables:    sliceToMap(dbProto.Consumables),
+		Spells:         sliceToMap(dbProto.Spells),
+		ItemSets:       sliceToMap(dbProto.ItemSets),
 	}
 }
 
@@ -293,11 +303,13 @@ func (db *WowDatabase) WriteJson(jsonFilePath string) {
 	buffer.WriteString(",\n")
 	tools.WriteProtoArrayToBuffer(uidb.Factions, buffer, "factions")
 	buffer.WriteString(",\n")
-	tools.WriteProtoArrayToBuffer(uidb.ItemIcons, buffer, "itemIcons")
+	tools.WriteProtoArrayToBuffer(uidb.Consumables, buffer, "consumables")
 	buffer.WriteString(",\n")
-	tools.WriteProtoArrayToBuffer(uidb.SpellIcons, buffer, "spellIcons")
+	tools.WriteProtoArrayToBuffer(uidb.Spells, buffer, "spells")
 	buffer.WriteString(",\n")
 	tools.WriteProtoArrayToBuffer(uidb.Encounters, buffer, "encounters")
+	buffer.WriteString(",\n")
+	tools.WriteProtoArrayToBuffer(uidb.ItemSets, buffer, "itemSets")
 	buffer.WriteString("\n")
 
 	buffer.WriteString("}")

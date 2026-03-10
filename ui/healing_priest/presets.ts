@@ -15,8 +15,8 @@ export const GearBlank = PresetUtils.makePresetGear('Blank', BlankGear);
 export const ROTATION_PRESET_DISC = PresetUtils.makePresetAPLRotation('Disc', DiscApl);
 export const ROTATION_PRESET_HOLY = PresetUtils.makePresetAPLRotation('Holy', HolyApl);
 
-// Default talents. Uses the wowhead calculator format, make the talents on
-// https://wowhead.com/talent-calc and copy the numbers in the url.
+// Default talents. Uses the talent string format (numeric), make the talents on
+// a talent calculator and copy the numbers in the url.
 export const DiscTalents = {
 	name: 'Disc',
 	data: SavedTalents.create({

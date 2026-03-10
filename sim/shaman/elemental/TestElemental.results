@@ -638,8 +638,8 @@ dps_results: {
 dps_results: {
  key: "TestElemental-Phase1-AllItems-TheTenStorms"
  value: {
-  dps: 503.3664
-  tps: 479.01801
+  dps: 503.40065
+  tps: 479.05225
  }
 }
 dps_results: {
@@ -799,8 +799,8 @@ dps_results: {
 dps_results: {
  key: "TestElemental-Phase2-AllItems-TheTenStorms"
  value: {
-  dps: 522.24241
-  tps: 497.54549
+  dps: 522.22223
+  tps: 497.43642
  }
 }
 dps_results: {
@@ -960,8 +960,8 @@ dps_results: {
 dps_results: {
  key: "TestElemental-Phase3-AllItems-TheTenStorms"
  value: {
-  dps: 556.10477
-  tps: 526.76394
+  dps: 556.01426
+  tps: 526.98303
  }
 }
 dps_results: {
@@ -1114,15 +1114,15 @@ dps_results: {
 dps_results: {
  key: "TestElemental-Phase4-AllItems-TheEarthshatterer"
  value: {
-  dps: 538.23617
-  tps: 507.99318
+  dps: 538.20329
+  tps: 507.9603
  }
 }
 dps_results: {
  key: "TestElemental-Phase4-AllItems-TheTenStorms"
  value: {
-  dps: 562.38888
-  tps: 532.57409
+  dps: 562.07033
+  tps: 532.42277
  }
 }
 dps_results: {
@@ -1275,15 +1275,15 @@ dps_results: {
 dps_results: {
  key: "TestElemental-Phase5-AllItems-TheEarthshatterer"
  value: {
-  dps: 596.33831
-  tps: 563.71781
+  dps: 596.02274
+  tps: 563.36027
  }
 }
 dps_results: {
  key: "TestElemental-Phase5-AllItems-TheTenStorms"
  value: {
-  dps: 620.79833
-  tps: 587.70345
+  dps: 620.5207
+  tps: 587.4097
  }
 }
 dps_results: {
@@ -1436,15 +1436,15 @@ dps_results: {
 dps_results: {
  key: "TestElemental-Phase6-AllItems-TheEarthshatterer"
  value: {
-  dps: 628.2238
-  tps: 593.96503
+  dps: 628.32664
+  tps: 594.08438
  }
 }
 dps_results: {
  key: "TestElemental-Phase6-AllItems-TheTenStorms"
  value: {
-  dps: 662.47737
-  tps: 626.56156
+  dps: 662.59677
+  tps: 626.68419
  }
 }
 dps_results: {

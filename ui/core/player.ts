@@ -1,5 +1,6 @@
 import Toast from './components/toast';
-import { getLanguageCode } from './constants/lang.js';
+import { TooltipManager } from './components/tooltip_manager.js';
+
 import * as Mechanics from './constants/mechanics.js';
 import { SimSettingCategories } from './constants/sim_settings';
 import { MAX_PARTY_SIZE, Party } from './party.js';
@@ -72,6 +73,7 @@ import {
 import { Raid } from './raid.js';
 import { Sim } from './sim.js';
 import { playerTalentStringToProto } from './talents/factory.js';
+import { ItemTooltipContext } from './tooltip_context.js';
 import { EventID, TypedEvent } from './typed_event.js';
 import { stringComparator } from './utils.js';
 import { WorkerProgressCallback } from './worker_pool';
@@ -1166,27 +1168,24 @@ export class Player<SpecType extends Spec> {
 		return ep;
 	}
 
-	setWowheadData(equippedItem: EquippedItem, elem: HTMLElement) {
-		const parts = [];
-
-		const lang = getLanguageCode();
-		const langPrefix = lang ? lang + '.' : '';
-		parts.push(`domain=${langPrefix}classic`);
+	attachTooltip(equippedItem: EquippedItem, elem: HTMLElement) {
+		const tooltipContext: Partial<ItemTooltipContext> = {};
 
 		if (equippedItem.enchant !== null) {
-			parts.push('ench=' + equippedItem.enchant.effectId);
+			tooltipContext.enchantId = equippedItem.enchant.effectId;
 		}
-		parts.push(
-			'pcs=' +
-			this.gear
-				.asArray()
-				.filter(ei => ei !== null)
-				.map(ei => ei!.item.id)
-				.join(':'),
-		);
 
-		elem.dataset.wowhead = parts.join('&');
-		elem.dataset.whtticon = 'false';
+		// Set pieces - collect all equipped item IDs for set bonuses
+		const setPieceIds = this.gear
+			.asArray()
+			.filter(ei => ei !== null)
+			.map(ei => ei!.item.id);
+		if (setPieceIds.length > 0) {
+			tooltipContext.setPieceIds = setPieceIds;
+		}
+
+		const actionId = equippedItem.asActionId();
+		TooltipManager.attachTooltip(elem, actionId, tooltipContext);
 	}
 
 	static ARMOR_SLOTS: Array<ItemSlot> = [

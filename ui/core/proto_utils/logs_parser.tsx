@@ -182,8 +182,8 @@ export class SimLog {
 			</a>
 		);
 		actionId.setBackground(iconElem as HTMLAnchorElement);
-		actionId.setWowheadHref(actionAnchor as HTMLAnchorElement);
-		actionId.setWowheadDataset(actionAnchor as HTMLAnchorElement, { useBuffAura: isAura });
+		actionId.setDatabaseHref(actionAnchor as HTMLAnchorElement);
+		actionId.attachTooltip(actionAnchor as HTMLAnchorElement);
 		return actionAnchor;
 	}
 

@@ -19,9 +19,10 @@ message UIDatabase {
 	repeated UINPC npcs = 9;
 	repeated UIFaction factions = 11;
 
-	// Entities for which we just need a name/icon.
-	repeated IconData item_icons = 4;
-	repeated IconData spell_icons = 5;
+	repeated UIItem consumables = 4;
+	repeated UISpell spells = 5;
+
+	repeated UIItemSet item_sets = 12;
 }
 
 message UIZone {
@@ -43,7 +44,7 @@ message UIFaction {
 // Contains all information about an Item needed by the UI.
 // Generally this will include everything needed by the sim, plus some
 // additional data for displaying / filtering.
-// NextIndex: 31
+// NextIndex: 36
 message UIItem {
 	int32 id = 1;
 	string name = 2;
@@ -89,6 +90,12 @@ message UIItem {
 	}
 
 	FactionRestriction faction_restriction = 26;
+
+	ItemBindType bind_type = 31;
+	int32 required_level = 32;
+	int32 max_durability = 33;
+	repeated UIItemEffect effects = 34;
+	bool has_implemented_effects = 35;
 }
 
 enum Expansion {
@@ -150,6 +157,27 @@ message RepSource {
 	Faction player_faction = 3;
 }
 
+enum ItemBindType {
+	ItemBindTypeUnknown = 0;
+	ItemBindTypeBindOnPickup = 1;
+	ItemBindTypeBindOnEquip = 2;
+	ItemBindTypeBindOnUse = 3;
+	ItemBindTypeQuestItem = 4;
+}
+
+message UIItemEffect {
+	ItemEffectTriggerType trigger_type = 1;
+	int32 spell_id = 2;
+}
+
+enum ItemEffectTriggerType {
+	ItemEffectTriggerTypeUnknown = 0;
+	ItemEffectTriggerTypeOnUse = 1;
+	ItemEffectTriggerTypeOnEquip = 2;
+	ItemEffectTriggerTypeChanceOnHit = 3;
+}
+
+
 // NextIndex: 15
 message UIEnchant {
 	// All enchants have an effect ID. Some also have an item ID, others have a spell ID,
@@ -160,7 +188,7 @@ message UIEnchant {
 	int32 item_id = 2;   // ID of the enchant "item". Might be 0 if not available.
 	int32 spell_id = 3;  // ID of the enchant "spell". Might be 0 if not available.
 
-	string name = 4;     
+	string name = 4;
 	string icon = 5;
 
 	ItemType type = 6;                  // Which type of item this enchant can be applied to.
@@ -182,7 +210,6 @@ message IconData {
 	string name = 2;
 	string icon = 3;
 	int32 rank = 4;
-	bool has_buff = 5;
 }
 
 enum SourceFilterOption {
@@ -233,6 +260,40 @@ enum RaidFilterOption {
 // Zones not yet available to players
 enum ExcludedZones {
 	ZoneUnknown = 0;
+}
+
+message UISpell {
+	int32 id = 1;
+	string name = 2;
+	string icon = 3;
+	int32 rank = 4;
+	int32 required_level = 5;
+	int32 mana_cost = 6;
+	int32 cast_time = 7;
+	bool is_channel = 8;
+	int32 duration = 9;
+	int32 cooldown = 10;
+	string description = 11;
+	string subtext = 12;
+	int32 range = 13;
+}
+
+message UIItemSet {
+	int32 id = 1;
+	string name = 2;
+
+	repeated int32 item_ids = 3;
+
+	repeated UIItemSetBonus bonuses = 4;
+
+	Profession required_profession = 5;
+	int32 required_skill_rank = 6;
+}
+
+message UIItemSetBonus {
+	int32 pieces_required = 1;
+	int32 spell_id = 2;
+	bool is_implemented = 3;
 }
 
 // Next tag: 23

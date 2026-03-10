@@ -120,8 +120,8 @@ dps_results: {
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-JudgementArmor"
  value: {
-  dps: 307.20351
-  tps: 337.73651
+  dps: 297.05396
+  tps: 326.69705
  }
 }
 dps_results: {

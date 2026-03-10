@@ -38,7 +38,13 @@ func main() {
 		tools.ReadFile(fmt.Sprintf("%s/Faction.csv", inputsDir)),
 		tools.ReadFile(fmt.Sprintf("%s/ItemSet.csv", inputsDir)),
 	)
-	turtleSpells := database.ParseTurtleSpellDB(tools.ReadFile(fmt.Sprintf("%s/Spell.csv", inputsDir)), tools.ReadFile(fmt.Sprintf("%s/SpellIcon.csv", inputsDir)))
+	turtleSpells := database.ParseTurtleSpellDB(
+		tools.ReadFile(fmt.Sprintf("%s/Spell.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/SpellIcon.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/SpellRange.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/SpellDuration.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/SpellCastTimes.csv", inputsDir)),
+		tools.ReadFile(fmt.Sprintf("%s/SpellRadius.csv", inputsDir)))
 
 	db := database.NewWowDatabase()
 	db.Encounters = core.PresetEncounters
@@ -61,18 +67,24 @@ func main() {
 	ApplySimmableFilters(db)
 	for _, enchant := range db.Enchants {
 		if enchant.ItemId != 0 {
-			db.MergeItemIcon(enchant.ItemId, turtleItemsDB.Items)
+			db.MergeConsumable(enchant.ItemId, turtleItemsDB.Items)
 		}
 	}
 
-	for _, itemID := range database.ExtraItemIcons {
-		db.MergeItemIcon(itemID, turtleItemsDB.Items)
+	for _, itemID := range database.Consumables {
+		db.MergeConsumable(itemID, turtleItemsDB.Items)
 	}
 
-	// Add spells from Turtle WoW DBC
-	db.MergeSpellIcons(turtleSpells)
+	// TODO: Filter spells
+	db.MergeSpells(turtleSpells)
 
-	db.MergeSpellIcons(database.SpellIconoverrides)
+	for _, itemSet := range turtleItemsDB.ItemSets {
+		db.MergeItemSet(itemSet)
+	}
+
+	sim.RegisterAll()
+
+	annotateImplementationStatus(db)
 
 	db.WriteBinaryAndJson(fmt.Sprintf("%s/db.bin", dbDir), fmt.Sprintf("%s/db.json", dbDir))
 }
@@ -106,13 +118,6 @@ func ApplyGlobalFilters(db *database.WowDatabase) {
 	// 	}
 	// 	return true
 	// })
-
-	db.ItemIcons = core.FilterMap(db.ItemIcons, func(_ int32, icon *proto.IconData) bool {
-		return icon.Name != "" && icon.Icon != ""
-	})
-	db.SpellIcons = core.FilterMap(db.SpellIcons, func(_ int32, icon *proto.IconData) bool {
-		return icon.Name != "" && icon.Icon != ""
-	})
 }
 
 // Filters out entities which shouldn't be included in the sim.
@@ -153,6 +158,30 @@ func simmableItemFilter(_ int32, item *proto.UIItem) bool {
 	}
 
 	return true
+}
+
+func annotateItemImplementationStatus(items map[int32]*proto.UIItem) {
+	for _, item := range items {
+		if core.HasItemEffect(item.Id) {
+			item.HasImplementedEffects = true
+		}
+	}
+}
+
+func annotateSetBonusImplementationStatus(itemSets map[int32]*proto.UIItemSet) {
+	for _, itemSet := range itemSets {
+		for _, bonus := range itemSet.Bonuses {
+			bonus.IsImplemented = core.HasSetBonusEffect(itemSet.Id, itemSet.Name, bonus.PiecesRequired)
+		}
+	}
+}
+
+func annotateImplementationStatus(db *database.WowDatabase) {
+	annotateItemImplementationStatus(db.Items)
+	annotateSetBonusImplementationStatus(db.ItemSets)
+	for _, consumable := range db.Consumables {
+		consumable.HasImplementedEffects = true
+	}
 }
 
 type TalentConfig struct {

@@ -1,38 +1,15 @@
-export const wowheadSupportedLanguages: Record<string, string> = {
-	en: 'English',
-	cn: '简体中文',
-	de: 'Deutsch',
-	es: 'Español',
-	fr: 'Français',
-	it: 'Italiano',
-	ko: '한국어',
-	pt: 'Português Brasileiro',
-	ru: 'Русский',
-};
-
-// Returns a 2-letter language code if it is a wowhead-supported language, or '' otherwise.
+// Returns a 2-letter browser language code, or '' if not available.
 export function getBrowserLanguageCode(): string {
-	const browserLang = (navigator.language || '').substring(0, 2);
-	if (Object.keys(wowheadSupportedLanguages).includes(browserLang)) {
-		return browserLang;
-	} else {
-		return '';
-	}
+	return (navigator.language || '').substring(0, 2);
 }
 
 export function getLanguageCode(): string {
 	return cachedLanguageCode_;
 }
 
-export function getWowheadLanguagePrefix(): string {
-	return cachedWowheadLanguagePrefix_;
-}
-
 export function setLanguageCode(newLang: string) {
-	// Use '' instead of 'en' because wowhead doesn't like having the en/ prefix.
+	// Keep language code for sim settings; 'en' is stored as empty string for compatibility
 	cachedLanguageCode_ = newLang == 'en' ? '' : newLang;
-	cachedWowheadLanguagePrefix_ = cachedLanguageCode_ ? cachedLanguageCode_ + '/' : '';
 }
 
 let cachedLanguageCode_ = '';
-let cachedWowheadLanguagePrefix_ = '';

@@ -57,8 +57,7 @@ export class IconPicker<ModObject, ValueType> extends Input<ModObject, ValueType
 
 		this.rootAnchor = document.createElement('a');
 		this.rootAnchor.classList.add('icon-picker-button');
-		this.rootAnchor.dataset.whtticon = 'false';
-		this.rootAnchor.dataset.disableWowheadTouchTooltip = 'true';
+
 		this.rootAnchor.target = '_blank';
 		this.rootElem.prepend(this.rootAnchor);
 
@@ -78,14 +77,8 @@ export class IconPicker<ModObject, ValueType> extends Input<ModObject, ValueType
 		const ce = ref<HTMLSpanElement>();
 		this.rootAnchor.appendChild(
 			<div className="icon-input-level-container">
-				<a
-					ref={ia}
-					className="icon-picker-button icon-input-improved icon-input-improved1"
-					dataset={{ whtticon: 'false', disableWowheadTouchTooltip: 'true' }}></a>
-				<a
-					ref={ia2}
-					className="icon-picker-button icon-input-improved icon-input-improved2"
-					dataset={{ whtticon: 'false', disableWowheadTouchTooltip: 'true' }}></a>
+				<a ref={ia} className="icon-picker-button icon-input-improved icon-input-improved1"></a>
+				<a ref={ia2} className="icon-picker-button icon-input-improved icon-input-improved2"></a>
 				<span ref={ce} className={`icon-picker-label ${this.config.states > 2 ? '' : 'hide'}`}></span>
 			</div>,
 		);
@@ -95,17 +88,17 @@ export class IconPicker<ModObject, ValueType> extends Input<ModObject, ValueType
 		this.counterElem = ce.value!;
 
 		if (this.config.states >= 3 && this.config.improvedId) {
-			this.config.improvedId.fillAndSet(this.improvedAnchor, true, true);
+			this.config.improvedId.fillAndApplyToAnchor(this.improvedAnchor);
 		}
 		if (this.config.states >= 4 && this.config.improvedId2) {
-			this.config.improvedId2.fillAndSet(this.improvedAnchor2, true, true);
+			this.config.improvedId2.fillAndApplyToAnchor(this.improvedAnchor2);
 		}
 
 		this.init();
 
 		// This must occur after this.init() else the state will not be handled correctly
 		const updateState = () => {
-			this.config.actionId(this.modObject)?.fillAndSet(this.rootAnchor, true, true);
+			this.config.actionId(this.modObject)?.fillAndApplyToAnchor(this.rootAnchor);
 
 			if (this.showWhen()) {
 				this.rootElem.classList.remove('hide');

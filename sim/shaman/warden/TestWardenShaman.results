@@ -127,15 +127,15 @@ dps_results: {
 dps_results: {
  key: "TestWardenShaman-Phase1-AllItems-TheEarthshatterer"
  value: {
-  dps: 192.50653
-  tps: 205.60278
+  dps: 189.46509
+  tps: 202.05156
  }
 }
 dps_results: {
  key: "TestWardenShaman-Phase1-AllItems-TheTenStorms"
  value: {
-  dps: 193.0566
-  tps: 202.63579
+  dps: 191.67381
+  tps: 201.25712
  }
 }
 dps_results: {

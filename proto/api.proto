@@ -32,7 +32,7 @@ message Player {
 
 	IndividualBuffs buffs = 8;
 
-	// Talents in wowhead format, e.g. '01102123133-12312312-'
+	// Talents in numeric format, e.g. '01102123133-12312312-'
 	string talents_string = 9;
 	Profession profession1 = 10;
 	Profession profession2 = 11;

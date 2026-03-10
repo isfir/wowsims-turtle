@@ -4,6 +4,7 @@ import { ref } from 'tsx-vanilla';
 import { Component } from '../components/component.js';
 import { CopyButton } from '../components/copy_button.js';
 import { Input, InputConfig } from '../components/input.js';
+import { TooltipManager } from '../components/tooltip_manager.js';
 import { MAX_TALENT_POINTS } from '../constants/mechanics';
 import { Player } from '../player.js';
 import { Class, Spec } from '../proto/common.js';
@@ -353,7 +354,6 @@ class TalentPicker<TalentsProto> extends Component {
 		this.rootElem.style.gridColumn = String(this.config.location.colIdx + 1);
 
 		this.rootElem.dataset.maxPoints = String(this.config.maxPoints);
-		this.rootElem.dataset.whtticon = 'false';
 
 		this.pointsDisplay = document.createElement('span');
 		this.pointsDisplay.classList.add('talent-picker-points');
@@ -522,7 +522,8 @@ class TalentPicker<TalentsProto> extends Component {
 		ActionId.fromSpellId(spellId)
 			.fill()
 			.then(actionId => {
-				actionId.setWowheadHref(this.rootElem as HTMLAnchorElement);
+				actionId.setDatabaseHref(this.rootElem as HTMLAnchorElement);
+				actionId.attachTooltip(this.rootElem);
 				this.rootElem.style.backgroundImage = `url('${actionId.iconUrl}')`;
 			});
 	}

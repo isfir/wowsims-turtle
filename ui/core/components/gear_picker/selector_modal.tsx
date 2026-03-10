@@ -231,19 +231,19 @@ export default class SelectorModal extends BaseModal {
 										picker.openSelectorModal(this.currentTab);
 									}
 								}}
-								dataset={{ whtticon: 'false' }}
 							/>
 						</div>
 					) as HTMLElement;
 
 					const setItemData = () => {
 						if (picker.item) {
-							this.player.setWowheadData(picker.item, anchorRef.value!);
+							this.player.attachTooltip(picker.item, anchorRef.value!);
 							picker.item
 								.asActionId()
 								.fill()
 								.then(filledId => {
-									filledId.setBackgroundAndHref(anchorRef.value!);
+									filledId.setBackground(anchorRef.value!);
+									filledId.setDatabaseHref(anchorRef.value!);
 								});
 						} else {
 							anchorRef.value!.style.backgroundImage = `url('${getEmptySlotIconUrl(picker.slot)}')`;

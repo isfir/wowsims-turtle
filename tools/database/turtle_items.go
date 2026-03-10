@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"math"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -15,6 +16,18 @@ import (
 type itemSetInfo struct {
 	SetID   int32
 	SetName string
+}
+
+type SpellEffect struct {
+	Stat                proto.Stat
+	WeaponSkill         proto.WeaponSkill
+	BonusPhysicalDamage float64
+	Value               float64
+}
+
+type SpellAnalysis struct {
+	Effects            []SpellEffect
+	HasUnhandledEffect bool
 }
 
 const (
@@ -145,20 +158,35 @@ var hordeRaceMask = func() uint32 {
 	return mask
 }()
 
+func isAllZeros(slice []float64) bool {
+	if slice == nil {
+		return true
+	}
+	for _, v := range slice {
+		if v != 0 {
+			return false
+		}
+	}
+	return true
+}
+
 func ParseTurtleItemsDB(itemsCSV, itemDisplayInfoCSV, spellCSV, factionCSV, itemSetCSV string) *WowDatabase {
 	db := NewWowDatabase()
 
 	displayInfo := parseItemDisplayInfoCSV(itemDisplayInfoCSV)
 	spellEffects := parseSpellEffectsCSV(spellCSV)
 	factionMap := parseFactionMapping(factionCSV)
-	setNames, itemToSet := parseItemSetCSV(itemSetCSV)
+	itemSets, itemToSet := parseItemSetCSV(itemSetCSV)
+	for _, itemSet := range itemSets {
+		db.MergeItemSet(itemSet)
+	}
 
-	items := parseItemsCSV(itemsCSV, displayInfo, spellEffects, factionMap, setNames, itemToSet)
+	items := parseItemsCSV(itemsCSV, displayInfo, spellEffects, factionMap, itemToSet)
 	for _, item := range items {
 		db.MergeItem(item)
 	}
 
-	// TODO: item sets, random suffixes (ItemRandomProperties + SpellItemEnchantment)
+	// TODO: random suffixes (ItemRandomProperties + SpellItemEnchantment)
 
 	return db
 }
@@ -193,7 +221,7 @@ func parseItemDisplayInfoCSV(csvData string) map[int32]string {
 	return iconMap
 }
 
-func parseItemsCSV(csvData string, displayInfo map[int32]string, spellEffects map[int32][]SpellEffect, factionMap map[int32]proto.UIItem_FactionRestriction, setNames map[int32]string, itemToSet map[int32]itemSetInfo) []*proto.UIItem {
+func parseItemsCSV(csvData string, displayInfo map[int32]string, spellEffects map[int32]SpellAnalysis, factionMap map[int32]proto.UIItem_FactionRestriction, itemToSet map[int32]itemSetInfo) []*proto.UIItem {
 	r := csv.NewReader(strings.NewReader(csvData))
 	headers, err := r.Read()
 	if err != nil {
@@ -225,7 +253,7 @@ func parseItemsCSV(csvData string, displayInfo map[int32]string, spellEffects ma
 			log.Fatalf("Cannot read items csv row: %v", err)
 		}
 
-		item := parseItemRow(row, colIdx, displayInfo, spellEffects, factionMap, setNames, itemToSet)
+		item := parseItemRow(row, colIdx, displayInfo, spellEffects, factionMap, itemToSet)
 		if item != nil {
 			items = append(items, item)
 		}
@@ -233,7 +261,7 @@ func parseItemsCSV(csvData string, displayInfo map[int32]string, spellEffects ma
 	return items
 }
 
-func parseItemRow(row []string, colIdx map[string]int, displayInfo map[int32]string, spellEffects map[int32][]SpellEffect, factionMap map[int32]proto.UIItem_FactionRestriction, setNames map[int32]string, itemToSet map[int32]itemSetInfo) *proto.UIItem {
+func parseItemRow(row []string, colIdx map[string]int, displayInfo map[int32]string, spellEffects map[int32]SpellAnalysis, factionMap map[int32]proto.UIItem_FactionRestriction, itemToSet map[int32]itemSetInfo) *proto.UIItem {
 	id, ok := getInt(row, colIdx, "itemID")
 	if !ok {
 		return nil
@@ -274,8 +302,12 @@ func parseItemRow(row []string, colIdx map[string]int, displayInfo map[int32]str
 	for i := range stats {
 		stats[i] += spellBonuses[i]
 	}
-	item.Stats = stats
-	item.WeaponSkills = weaponSkills
+	if !isAllZeros(stats) {
+		item.Stats = stats
+	}
+	if !isAllZeros(weaponSkills) {
+		item.WeaponSkills = weaponSkills
+	}
 	item.BonusPhysicalDamage = bonusPhysicalDmg
 
 	if hasWeaponDamage(row, colIdx) {
@@ -284,6 +316,8 @@ func parseItemRow(row []string, colIdx map[string]int, displayInfo map[int32]str
 		item.WeaponDamageMax = maxDmg
 		item.WeaponSpeed = speed
 	}
+
+	item.Effects = parseItemEffects(row, colIdx, spellEffects)
 
 	if classMask, ok := getUint(row, colIdx, "classBinFlag"); ok {
 		item.ClassAllowlist = parseClassMask(uint32(classMask))
@@ -313,14 +347,29 @@ func parseItemRow(row []string, colIdx map[string]int, displayInfo map[int32]str
 		item.RequiredProfession = prof
 	}
 
+	if bonding, ok := getInt(row, colIdx, "bondID"); ok {
+		item.BindType = mapItemBindType(bonding)
+	}
+
+	if requiredLevel, ok := getInt(row, colIdx, "requiredLevel"); ok && requiredLevel > 0 {
+		item.RequiredLevel = requiredLevel
+	}
+
+	if maxDurability, ok := getInt(row, colIdx, "durabilityValue"); ok && maxDurability > 0 {
+		item.MaxDurability = maxDurability
+	}
+
 	if setID, ok := getInt(row, colIdx, "itemSetID"); ok && setID != 0 {
 		item.SetId = setID
-		if name, ok := setNames[setID]; ok {
-			item.SetName = name
+	}
+
+	if info, ok := itemToSet[item.Id]; ok {
+		if item.SetId == 0 {
+			item.SetId = info.SetID
 		}
-	} else if info, ok := itemToSet[item.Id]; ok {
-		item.SetId = info.SetID
-		item.SetName = info.SetName
+		if item.SetName == "" {
+			item.SetName = info.SetName
+		}
 	}
 
 	return item
@@ -374,14 +423,7 @@ func parseItemStats(row []string, colIdx map[string]int) []float64 {
 	return stats
 }
 
-type SpellEffect struct {
-	Stat                proto.Stat
-	WeaponSkill         proto.WeaponSkill
-	BonusPhysicalDamage float64
-	Value               float64
-}
-
-func parseItemSpellEffects(row []string, colIdx map[string]int, spellEffects map[int32][]SpellEffect) ([]float64, []float64, float64) {
+func parseItemSpellEffects(row []string, colIdx map[string]int, spellEffects map[int32]SpellAnalysis) ([]float64, []float64, float64) {
 	bonuses := make([]float64, statsLen)
 	weaponSkills := make([]float64, weaponSkillLen)
 
@@ -397,248 +439,128 @@ func parseItemSpellEffects(row []string, colIdx map[string]int, spellEffects map
 			continue
 		}
 
-		if triggerID != 1 { // on-equip only
+		if triggerID != 1 { // only on-equip contributes to passive item stats
 			continue
 		}
 
-		if effects, ok := spellEffects[spellID]; ok {
-			for _, effect := range effects {
-				if effect.Stat != proto.Stat(-1) {
-					bonuses[effect.Stat] += effect.Value
-				}
-				if effect.WeaponSkill != proto.WeaponSkill_WeaponSkillUnknown {
-					weaponSkills[effect.WeaponSkill] += effect.Value
-				}
-				if effect.BonusPhysicalDamage != 0 {
-					bonusPhysicalDamage += effect.BonusPhysicalDamage
-				}
+		analysis, ok := spellEffects[spellID]
+		if !ok {
+			continue
+		}
+
+		for _, effect := range analysis.Effects {
+			if effect.Stat != proto.Stat(-1) {
+				bonuses[effect.Stat] += effect.Value
+			}
+			if effect.WeaponSkill != proto.WeaponSkill_WeaponSkillUnknown {
+				weaponSkills[effect.WeaponSkill] += effect.Value
+			}
+			if effect.BonusPhysicalDamage != 0 {
+				bonusPhysicalDamage += effect.BonusPhysicalDamage
 			}
 		}
-		if bonuses[proto.Stat_StatSpellDamage] > 0 && bonuses[proto.Stat_StatSpellDamage] == bonuses[proto.Stat_StatHealingPower] {
-			bonuses[proto.Stat_StatSpellPower] += bonuses[proto.Stat_StatSpellDamage]
-			bonuses[proto.Stat_StatSpellDamage] = 0
-			bonuses[proto.Stat_StatHealingPower] = 0
-		}
+	}
+
+	if bonuses[proto.Stat_StatSpellDamage] > 0 && bonuses[proto.Stat_StatSpellDamage] == bonuses[proto.Stat_StatHealingPower] {
+		bonuses[proto.Stat_StatSpellPower] += bonuses[proto.Stat_StatSpellDamage]
+		bonuses[proto.Stat_StatSpellDamage] = 0
+		bonuses[proto.Stat_StatHealingPower] = 0
 	}
 
 	return bonuses, weaponSkills, bonusPhysicalDamage
 }
 
-func parseSpellEffectsCSV(csvData string) map[int32][]SpellEffect {
-	r := csv.NewReader(strings.NewReader(csvData))
-	headers, err := r.Read()
-	if err != nil {
-		log.Fatalf("Cannot read spell csv header: %v", err)
-	}
+func parseItemEffects(row []string, colIdx map[string]int, spellEffects map[int32]SpellAnalysis) []*proto.UIItemEffect {
+	var effects []*proto.UIItemEffect
 
-	colIdx := make(map[string]int)
-	for i, name := range headers {
-		colIdx[name] = i
-	}
+	for i := 1; i <= 5; i++ {
+		spellIDCol := fmt.Sprintf("spell%dID", i)
+		triggerIDCol := fmt.Sprintf("spell%dTriggerID", i)
 
-	requiredCols := []string{
-		"id", "effect_1", "effect_2", "effect_3",
-		"effectApplyAura_1", "effectApplyAura_2", "effectApplyAura_3",
-		"effectBasePoints_1", "effectBasePoints_2", "effectBasePoints_3",
-		"effectBaseDice_1", "effectBaseDice_2", "effectBaseDice_3",
-		"effectMiscValue_1", "effectMiscValue_2", "effectMiscValue_3",
-	}
-	for _, col := range requiredCols {
-		if _, ok := colIdx[col]; !ok {
-			log.Fatalf("Missing required column %s in spell csv", col)
-		}
-	}
-
-	effectsMap := make(map[int32][]SpellEffect)
-	for {
-		row, err := r.Read()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatalf("Cannot read spell csv row: %v", err)
-		}
-
-		spellID, err := strconv.Atoi(row[colIdx["id"]])
-		if err != nil {
+		spellID, okID := getInt(row, colIdx, spellIDCol)
+		triggerID, okTrig := getInt(row, colIdx, triggerIDCol)
+		if !okID || !okTrig || spellID == 0 {
 			continue
 		}
 
-		var effects []SpellEffect
-		for i := 1; i <= 3; i++ {
-			effectCol := fmt.Sprintf("effect_%d", i)
-			auraCol := fmt.Sprintf("effectApplyAura_%d", i)
-			basePointsCol := fmt.Sprintf("effectBasePoints_%d", i)
-			baseDiceCol := fmt.Sprintf("effectBaseDice_%d", i)
-			miscValueCol := fmt.Sprintf("effectMiscValue_%d", i)
-
-			effectStr := row[colIdx[effectCol]]
-			if effectStr == "" || effectStr == "0" {
-				continue
-			}
-
-			effect, err := strconv.Atoi(effectStr)
-			if err != nil || effect != spellEffectApplyAura {
-				continue
-			}
-
-			auraStr := row[colIdx[auraCol]]
-			if auraStr == "" || auraStr == "0" {
-				continue
-			}
-			aura, err := strconv.Atoi(auraStr)
-			if err != nil {
-				continue
-			}
-
-			basePoints, _ := strconv.ParseFloat(row[colIdx[basePointsCol]], 64)
-			baseDice, _ := strconv.ParseFloat(row[colIdx[baseDiceCol]], 64)
-			miscValue, _ := strconv.Atoi(row[colIdx[miscValueCol]])
-
-			value := basePoints + baseDice
-			if value == 0 {
-				continue
-			}
-
-			effects = append(effects, auraTypeToEffects(int32(aura), int32(miscValue), value)...)
+		triggerType := mapItemEffectTriggerType(triggerID)
+		if triggerType == proto.ItemEffectTriggerType_ItemEffectTriggerTypeUnknown {
+			continue
 		}
 
-		if len(effects) > 0 {
-			effectsMap[int32(spellID)] = effects
-		}
-	}
+		analysis, hasAnalysis := spellEffects[spellID]
 
-	return effectsMap
-}
+		// Pure passive on-equip stat auras are already folded into item.stats.
+		// Skip them here to avoid duplicate tooltip lines.
+		if triggerType == proto.ItemEffectTriggerType_ItemEffectTriggerTypeOnEquip &&
+			hasAnalysis &&
+			!analysis.HasUnhandledEffect &&
+			len(analysis.Effects) > 0 {
+			continue
+		}
 
-func auraTypeToEffects(auraType, miscValue int32, value float64) []SpellEffect {
-	var effects []SpellEffect
-
-	switch auraType {
-	case auraModDamageDone:
-		stats, hasPhysical := spellSchoolMaskToStats(miscValue)
-		for _, stat := range stats {
-			effects = append(effects, SpellEffect{Stat: stat, Value: value})
-		}
-		if hasPhysical {
-			effects = append(effects, SpellEffect{BonusPhysicalDamage: value})
-		}
-	case auraModStat:
-		stat := mapItemModTypeToStat(miscValue)
-		if stat != proto.Stat(-1) {
-			effects = append(effects, SpellEffect{Stat: stat, Value: value})
-		}
-	case auraModResistance, auraModBaseResistance:
-		stat := spellSchoolToResistanceStat(miscValue)
-		if stat != proto.Stat(-1) {
-			effects = append(effects, SpellEffect{Stat: stat, Value: value})
-		}
-	case auraModSpellHitChance, auraModAttackerSpellHitChance:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatSpellHit, Value: value})
-	case auraModSpellCritChance, auraModSpellCritChanceSchool:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatSpellCrit, Value: value})
-	case auraModMeleeHaste:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatMeleeHaste, Value: value})
-	case auraModRangedHaste:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatMeleeHaste, Value: value})
-	case auraModCastingSpeedNotStack:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatSpellHaste, Value: value})
-	case auraModAttackPower:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatAttackPower, Value: value})
-	case auraModRangedAttackPower, auraModRangedAttackPowerVersus:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatRangedAttackPower, Value: value})
-	case auraModIncreaseHealth:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatHealth, Value: value})
-	case auraModIncreaseEnergy:
-		switch miscValue {
-		case powerTypeMana:
-			effects = append(effects, SpellEffect{Stat: proto.Stat_StatMana, Value: value})
-		case powerTypeRage:
-			effects = append(effects, SpellEffect{Stat: proto.Stat_StatRage, Value: value})
-		case powerTypeEnergy:
-			effects = append(effects, SpellEffect{Stat: proto.Stat_StatEnergy, Value: value})
-		default:
-			effects = append(effects, SpellEffect{Stat: proto.Stat_StatMana, Value: value})
-		}
-	case auraModPowerRegen, auraModManaRegenInterrupt:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatMP5, Value: value})
-	case auraModCritPercent:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatMeleeCrit, Value: value})
-	case auraModHitChance, auraModAttackerMeleeHitChance, auraModAttackerRangedHitChance:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatMeleeHit, Value: value})
-	case auraModHealingDone, auraModHealing:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatHealingPower, Value: value})
-	case auraModSkill, auraModSkillTalent:
-		if stat := skillIDToStat(miscValue); stat != proto.Stat(-1) {
-			effects = append(effects, SpellEffect{Stat: stat, Value: value})
-		} else if ws := skillIDToWeaponSkill(miscValue); ws != proto.WeaponSkill_WeaponSkillUnknown {
-			effects = append(effects, SpellEffect{WeaponSkill: ws, Value: value})
-		}
-	case auraModParrySkill, auraModParryPercent:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatParry, Value: value})
-	case auraModDodgeSkill, auraModDodgePercent:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatDodge, Value: value})
-	case auraModBlockSkill, auraModBlockPercent:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatBlock, Value: value})
-	case auraModShieldBlockValue:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatBlockValue, Value: value})
-	case auraModTargetResistance:
-		effects = append(effects, SpellEffect{Stat: proto.Stat_StatSpellPenetration, Value: math.Abs(value)})
+		effects = append(effects, &proto.UIItemEffect{
+			TriggerType: triggerType,
+			SpellId:     spellID,
+		})
 	}
 
 	return effects
 }
 
-func spellSchoolMaskToStats(mask int32) ([]proto.Stat, bool) {
-	hasPhysical := mask&1 != 0
-
-	if mask == 124 || mask == 126 || mask == 127 {
-		return []proto.Stat{proto.Stat_StatSpellDamage}, hasPhysical
-	}
-
-	var stats []proto.Stat
-	if mask&64 != 0 {
-		stats = append(stats, proto.Stat_StatArcanePower)
-	}
-	if mask&4 != 0 {
-		stats = append(stats, proto.Stat_StatFirePower)
-	}
-	if mask&16 != 0 {
-		stats = append(stats, proto.Stat_StatFrostPower)
-	}
-	if mask&2 != 0 {
-		stats = append(stats, proto.Stat_StatHolyPower)
-	}
-	if mask&8 != 0 {
-		stats = append(stats, proto.Stat_StatNaturePower)
-	}
-	if mask&32 != 0 {
-		stats = append(stats, proto.Stat_StatShadowPower)
-	}
-
-	if len(stats) == 0 && mask != 0 && !hasPhysical {
-		stats = append(stats, proto.Stat_StatSpellDamage)
-	}
-
-	return stats, hasPhysical
+func hasWeaponDamage(row []string, colIdx map[string]int) bool {
+	minDmgStr := getString(row, colIdx, "damage1Min")
+	return minDmgStr != "" && minDmgStr != "0.0"
 }
 
-func spellSchoolToResistanceStat(school int32) proto.Stat {
-	switch school {
-	case 0:
-		return proto.Stat_StatArmor
-	case 2:
-		return proto.Stat_StatFireResistance
-	case 3:
-		return proto.Stat_StatNatureResistance
-	case 4:
-		return proto.Stat_StatFrostResistance
-	case 5:
-		return proto.Stat_StatShadowResistance
-	case 6:
-		return proto.Stat_StatArcaneResistance
+func parseWeaponDamage(row []string, colIdx map[string]int) (minDmg, maxDmg, speed float64) {
+	minDmgStr := getString(row, colIdx, "damage1Min")
+	maxDmgStr := getString(row, colIdx, "damage1Max")
+	speedStr := getString(row, colIdx, "weaponDelay")
+
+	if minDmgStr != "" && minDmgStr != "0.0" {
+		minDmg, _ = strconv.ParseFloat(minDmgStr, 64)
+	}
+	if maxDmgStr != "" && maxDmgStr != "0.0" {
+		maxDmg, _ = strconv.ParseFloat(maxDmgStr, 64)
+	}
+	if speedStr != "" && speedStr != "0" {
+		speedVal, _ := strconv.ParseFloat(speedStr, 64)
+		speed = speedVal / 1000.0
+	}
+
+	return minDmg, maxDmg, speed
+}
+
+func parseClassMask(classMask uint32) []proto.Class {
+	if classMask == 0 || (classMask&allClassesMask) == allClassesMask {
+		return nil
+	}
+
+	var classes []proto.Class
+	for _, c := range classMaskMap {
+		if classMask&(1<<(c.ClassID-1)) != 0 {
+			classes = append(classes, c.Class)
+		}
+	}
+	return classes
+}
+
+func factionRestrictionFromRaceMask(mask uint32) proto.UIItem_FactionRestriction {
+	if mask == 0 || mask == 0xFFFFFFFF {
+		return proto.UIItem_FACTION_RESTRICTION_UNSPECIFIED
+	}
+
+	hasAlliance := (mask & allianceRaceMask) != 0
+	hasHorde := (mask & hordeRaceMask) != 0
+
+	switch {
+	case hasAlliance && !hasHorde:
+		return proto.UIItem_FACTION_RESTRICTION_ALLIANCE_ONLY
+	case hasHorde && !hasAlliance:
+		return proto.UIItem_FACTION_RESTRICTION_HORDE_ONLY
 	default:
-		return proto.Stat(-1)
+		return proto.UIItem_FACTION_RESTRICTION_UNSPECIFIED
 	}
 }
 
@@ -674,23 +596,6 @@ func mapInventorySlotToItemType(slot int32) proto.ItemType {
 		return proto.ItemType_ItemTypeRanged
 	default:
 		return proto.ItemType_ItemTypeUnknown
-	}
-}
-
-func mapHandType(invType int32) proto.HandType {
-	switch invType {
-	case invTypeWeapon:
-		return proto.HandType_HandTypeOneHand
-	case invTypeWeaponMain:
-		return proto.HandType_HandTypeMainHand
-	case invTypeWeaponOff, invTypeShield, invTypeHoldable:
-		return proto.HandType_HandTypeOffHand
-	case invType2HWeapon:
-		return proto.HandType_HandTypeTwoHand
-	case invTypeRanged, invTypeRangedRight, invTypeThrown:
-		return proto.HandType_HandTypeMainHand
-	default:
-		return proto.HandType_HandTypeUnknown
 	}
 }
 
@@ -772,6 +677,328 @@ func mapWeaponTypes(itemClass, itemSubClass, invType int32) (proto.WeaponType, p
 	return weaponType, rangedType
 }
 
+func mapHandType(invType int32) proto.HandType {
+	switch invType {
+	case invTypeWeapon:
+		return proto.HandType_HandTypeOneHand
+	case invTypeWeaponMain:
+		return proto.HandType_HandTypeMainHand
+	case invTypeWeaponOff, invTypeShield, invTypeHoldable:
+		return proto.HandType_HandTypeOffHand
+	case invType2HWeapon:
+		return proto.HandType_HandTypeTwoHand
+	default:
+		return proto.HandType_HandTypeUnknown
+	}
+}
+
+func mapProfessionBySkillID(skillID int32) proto.Profession {
+	switch skillID {
+	case 171:
+		return proto.Profession_Alchemy
+	case 164:
+		return proto.Profession_Blacksmithing
+	case 333:
+		return proto.Profession_Enchanting
+	case 202:
+		return proto.Profession_Engineering
+	case 182:
+		return proto.Profession_Herbalism
+	case 165:
+		return proto.Profession_Leatherworking
+	case 186:
+		return proto.Profession_Mining
+	case 393:
+		return proto.Profession_Skinning
+	case 197:
+		return proto.Profession_Tailoring
+	default:
+		return proto.Profession_ProfessionUnknown
+	}
+}
+
+func mapRequiredProfession(row []string, colIdx map[string]int) proto.Profession {
+	skillID, ok := getInt(row, colIdx, "requiredSkillID")
+	if !ok || skillID == 0 {
+		return proto.Profession_ProfessionUnknown
+	}
+
+	return mapProfessionBySkillID(skillID)
+}
+
+func mapItemBindType(bonding int32) proto.ItemBindType {
+	switch bonding {
+	case 1:
+		return proto.ItemBindType_ItemBindTypeBindOnPickup
+	case 2:
+		return proto.ItemBindType_ItemBindTypeBindOnEquip
+	case 3:
+		return proto.ItemBindType_ItemBindTypeBindOnUse
+	case 4:
+		return proto.ItemBindType_ItemBindTypeQuestItem
+	default:
+		return proto.ItemBindType_ItemBindTypeUnknown
+	}
+}
+
+func mapItemEffectTriggerType(triggerID int32) proto.ItemEffectTriggerType {
+	switch triggerID {
+	case 0:
+		return proto.ItemEffectTriggerType_ItemEffectTriggerTypeOnUse
+	case 1:
+		return proto.ItemEffectTriggerType_ItemEffectTriggerTypeOnEquip
+	case 2:
+		return proto.ItemEffectTriggerType_ItemEffectTriggerTypeChanceOnHit
+	default:
+		return proto.ItemEffectTriggerType_ItemEffectTriggerTypeUnknown
+	}
+}
+
+func parseSpellEffectsCSV(csvData string) map[int32]SpellAnalysis {
+	r := csv.NewReader(strings.NewReader(csvData))
+	headers, err := r.Read()
+	if err != nil {
+		log.Fatalf("Cannot read spell csv header: %v", err)
+	}
+
+	colIdx := make(map[string]int)
+	for i, name := range headers {
+		colIdx[name] = i
+	}
+
+	requiredCols := []string{
+		"id", "effect_1", "effect_2", "effect_3",
+		"effectApplyAura_1", "effectApplyAura_2", "effectApplyAura_3",
+		"effectBasePoints_1", "effectBasePoints_2", "effectBasePoints_3",
+		"effectBaseDice_1", "effectBaseDice_2", "effectBaseDice_3",
+		"effectMiscValue_1", "effectMiscValue_2", "effectMiscValue_3",
+	}
+	for _, col := range requiredCols {
+		if _, ok := colIdx[col]; !ok {
+			log.Fatalf("Missing required column %s in spell csv", col)
+		}
+	}
+
+	analyses := make(map[int32]SpellAnalysis)
+
+	for {
+		row, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Cannot read spell csv row: %v", err)
+		}
+
+		spellID, err := strconv.Atoi(row[colIdx["id"]])
+		if err != nil {
+			continue
+		}
+
+		analysis := SpellAnalysis{}
+
+		for i := 1; i <= 3; i++ {
+			effectCol := fmt.Sprintf("effect_%d", i)
+			auraCol := fmt.Sprintf("effectApplyAura_%d", i)
+			basePointsCol := fmt.Sprintf("effectBasePoints_%d", i)
+			baseDiceCol := fmt.Sprintf("effectBaseDice_%d", i)
+			miscValueCol := fmt.Sprintf("effectMiscValue_%d", i)
+
+			effectStr := row[colIdx[effectCol]]
+			if effectStr == "" || effectStr == "0" {
+				continue
+			}
+
+			effect, err := strconv.Atoi(effectStr)
+			if err != nil {
+				continue
+			}
+
+			// Non-aura effect => not reducible to raw item stats, likely a real item effect / proc / use effect.
+			if effect != spellEffectApplyAura {
+				analysis.HasUnhandledEffect = true
+				continue
+			}
+
+			auraStr := row[colIdx[auraCol]]
+			if auraStr == "" || auraStr == "0" {
+				analysis.HasUnhandledEffect = true
+				continue
+			}
+			aura, err := strconv.Atoi(auraStr)
+			if err != nil {
+				analysis.HasUnhandledEffect = true
+				continue
+			}
+
+			basePoints, _ := strconv.ParseFloat(row[colIdx[basePointsCol]], 64)
+			baseDice, _ := strconv.ParseFloat(row[colIdx[baseDiceCol]], 64)
+			miscValue, _ := strconv.Atoi(row[colIdx[miscValueCol]])
+
+			value := basePoints + baseDice
+			if value == 0 {
+				continue
+			}
+
+			converted, handled := auraTypeToEffects(int32(aura), int32(miscValue), value)
+			if !handled {
+				analysis.HasUnhandledEffect = true
+				continue
+			}
+			analysis.Effects = append(analysis.Effects, converted...)
+		}
+
+		if len(analysis.Effects) > 0 || analysis.HasUnhandledEffect {
+			analyses[int32(spellID)] = analysis
+		}
+	}
+
+	return analyses
+}
+
+func auraTypeToEffects(auraType, miscValue int32, value float64) ([]SpellEffect, bool) {
+	var effects []SpellEffect
+
+	switch auraType {
+	case auraModDamageDone:
+		stats, hasPhysical := spellSchoolMaskToStats(miscValue)
+		for _, stat := range stats {
+			effects = append(effects, SpellEffect{Stat: stat, Value: value})
+		}
+		if hasPhysical {
+			effects = append(effects, SpellEffect{BonusPhysicalDamage: value})
+		}
+		return effects, true
+
+	case auraModStat:
+		stat := mapItemModTypeToStat(miscValue)
+		if stat != proto.Stat(-1) {
+			effects = append(effects, SpellEffect{Stat: stat, Value: value})
+			return effects, true
+		}
+		return nil, false
+
+	case auraModResistance, auraModBaseResistance:
+		stat := spellSchoolToResistanceStat(miscValue)
+		if stat != proto.Stat(-1) {
+			effects = append(effects, SpellEffect{Stat: stat, Value: value})
+			return effects, true
+		}
+		return nil, false
+
+	case auraModSpellHitChance, auraModAttackerSpellHitChance:
+		return []SpellEffect{{Stat: proto.Stat_StatSpellHit, Value: value}}, true
+
+	case auraModSpellCritChance, auraModSpellCritChanceSchool:
+		return []SpellEffect{{Stat: proto.Stat_StatSpellCrit, Value: value}}, true
+
+	case auraModMeleeHaste:
+		return []SpellEffect{{Stat: proto.Stat_StatMeleeHaste, Value: value}}, true
+
+	case auraModRangedHaste:
+		// Intentionally ignored.
+		// The sim has no ranged haste stat, and many item effects include both melee+ranged haste.
+		// Treating this as "handled but no-op" avoids doubling haste and avoids exposing it as an extra effect.
+		return nil, true
+
+	case auraModCastingSpeedNotStack:
+		return []SpellEffect{{Stat: proto.Stat_StatSpellHaste, Value: value}}, true
+
+	case auraModAttackPower:
+		return []SpellEffect{{Stat: proto.Stat_StatAttackPower, Value: value}}, true
+
+	case auraModRangedAttackPower, auraModRangedAttackPowerVersus:
+		return []SpellEffect{{Stat: proto.Stat_StatRangedAttackPower, Value: value}}, true
+
+	case auraModIncreaseHealth:
+		return []SpellEffect{{Stat: proto.Stat_StatHealth, Value: value}}, true
+
+	case auraModIncreaseEnergy:
+		switch miscValue {
+		case powerTypeMana:
+			return []SpellEffect{{Stat: proto.Stat_StatMana, Value: value}}, true
+		case powerTypeRage:
+			return []SpellEffect{{Stat: proto.Stat_StatRage, Value: value}}, true
+		case powerTypeEnergy:
+			return []SpellEffect{{Stat: proto.Stat_StatEnergy, Value: value}}, true
+		default:
+			return []SpellEffect{{Stat: proto.Stat_StatMana, Value: value}}, true
+		}
+
+	case auraModPowerRegen, auraModManaRegenInterrupt:
+		return []SpellEffect{{Stat: proto.Stat_StatMP5, Value: value}}, true
+
+	case auraModCritPercent:
+		return []SpellEffect{{Stat: proto.Stat_StatMeleeCrit, Value: value}}, true
+
+	case auraModHitChance, auraModAttackerMeleeHitChance, auraModAttackerRangedHitChance:
+		return []SpellEffect{{Stat: proto.Stat_StatMeleeHit, Value: value}}, true
+
+	case auraModHealingDone, auraModHealing:
+		return []SpellEffect{{Stat: proto.Stat_StatHealingPower, Value: value}}, true
+
+	case auraModSkill, auraModSkillTalent:
+		if stat := skillIDToStat(miscValue); stat != proto.Stat(-1) {
+			return []SpellEffect{{Stat: stat, Value: value}}, true
+		} else if ws := skillIDToWeaponSkill(miscValue); ws != proto.WeaponSkill_WeaponSkillUnknown {
+			return []SpellEffect{{WeaponSkill: ws, Value: value}}, true
+		}
+		return nil, false
+
+	case auraModParrySkill, auraModParryPercent:
+		return []SpellEffect{{Stat: proto.Stat_StatParry, Value: value}}, true
+
+	case auraModDodgeSkill, auraModDodgePercent:
+		return []SpellEffect{{Stat: proto.Stat_StatDodge, Value: value}}, true
+
+	case auraModBlockSkill, auraModBlockPercent:
+		return []SpellEffect{{Stat: proto.Stat_StatBlock, Value: value}}, true
+
+	case auraModShieldBlockValue:
+		return []SpellEffect{{Stat: proto.Stat_StatBlockValue, Value: value}}, true
+
+	case auraModTargetResistance:
+		return []SpellEffect{{Stat: proto.Stat_StatSpellPenetration, Value: math.Abs(value)}}, true
+
+	default:
+		return nil, false
+	}
+}
+
+func spellSchoolMaskToStats(mask int32) ([]proto.Stat, bool) {
+	hasPhysical := mask&1 != 0
+
+	if mask == 124 || mask == 126 || mask == 127 {
+		return []proto.Stat{proto.Stat_StatSpellDamage}, hasPhysical
+	}
+
+	var stats []proto.Stat
+	if mask&64 != 0 {
+		stats = append(stats, proto.Stat_StatArcanePower)
+	}
+	if mask&4 != 0 {
+		stats = append(stats, proto.Stat_StatFirePower)
+	}
+	if mask&16 != 0 {
+		stats = append(stats, proto.Stat_StatFrostPower)
+	}
+	if mask&2 != 0 {
+		stats = append(stats, proto.Stat_StatHolyPower)
+	}
+	if mask&8 != 0 {
+		stats = append(stats, proto.Stat_StatNaturePower)
+	}
+	if mask&32 != 0 {
+		stats = append(stats, proto.Stat_StatShadowPower)
+	}
+
+	if len(stats) == 0 && mask != 0 && !hasPhysical {
+		stats = append(stats, proto.Stat_StatSpellDamage)
+	}
+
+	return stats, hasPhysical
+}
+
 func mapItemModTypeToStat(modType int32) proto.Stat {
 	switch modType {
 	case 0:
@@ -788,6 +1015,25 @@ func mapItemModTypeToStat(modType int32) proto.Stat {
 		return proto.Stat_StatSpirit
 	case 7:
 		return proto.Stat_StatStamina
+	default:
+		return proto.Stat(-1)
+	}
+}
+
+func spellSchoolToResistanceStat(school int32) proto.Stat {
+	switch school {
+	case 0:
+		return proto.Stat_StatArmor
+	case 2:
+		return proto.Stat_StatFireResistance
+	case 3:
+		return proto.Stat_StatNatureResistance
+	case 4:
+		return proto.Stat_StatFrostResistance
+	case 5:
+		return proto.Stat_StatShadowResistance
+	case 6:
+		return proto.Stat_StatArcaneResistance
 	default:
 		return proto.Stat(-1)
 	}
@@ -838,38 +1084,6 @@ func skillIDToWeaponSkill(skillID int32) proto.WeaponSkill {
 		return proto.WeaponSkill_WeaponSkillFeralCombat
 	default:
 		return proto.WeaponSkill_WeaponSkillUnknown
-	}
-}
-
-func parseClassMask(classMask uint32) []proto.Class {
-	if classMask == 0 || (classMask&allClassesMask) == allClassesMask {
-		return nil
-	}
-
-	var classes []proto.Class
-	for _, c := range classMaskMap {
-		if classMask&(1<<(c.ClassID-1)) != 0 {
-			classes = append(classes, c.Class)
-		}
-	}
-	return classes
-}
-
-func factionRestrictionFromRaceMask(mask uint32) proto.UIItem_FactionRestriction {
-	if mask == 0 || mask == 0xFFFFFFFF {
-		return proto.UIItem_FACTION_RESTRICTION_UNSPECIFIED
-	}
-
-	hasAlliance := (mask & allianceRaceMask) != 0
-	hasHorde := (mask & hordeRaceMask) != 0
-
-	switch {
-	case hasAlliance && !hasHorde:
-		return proto.UIItem_FACTION_RESTRICTION_ALLIANCE_ONLY
-	case hasHorde && !hasAlliance:
-		return proto.UIItem_FACTION_RESTRICTION_HORDE_ONLY
-	default:
-		return proto.UIItem_FACTION_RESTRICTION_UNSPECIFIED
 	}
 }
 
@@ -941,49 +1155,19 @@ func parseFactionMapping(csvData string) map[int32]proto.UIItem_FactionRestricti
 	return factionMap
 }
 
-func mapRequiredProfession(row []string, colIdx map[string]int) proto.Profession {
-	skillID, ok := getInt(row, colIdx, "requiredSkillID")
-	if !ok || skillID == 0 {
-		return proto.Profession_ProfessionUnknown
-	}
-
-	switch skillID {
-	case 171:
-		return proto.Profession_Alchemy
-	case 164:
-		return proto.Profession_Blacksmithing
-	case 333:
-		return proto.Profession_Enchanting
-	case 202:
-		return proto.Profession_Engineering
-	case 182:
-		return proto.Profession_Herbalism
-	case 165:
-		return proto.Profession_Leatherworking
-	case 186:
-		return proto.Profession_Mining
-	case 393:
-		return proto.Profession_Skinning
-	case 197:
-		return proto.Profession_Tailoring
-	default:
-		return proto.Profession_ProfessionUnknown
-	}
-}
-
-func parseItemSetCSV(csvData string) (map[int32]string, map[int32]itemSetInfo) {
-	setNames := make(map[int32]string)
+func parseItemSetCSV(csvData string) ([]*proto.UIItemSet, map[int32]itemSetInfo) {
+	var sets []*proto.UIItemSet
 	itemToSet := make(map[int32]itemSetInfo)
 
 	if csvData == "" {
-		return setNames, itemToSet
+		return sets, itemToSet
 	}
 
 	r := csv.NewReader(strings.NewReader(csvData))
 	headers, err := r.Read()
 	if err != nil {
 		log.Printf("Cannot read item set csv header: %v", err)
-		return setNames, itemToSet
+		return sets, itemToSet
 	}
 
 	colIdx := make(map[string]int)
@@ -995,7 +1179,7 @@ func parseItemSetCSV(csvData string) (map[int32]string, map[int32]itemSetInfo) {
 	for _, col := range requiredCols {
 		if _, ok := colIdx[col]; !ok {
 			log.Printf("Missing required column %s in item set csv", col)
-			return setNames, itemToSet
+			return sets, itemToSet
 		}
 	}
 
@@ -1014,52 +1198,70 @@ func parseItemSetCSV(csvData string) (map[int32]string, map[int32]itemSetInfo) {
 		}
 
 		setName := row[colIdx["name_enUS"]]
-		if setName != "" {
-			setNames[int32(setID)] = setName
+		if setName == "" {
+			continue
 		}
 
+		itemSet := &proto.UIItemSet{
+			Id:   int32(setID),
+			Name: setName,
+		}
+
+		// Items
 		for i := 1; i <= 17; i++ {
 			col := fmt.Sprintf("itemId_%d", i)
 			idx, ok := colIdx[col]
-			if !ok {
+			if !ok || idx >= len(row) {
 				continue
 			}
+
 			itemID, err := strconv.Atoi(row[idx])
 			if err != nil || itemID == 0 {
 				continue
 			}
+
+			itemSet.ItemIds = append(itemSet.ItemIds, int32(itemID))
 			itemToSet[int32(itemID)] = itemSetInfo{
 				SetID:   int32(setID),
 				SetName: setName,
 			}
 		}
+
+		// Bonuses
+		for i := 1; i <= 8; i++ {
+			spellCol := fmt.Sprintf("setSpellId_%d", i)
+			thresholdCol := fmt.Sprintf("setThreshold_%d", i)
+
+			spellID, okSpell := getInt(row, colIdx, spellCol)
+			threshold, okThreshold := getInt(row, colIdx, thresholdCol)
+
+			if !okSpell || !okThreshold || spellID == 0 || threshold == 0 {
+				continue
+			}
+
+			itemSet.Bonuses = append(itemSet.Bonuses, &proto.UIItemSetBonus{
+				PiecesRequired: threshold,
+				SpellId:        spellID,
+			})
+		}
+
+		// Sort bonuses by threshold, stable so duplicate thresholds keep CSV order.
+		sort.SliceStable(itemSet.Bonuses, func(i, j int) bool {
+			return itemSet.Bonuses[i].PiecesRequired < itemSet.Bonuses[j].PiecesRequired
+		})
+
+		// Optional profession requirement
+		if requiredSkillID, ok := getInt(row, colIdx, "requiredSkillId"); ok && requiredSkillID != 0 {
+			itemSet.RequiredProfession = mapProfessionBySkillID(requiredSkillID)
+		}
+		if requiredSkillRank, ok := getInt(row, colIdx, "requiredSkillRank"); ok && requiredSkillRank > 0 {
+			itemSet.RequiredSkillRank = requiredSkillRank
+		}
+
+		sets = append(sets, itemSet)
 	}
 
-	return setNames, itemToSet
-}
-
-func hasWeaponDamage(row []string, colIdx map[string]int) bool {
-	minDmgStr := getString(row, colIdx, "damage1Min")
-	return minDmgStr != "" && minDmgStr != "0.0"
-}
-
-func parseWeaponDamage(row []string, colIdx map[string]int) (minDmg, maxDmg, speed float64) {
-	minDmgStr := getString(row, colIdx, "damage1Min")
-	maxDmgStr := getString(row, colIdx, "damage1Max")
-	speedStr := getString(row, colIdx, "weaponDelay")
-
-	if minDmgStr != "" && minDmgStr != "0.0" {
-		minDmg, _ = strconv.ParseFloat(minDmgStr, 64)
-	}
-	if maxDmgStr != "" && maxDmgStr != "0.0" {
-		maxDmg, _ = strconv.ParseFloat(maxDmgStr, 64)
-	}
-	if speedStr != "" && speedStr != "0" {
-		speedVal, _ := strconv.ParseFloat(speedStr, 64)
-		speed = speedVal / 1000.0
-	}
-
-	return minDmg, maxDmg, speed
+	return sets, itemToSet
 }
 
 // Helpers

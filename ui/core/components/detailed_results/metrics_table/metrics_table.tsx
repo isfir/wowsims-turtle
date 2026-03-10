@@ -212,10 +212,7 @@ export abstract class MetricsTable<T extends ActionMetrics | AuraMetrics | UnitM
 					</div>,
 				);
 				if (iconElem.value) {
-					data.actionId.setBackgroundAndHref(iconElem.value);
-					data.actionId.setWowheadDataset(iconElem.value, {
-						useBuffAura: data.metricType === 'AuraMetrics',
-					});
+					data.actionId.applyToAnchor(iconElem.value);
 				}
 			},
 		};

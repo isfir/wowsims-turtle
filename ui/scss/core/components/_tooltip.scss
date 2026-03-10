@@ -1,0 +1,212 @@
+$tooltip-bg: rgba(10, 10, 12, 0.96);
+$tooltip-bg-inner: rgba(18, 18, 22, 0.82);
+$tooltip-border: #5f5f66;
+$tooltip-border-inner: rgba(255, 255, 255, 0.07);
+
+$tooltip-text: #ffffff;
+$tooltip-muted: #d0d0d0;
+$tooltip-debug: #7e7e86;
+$tooltip-description: #ffd100;
+$tooltip-effect: #1eff00;
+$tooltip-error: #ff6666;
+
+$quality-junk: #9d9d9d;
+$quality-common: #ffffff;
+$quality-uncommon: #1eff00;
+$quality-rare: #0070dd;
+$quality-epic: #a335ee;
+$quality-legendary: #ff8000;
+$quality-artifact: #e6cc80;
+$quality-heirloom: #00ccff;
+
+$set-header: #ffd100;
+$set-active: #ffff98;
+$set-inactive: #9a9a9a;
+
+.tippy-box[data-theme~='wow-tooltip'] {
+    --tippy-bg: #0a0a0c;
+
+    max-width: 320px;
+    color: $tooltip-text;
+    background-color: $tooltip-bg !important;
+    background-image: linear-gradient(180deg, $tooltip-bg-inner 0%, $tooltip-bg 100%) !important;
+    border: 1px solid $tooltip-border;
+    border-radius: 0;
+    box-shadow:
+        inset 0 0 0 1px $tooltip-border-inner,
+        0 8px 20px rgba(0, 0, 0, 0.65);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.25;
+    text-shadow: 1px 1px 0 #000;
+
+    .tippy-content {
+        padding: 8px 10px;
+        background: transparent !important;
+    }
+}
+
+.wow-tooltip {
+    min-width: 220px;
+    max-width: 320px;
+    word-break: break-word;
+
+    .tooltip-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .tooltip-line-pair {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+
+        span:first-child {
+            flex: 1 1 auto;
+        }
+
+        span:last-child {
+            flex: 0 0 auto;
+            text-align: right;
+            white-space: nowrap;
+        }
+    }
+
+    .tooltip-name {
+        margin-bottom: 3px;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.15;
+
+        &.is-junk {
+            color: $quality-junk;
+        }
+
+        &.is-common {
+            color: $quality-common;
+        }
+
+        &.is-uncommon {
+            color: $quality-uncommon;
+        }
+
+        &.is-rare {
+            color: $quality-rare;
+        }
+
+        &.is-epic {
+            color: $quality-epic;
+        }
+
+        &.is-legendary {
+            color: $quality-legendary;
+        }
+
+        &.is-artifact {
+            color: $quality-artifact;
+        }
+
+        &.is-heirloom {
+            color: $quality-heirloom;
+        }
+    }
+
+    .tooltip-subtext {
+        flex: 0 0 auto;
+        color: $tooltip-debug;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .tooltip-meta,
+    .tooltip-stat,
+    .tooltip-note,
+    .tooltip-effect,
+    .tooltip-req,
+    .tooltip-description,
+    .tooltip-loading,
+    .tooltip-error,
+    .tooltip-debug,
+    .tooltip-set-name,
+    .tooltip-set-item,
+    .tooltip-set-bonus,
+    .tooltip-item-level {
+        margin-bottom: 2px;
+    }
+
+    .tooltip-meta,
+    .tooltip-stat,
+    .tooltip-note,
+    .tooltip-req,
+    .tooltip-loading {
+        color: $tooltip-text;
+    }
+
+    .tooltip-item-level,
+    .tooltip-description,
+    .tooltip-set-name {
+        color: $tooltip-description;
+    }
+
+    .tooltip-type-line {
+        margin-top: 1px;
+    }
+
+    .tooltip-effect {
+        color: $tooltip-effect;
+
+        &.is-unimplemented {
+            font-style: italic;
+            opacity: 0.92;
+        }
+    }
+
+    .tooltip-debug {
+        margin-top: 4px;
+        color: $tooltip-debug;
+        font-size: 10px;
+    }
+
+    .tooltip-placeholder {
+        font-style: italic;
+        opacity: 0.9;
+    }
+
+    .tooltip-set-name {
+        margin-top: 6px;
+    }
+
+    .tooltip-set-item {
+        padding-left: 8px;
+        color: $set-inactive;
+
+        &.is-equipped {
+            color: $set-active;
+        }
+    }
+
+    .tooltip-set-bonus {
+        padding-left: 0;
+        color: $set-inactive;
+
+        &.is-active {
+            color: $set-active;
+        }
+
+        &.is-unimplemented {
+            font-style: italic;
+            opacity: 0.92;
+        }
+    }
+
+    .tooltip-set-bonus-start {
+        margin-top: 6px;
+    }
+
+    .tooltip-error {
+        color: $tooltip-error;
+    }
+}

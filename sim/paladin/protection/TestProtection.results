@@ -120,8 +120,8 @@ dps_results: {
 dps_results: {
  key: "TestProtection-Phase4-AllItems-JudgementArmor"
  value: {
-  dps: 433.4272
-  tps: 806.28606
+  dps: 415.06702
+  tps: 777.23573
  }
 }
 dps_results: {

@@ -11,6 +11,7 @@ import { itemTypeToSlotsMap } from '../../proto_utils/utils.js';
 import { SimUI } from '../../sim_ui';
 import { EventID } from '../../typed_event';
 import { Component } from '../component';
+import { TooltipManager } from '../tooltip_manager';
 import { GearData } from './item_list';
 import SelectorModal, { SelectorModalTabs } from './selector_modal';
 import { getEmptySlotIconUrl } from './utils';
@@ -96,11 +97,11 @@ export class ItemRenderer extends Component {
 	}
 
 	clear() {
-		this.iconElem.removeAttribute('data-wowhead');
+		TooltipManager.detachTooltip(this.iconElem);
 		this.iconElem.removeAttribute('href');
-		this.nameElem.removeAttribute('data-wowhead');
+		TooltipManager.detachTooltip(this.nameElem);
 		this.nameElem.removeAttribute('href');
-		this.enchantElem.removeAttribute('data-wowhead');
+		TooltipManager.detachTooltip(this.enchantElem);
 		this.enchantElem.removeAttribute('href');
 		this.enchantElem.classList.add('hide');
 
@@ -121,14 +122,15 @@ export class ItemRenderer extends Component {
 
 		setItemQualityCssClass(this.nameElem, newItem.item.quality);
 
-		this.player.setWowheadData(newItem, this.iconElem);
-		this.player.setWowheadData(newItem, this.nameElem);
+		this.player.attachTooltip(newItem, this.iconElem);
+		this.player.attachTooltip(newItem, this.nameElem);
 		newItem
 			.asActionId()
 			.fill()
 			.then(filledId => {
-				filledId.setBackgroundAndHref(this.iconElem);
-				filledId.setWowheadHref(this.nameElem);
+				filledId.setBackground(this.iconElem);
+				filledId.setDatabaseHref(this.iconElem);
+				filledId.setDatabaseHref(this.nameElem);
 			});
 
 		if (newItem.enchant) {
@@ -138,16 +140,13 @@ export class ItemRenderer extends Component {
 			// Make enchant text hover have a tooltip.
 			if (newItem.enchant.spellId) {
 				this.enchantElem.href = ActionId.makeSpellUrl(newItem.enchant.spellId);
-				ActionId.makeSpellTooltipData(newItem.enchant.spellId).then(url => {
-					this.enchantElem.dataset.wowhead = url;
-				});
+				const actionId = ActionId.fromSpellId(newItem.enchant.spellId);
+				TooltipManager.attachTooltip(this.enchantElem, actionId);
 			} else {
 				this.enchantElem.href = ActionId.makeItemUrl(newItem.enchant.itemId);
-				ActionId.makeItemTooltipData(newItem.enchant.itemId).then(url => {
-					this.enchantElem.dataset.wowhead = url;
-				});
+				const actionId = ActionId.fromItemId(newItem.enchant.itemId);
+				TooltipManager.attachTooltip(this.enchantElem, actionId);
 			}
-			this.enchantElem.dataset.whtticon = 'false';
 			this.enchantElem.classList.remove('hide');
 		} else {
 			this.enchantElem.classList.add('hide');
@@ -201,7 +200,7 @@ export class ItemPicker extends Component {
 
 		player.professionChangeEmitter.on(() => {
 			if (!!this._equippedItem) {
-				this.player.setWowheadData(this._equippedItem, this.itemElem.iconElem);
+				this.player.attachTooltip(this._equippedItem, this.itemElem.iconElem);
 			}
 		});
 	}

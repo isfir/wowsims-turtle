@@ -46,8 +46,14 @@ export class IconItemSwapPicker extends Component {
 		if (newItem) {
 			this.iconAnchor.classList.add('active');
 
-			newItem.asActionId().fillAndSet(this.iconAnchor, true, true);
-			this.player.setWowheadData(newItem, this.iconAnchor);
+			newItem
+				.asActionId()
+				.fill()
+				.then(filledId => {
+					filledId.setBackground(this.iconAnchor);
+					filledId.setDatabaseHref(this.iconAnchor);
+				});
+			this.player.attachTooltip(newItem, this.iconAnchor);
 		} else {
 			this.iconAnchor.classList.remove('active');
 		}

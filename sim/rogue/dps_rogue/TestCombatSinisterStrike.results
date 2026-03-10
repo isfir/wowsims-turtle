@@ -127,8 +127,8 @@ dps_results: {
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-EmblemsofVeiledShadows"
  value: {
-  dps: 1057.43647
-  tps: 750.7799
+  dps: 1051.04665
+  tps: 746.24312
  }
 }
 dps_results: {

@@ -94,6 +94,27 @@ func (character *Character) HasSetBonus(set *ItemSet, numItems int32) bool {
 	return false
 }
 
+func HasSetBonusEffect(setID int32, setName string, numPieces int32) bool {
+	for _, set := range sets {
+		sameSet := false
+
+		if setID > 0 && set.ID == setID {
+			sameSet = true
+		} else if setName != "" && (set.Name == setName || set.AlternativeName == setName) {
+			sameSet = true
+		}
+
+		if !sameSet {
+			continue
+		}
+
+		_, ok := set.Bonuses[numPieces]
+		return ok
+	}
+
+	return false
+}
+
 type ActiveSetBonus struct {
 	// Name of the set.
 	Name string

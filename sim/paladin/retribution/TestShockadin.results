@@ -120,8 +120,8 @@ dps_results: {
 dps_results: {
  key: "TestShockadin-Phase5-AllItems-JudgementArmor"
  value: {
-  dps: 520.38313
-  tps: 567.03201
+  dps: 493.28957
+  tps: 537.85474
  }
 }
 dps_results: {

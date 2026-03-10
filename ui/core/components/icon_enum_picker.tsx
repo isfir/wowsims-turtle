@@ -74,8 +74,6 @@ export class IconEnumPicker<ModObject, T> extends Input<ModObject, T> {
 					}}
 					dataset={{
 						bsToggle: 'dropdown',
-						whtticon: 'false',
-						disableWowheadTouchTooltip: 'true',
 					}}></a>
 				<ul className="dropdown-menu"></ul>
 				<label className="form-label"></label>
@@ -101,8 +99,7 @@ export class IconEnumPicker<ModObject, T> extends Input<ModObject, T> {
 
 			const option = document.createElement('a');
 			option.classList.add('icon-picker-button');
-			option.dataset.whtticon = 'false';
-			option.dataset.disableWowheadTouchTooltip = 'true';
+
 			optionContainer.appendChild(option);
 
 			const updateOption = () => {
@@ -178,7 +175,7 @@ export class IconEnumPicker<ModObject, T> extends Input<ModObject, T> {
 	}
 
 	private setActionImage(elem: HTMLAnchorElement, actionId: ActionId) {
-		actionId.fillAndSet(elem, true, true);
+		actionId.fillAndApplyToAnchor(elem);
 	}
 
 	private setImage(elem: HTMLAnchorElement, valueConfig: IconEnumValueConfig<ModObject, T>) {

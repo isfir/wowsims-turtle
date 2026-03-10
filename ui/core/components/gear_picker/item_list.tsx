@@ -421,7 +421,7 @@ export default class ItemList<T extends ItemListType> {
 					<div className="selector-modal-list-item-ilvl-container">{(itemData.item as unknown as UIItem).ilvl}</div>
 				)}
 				<div className="selector-modal-list-label-cell">
-					<a className="selector-modal-list-item-link" ref={anchorElem} dataset={{ whtticon: 'false' }}>
+					<a className="selector-modal-list-item-link" ref={anchorElem}>
 						<img className="selector-modal-list-item-icon" ref={iconElem}></img>
 						<label className="selector-modal-list-item-name" ref={nameElem}>
 							{itemData.name}
@@ -550,7 +550,8 @@ export default class ItemList<T extends ItemListType> {
 		});
 
 		itemData.actionId.fill().then(filledId => {
-			filledId.setWowheadHref(anchorElem.value!);
+			filledId.setDatabaseHref(anchorElem.value!);
+			filledId.attachTooltip(anchorElem.value!);
 			iconElem.value!.src = filledId.iconUrl;
 		});
 
@@ -573,7 +574,7 @@ export default class ItemList<T extends ItemListType> {
 	private getSourceInfo(item: UIItem, sim: Sim): JSX.Element {
 		const makeAnchor = (href: string, inner: string | JSX.Element) => {
 			return (
-				<a href={href} target="_blank" dataset={{ whtticon: 'false' }}>
+				<a href={href} target="_blank">
 					<small>{inner}</small>
 				</a>
 			);

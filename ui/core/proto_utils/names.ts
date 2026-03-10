@@ -1,6 +1,25 @@
 import { ResourceType } from '../proto/api.js';
-import { ArmorType, Class, ItemSlot, ItemType, Profession, PseudoStat, Race, RangedWeaponType, Stat, WeaponType } from '../proto/common.js';
-import { RaidFilterOption, RepLevel, SourceFilterOption } from '../proto/ui.js';
+import {
+	ArmorType,
+	Class,
+	HandType,
+	ItemSlot,
+	ItemType,
+	Profession,
+	PseudoStat,
+	Race,
+	RangedWeaponType,
+	Stat,
+	WeaponSkill,
+	WeaponType,
+} from '../proto/common.js';
+import {
+	ItemBindType,
+	ItemEffectTriggerType,
+	RaidFilterOption,
+	RepLevel,
+	SourceFilterOption,
+} from '../proto/ui.js';
 
 export const armorTypeNames: Map<ArmorType, string> = new Map([
 	[ArmorType.ArmorTypeUnknown, 'Unknown'],
@@ -23,6 +42,14 @@ export const weaponTypeNames: Map<WeaponType, string> = new Map([
 	[WeaponType.WeaponTypeSword, 'Sword'],
 ]);
 
+export const handTypeNames: Map<HandType, string> = new Map([
+	[HandType.HandTypeUnknown, 'Unknown'],
+	[HandType.HandTypeMainHand, 'Main Hand'],
+	[HandType.HandTypeOneHand, 'One-Hand'],
+	[HandType.HandTypeOffHand, 'Off Hand'],
+	[HandType.HandTypeTwoHand, 'Two-Hand'],
+]);
+
 export const rangedWeaponTypeNames: Map<RangedWeaponType, string> = new Map([
 	[RangedWeaponType.RangedWeaponTypeUnknown, 'Unknown'],
 	[RangedWeaponType.RangedWeaponTypeBow, 'Bow'],
@@ -34,6 +61,25 @@ export const rangedWeaponTypeNames: Map<RangedWeaponType, string> = new Map([
 	[RangedWeaponType.RangedWeaponTypeThrown, 'Thrown'],
 	[RangedWeaponType.RangedWeaponTypeTotem, 'Totem'],
 	[RangedWeaponType.RangedWeaponTypeWand, 'Wand'],
+]);
+
+export const weaponSkillNames: Map<WeaponSkill, string> = new Map([
+	[WeaponSkill.WeaponSkillUnknown, 'Unknown'],
+	[WeaponSkill.WeaponSkillAxes, 'Axes'],
+	[WeaponSkill.WeaponSkillSwords, 'Swords'],
+	[WeaponSkill.WeaponSkillMaces, 'Maces'],
+	[WeaponSkill.WeaponSkillDaggers, 'Daggers'],
+	[WeaponSkill.WeaponSkillUnarmed, 'Unarmed'],
+	[WeaponSkill.WeaponSkillTwoHandedAxes, 'Two-Handed Axes'],
+	[WeaponSkill.WeaponSkillTwoHandedSwords, 'Two-Handed Swords'],
+	[WeaponSkill.WeaponSkillTwoHandedMaces, 'Two-Handed Maces'],
+	[WeaponSkill.WeaponSkillPolearms, 'Polearms'],
+	[WeaponSkill.WeaponSkillStaves, 'Staves'],
+	[WeaponSkill.WeaponSkillThrown, 'Thrown'],
+	[WeaponSkill.WeaponSkillBows, 'Bows'],
+	[WeaponSkill.WeaponSkillCrossbows, 'Crossbows'],
+	[WeaponSkill.WeaponSkillGuns, 'Guns'],
+	[WeaponSkill.WeaponSkillFeralCombat, 'Feral Combat'],
 ]);
 
 export const raceNames: Map<Race, string> = new Map([
@@ -51,7 +97,7 @@ export const raceNames: Map<Race, string> = new Map([
 export function nameToRace(name: string): Race {
 	const normalized = name.toLowerCase().replaceAll(' ', '');
 	for (const [key, value] of raceNames) {
-		if (value.toLowerCase().replaceAll(' ', '') == normalized) {
+		if (value.toLowerCase().replaceAll(' ', '') === normalized) {
 			return key;
 		}
 	}
@@ -74,7 +120,7 @@ export const classNames: Map<Class, string> = new Map([
 export function nameToClass(name: string): Class {
 	const lower = name.toLowerCase();
 	for (const [key, value] of classNames) {
-		if (value.toLowerCase().replace(/\s+/g, '') == lower) {
+		if (value.toLowerCase().replace(/\s+/g, '') === lower) {
 			return key;
 		}
 	}
@@ -97,7 +143,7 @@ export const professionNames: Map<Profession, string> = new Map([
 export function nameToProfession(name: string): Profession {
 	const lower = name.toLowerCase();
 	for (const [key, value] of professionNames) {
-		if (value.toLowerCase() == lower) {
+		if (value.toLowerCase() === lower) {
 			return key;
 		}
 	}
@@ -115,6 +161,7 @@ export const statOrder: Array<Stat> = [
 	Stat.StatIntellect,
 	Stat.StatSpirit,
 	Stat.StatSpellPower,
+	Stat.StatHealingPower,
 	Stat.StatSpellDamage,
 	Stat.StatArcanePower,
 	Stat.StatFirePower,
@@ -150,6 +197,24 @@ export const statOrder: Array<Stat> = [
 	Stat.StatShadowResistance,
 ];
 
+export const weaponSkillOrder: Array<WeaponSkill> = [
+	WeaponSkill.WeaponSkillSwords,
+	WeaponSkill.WeaponSkillAxes,
+	WeaponSkill.WeaponSkillMaces,
+	WeaponSkill.WeaponSkillDaggers,
+	WeaponSkill.WeaponSkillUnarmed,
+	WeaponSkill.WeaponSkillTwoHandedSwords,
+	WeaponSkill.WeaponSkillTwoHandedAxes,
+	WeaponSkill.WeaponSkillTwoHandedMaces,
+	WeaponSkill.WeaponSkillPolearms,
+	WeaponSkill.WeaponSkillStaves,
+	WeaponSkill.WeaponSkillBows,
+	WeaponSkill.WeaponSkillCrossbows,
+	WeaponSkill.WeaponSkillGuns,
+	WeaponSkill.WeaponSkillThrown,
+	WeaponSkill.WeaponSkillFeralCombat,
+];
+
 export const statNames: Map<Stat, string> = new Map([
 	[Stat.StatStrength, 'Strength'],
 	[Stat.StatAgility, 'Agility'],
@@ -157,6 +222,7 @@ export const statNames: Map<Stat, string> = new Map([
 	[Stat.StatIntellect, 'Intellect'],
 	[Stat.StatSpirit, 'Spirit'],
 	[Stat.StatSpellPower, 'Spell Power'],
+	[Stat.StatHealingPower, 'Healing Power'],
 	[Stat.StatSpellDamage, 'Spell Damage'],
 	[Stat.StatArcanePower, 'Arcane Damage'],
 	[Stat.StatFirePower, 'Fire Damage'],
@@ -202,6 +268,7 @@ export const pseudoStatOrder: Array<PseudoStat> = [
 	PseudoStat.PseudoStatRangedDps,
 	PseudoStat.PseudoStatBlockValueMultiplier,
 ];
+
 export const pseudoStatNames: Map<PseudoStat, string> = new Map([
 	[PseudoStat.PseudoStatMainHandDps, 'Main Hand DPS'],
 	[PseudoStat.PseudoStatOffHandDps, 'Off Hand DPS'],
@@ -213,13 +280,12 @@ export const pseudoStatNames: Map<PseudoStat, string> = new Map([
 	[PseudoStat.BonusPhysicalDamage, 'Bonus Weapon Damage'],
 ]);
 
-export function getClassStatName(stat: Stat, playerClass: Class): string {
-	const statName = statNames.get(stat);
-	if (!statName) return 'UnknownStat';
-	return statName;
+export function getClassStatName(stat: Stat, _playerClass?: Class): string {
+	return statNames.get(stat) ?? 'UnknownStat';
 }
 
-// TODO: Make sure BE exports the spell schools properly
+// TODO: Make sure BE exports the spell schools properly if you want to use this broadly.
+// This is a UI helper bitmask enum, not the proto/common SpellSchool enum.
 export enum SpellSchool {
 	None = 0,
 	Physical = 1 << 1,
@@ -260,6 +326,23 @@ export const itemTypeNames: Map<ItemType, string> = new Map([
 	[ItemType.ItemTypeLegs, 'Pants'],
 	[ItemType.ItemTypeFeet, 'Boots'],
 	[ItemType.ItemTypeFinger, 'Ring'],
+	[ItemType.ItemTypeTrinket, 'Trinket'],
+	[ItemType.ItemTypeWeapon, 'Weapon'],
+	[ItemType.ItemTypeRanged, 'Ranged'],
+]);
+
+export const itemTypeTooltipNames: Map<ItemType, string> = new Map([
+	[ItemType.ItemTypeHead, 'Head'],
+	[ItemType.ItemTypeNeck, 'Neck'],
+	[ItemType.ItemTypeShoulder, 'Shoulder'],
+	[ItemType.ItemTypeBack, 'Back'],
+	[ItemType.ItemTypeChest, 'Chest'],
+	[ItemType.ItemTypeWrist, 'Wrist'],
+	[ItemType.ItemTypeHands, 'Hands'],
+	[ItemType.ItemTypeWaist, 'Waist'],
+	[ItemType.ItemTypeLegs, 'Legs'],
+	[ItemType.ItemTypeFeet, 'Feet'],
+	[ItemType.ItemTypeFinger, 'Finger'],
 	[ItemType.ItemTypeTrinket, 'Trinket'],
 	[ItemType.ItemTypeWeapon, 'Weapon'],
 	[ItemType.ItemTypeRanged, 'Ranged'],
@@ -307,7 +390,7 @@ export const resourceColors: Map<ResourceType, string> = new Map([
 
 export function stringToResourceType(str: string): ResourceType {
 	for (const [key, val] of resourceNames) {
-		if (val.toLowerCase() == str.toLowerCase()) {
+		if (val.toLowerCase() === str.toLowerCase()) {
 			return key;
 		}
 	}
@@ -321,7 +404,6 @@ export const sourceNames: Map<SourceFilterOption, string> = new Map([
 	[SourceFilterOption.SourceReputation, 'Reputation'],
 	[SourceFilterOption.SourceDungeon, 'Dungeon'],
 	[SourceFilterOption.SourceRaid, 'Raid'],
-	// [SourceFilterOption.SourceWorldBoss, 'World Boss'],
 	[SourceFilterOption.SourceWorldBOE, 'World Drops'],
 ]);
 
@@ -347,3 +429,18 @@ export const REP_LEVEL_NAMES: Record<RepLevel, string> = {
 	[RepLevel.RepLevelRevered]: 'Revered',
 	[RepLevel.RepLevelExalted]: 'Exalted',
 };
+
+export const itemBindTypeNames: Map<ItemBindType, string> = new Map([
+	[ItemBindType.ItemBindTypeUnknown, ''],
+	[ItemBindType.ItemBindTypeBindOnPickup, 'Binds when picked up'],
+	[ItemBindType.ItemBindTypeBindOnEquip, 'Binds when equipped'],
+	[ItemBindType.ItemBindTypeBindOnUse, 'Binds when used'],
+	[ItemBindType.ItemBindTypeQuestItem, 'Quest Item'],
+]);
+
+export const itemEffectTriggerNames: Map<ItemEffectTriggerType, string> = new Map([
+	[ItemEffectTriggerType.ItemEffectTriggerTypeUnknown, ''],
+	[ItemEffectTriggerType.ItemEffectTriggerTypeOnUse, 'Use'],
+	[ItemEffectTriggerType.ItemEffectTriggerTypeOnEquip, 'Equip'],
+	[ItemEffectTriggerType.ItemEffectTriggerTypeChanceOnHit, 'Chance on hit'],
+]);

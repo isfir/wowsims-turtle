@@ -15,6 +15,7 @@ import { SimResult } from './proto_utils/sim_result';
 import { Sim, SimError } from './sim.js';
 import { RequestTypes } from './sim_signal_manager';
 import { EventID, TypedEvent } from './typed_event.js';
+import { isDevMode } from './utils.js';
 import { WorkerProgressCallback } from './worker_pool';
 
 const URLMAXLEN = 2048;
@@ -41,6 +42,7 @@ export interface SimUIConfig {
 // Shared UI for all individual sims and the raid sim.
 export abstract class SimUI extends Component {
 	readonly sim: Sim;
+	readonly disabled: boolean;
 	readonly cssClass: string;
 	readonly cssScheme: string;
 	readonly isWithinRaidSim: boolean;
@@ -60,6 +62,7 @@ export abstract class SimUI extends Component {
 	constructor(parentElem: HTMLElement, sim: Sim, config: SimUIConfig) {
 		super(parentElem, 'sim-ui');
 		this.sim = sim;
+		this.disabled = !isDevMode() && config.simStatus.status === LaunchStatus.Unlaunched;
 		this.cssClass = config.cssClass;
 		this.cssScheme = config.cssScheme;
 		this.isWithinRaidSim = this.rootElem.closest('.within-raid-sim') != null;
@@ -187,12 +190,22 @@ export abstract class SimUI extends Component {
 				}
 			});
 		}
+
+		if (this.disabled) {
+			resultsViewerElem.appendChild(
+				<div className="sim-ui-unlaunched-container d-flex flex-column align-items-center text-center mt-auto mb-auto ms-auto me-auto">
+					<i className="fas fa-ban fa-3x mb-2" />
+					<h6>This sim is currently not supported.</h6>
+				</div>,
+			);
+		}
 	}
 
 	addAction(name: string, cssClass: string, onClick: (event: MouseEvent) => void) {
 		const button = document.createElement('button');
 		button.classList.add('btn', 'btn-primary', 'w-100', cssClass);
 		button.textContent = name;
+		button.disabled = this.disabled;
 		button.addEventListener('click', onClick);
 		this.simActionsContainer.appendChild(button);
 	}

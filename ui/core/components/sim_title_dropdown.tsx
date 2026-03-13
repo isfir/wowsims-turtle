@@ -236,7 +236,6 @@ export class SimTitleDropdown extends Component {
 
 	private launchStatusLabel(data: SpecOptions | RaidOptions): Element {
 		const status = data.type == 'Raid' ? raidSimStatus.status : simLaunchStatuses[data.index].status;
-		const phase = data.type == 'Raid' ? raidSimStatus.phase : simLaunchStatuses[data.index].phase;
 
 		return (
 			<span className="launch-status-label text-brand">
@@ -244,8 +243,7 @@ export class SimTitleDropdown extends Component {
 					<>Not Yet Supported</>
 				) : (
 					<>
-						Phase {phase}
-						{status != LaunchStatus.Launched && <> - {LaunchStatus[status]}</>}
+						{status != LaunchStatus.Launched && <> {LaunchStatus[status]}</>}
 					</>
 				)}
 			</span>

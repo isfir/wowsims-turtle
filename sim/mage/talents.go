@@ -323,9 +323,6 @@ func (mage *Mage) applyArcaneMeditation() {
 						extraActive = false
 						mage.UpdateManaRegenRates()
 					}
-					if sim.Log != nil {
-						sim.Log("Current Mana: %f, Current Spirit Regen Rate Casting: %f", mage.CurrentManaPercent(), mage.PseudoStats.SpiritRegenRateCasting)
-					}
 				},
 			})
 			sim.AddPendingAction(pa)

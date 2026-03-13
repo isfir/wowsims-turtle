@@ -1,5 +1,6 @@
 import { BaseModal } from './components/base_modal.jsx';
 import { Component } from './components/component.js';
+import { NoticeLocalSim } from './components/individual_sim_ui/notice_local_sim.jsx';
 import { NumberPicker } from './components/number_picker.js';
 import { ResultsViewer } from './components/results_viewer.jsx';
 import { SimHeader } from './components/sim_header.jsx';
@@ -163,6 +164,8 @@ export abstract class SimUI extends Component {
 		new SimTitleDropdown(titleElem, config.spec, { noDropdown: this.isWithinRaidSim });
 
 		this.simActionsContainer = this.rootElem.querySelector('.sim-sidebar-actions') as HTMLElement;
+		this.addNoticeForLocalSim();
+
 		this.iterationsPicker = new NumberPicker(this.simActionsContainer, this.sim, {
 			id: 'simui-iterations',
 			label: 'Iterations',
@@ -199,6 +202,10 @@ export abstract class SimUI extends Component {
 				</div>,
 			);
 		}
+	}
+
+	addNoticeForLocalSim() {
+		new NoticeLocalSim(this.simActionsContainer);
 	}
 
 	addAction(name: string, cssClass: string, onClick: (event: MouseEvent) => void) {

@@ -369,6 +369,11 @@ func (mage *Mage) applyAcceleratedArcana() {
 	})
 }
 
+type resonanceCascadeProc struct {
+	spell      *core.Spell
+	baseDamage *float64
+}
+
 func (mage *Mage) applyResonanceCascade() {
 	if mage.Talents.ResonanceCascade == 0 {
 		return
@@ -380,27 +385,7 @@ func (mage *Mage) applyResonanceCascade() {
 		procChance += 0.05
 	}
 
-	resonanceCascadeDamage := 0.0
-	resonanceCascadeProc := mage.RegisterSpell(core.SpellConfig{
-		SpellSchool: core.SpellSchoolArcane,
-		DefenseType: core.DefenseTypeMagic,
-		ProcMask:    core.ProcMaskSpellDamage,
-		Flags:       SpellFlagMage,
-
-		DamageMultiplier: 1,
-		ThreatMultiplier: 1,
-
-		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
-			result := spell.CalcDamage(sim, target, resonanceCascadeDamage, spell.OutcomeMagicHitAndCrit)
-			if spell.MissileSpeed != 0 {
-				spell.WaitTravelTime(sim, func(sim *core.Simulation) {
-					spell.DealDamage(sim, result)
-				})
-			} else {
-				spell.DealDamage(sim, result)
-			}
-		},
-	})
+	procCache := make(map[*core.Spell]resonanceCascadeProc)
 
 	mage.RegisterAura(core.Aura{
 		Label:    "Resonance Cascade Talent",
@@ -413,25 +398,89 @@ func (mage *Mage) applyResonanceCascade() {
 				return
 			}
 
+			// Roll only once per spell execution, on the first landed hit.
+			if result.LandedExecutionIndex != 1 {
+				return
+			}
+
 			if spell.ActionID.Tag >= 5 {
 				return
 			}
 
-			if sim.Proc(procChance, "Resonance Cascade") {
-				resonanceCascadeProc.SpellCode = spell.SpellCode
-				resonanceCascadeProc.ActionID = spell.ActionID.WithTag(spell.ActionID.Tag + 1)
-				resonanceCascadeProc.MissileSpeed = spell.MissileSpeed
-				resonanceCascadeProc.Rank = spell.Rank
-				resonanceCascadeProc.DamageMultiplier = spell.DamageMultiplier
-				resonanceCascadeProc.ThreatMultiplier = spell.ThreatMultiplier
-				resonanceCascadeProc.BonusHitRating = spell.BonusHitRating
-				resonanceCascadeProc.BonusCritRating = spell.BonusCritRating
-				resonanceCascadeProc.CritDamageBonus = spell.CritDamageBonus
-				resonanceCascadeDamage = result.RawDamage() * 0.5
-				resonanceCascadeProc.Cast(sim, result.Target)
+			if !sim.Proc(procChance, "Resonance Cascade") {
+				return
+			}
+
+			proc := mage.getOrRegisterResonanceCascadeProc(procCache, spell)
+			*proc.baseDamage = result.RawDamage() * 0.5
+
+			mage.syncResonanceCascadeProcSpell(proc.spell, spell)
+			proc.spell.Cast(sim, result.Target)
+		},
+	})
+}
+
+func (mage *Mage) getOrRegisterResonanceCascadeProc(cache map[*core.Spell]resonanceCascadeProc, source *core.Spell) resonanceCascadeProc {
+	if proc, ok := cache[source]; ok {
+		return proc
+	}
+
+	baseDamage := 0.0
+
+	procSpell := mage.RegisterSpell(core.SpellConfig{
+		ActionID:     source.ActionID.WithTag(source.ActionID.Tag + 1),
+		SpellCode:    source.SpellCode,
+		SpellSchool:  source.SpellSchool,
+		DefenseType:  source.DefenseType,
+		ProcMask:     source.ProcMask,
+		Flags:        source.Flags &^ core.SpellFlagAPL,
+		Rank:         source.Rank,
+		MissileSpeed: source.MissileSpeed,
+
+		DamageMultiplier: 1,
+		ThreatMultiplier: source.DamageMultiplier,
+
+		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+			outcomeApplier := spell.OutcomeMagicHitAndCrit
+			// Arcane Surge always hit
+			if spell.Flags.Matches(core.SpellFlagBinary) {
+				outcomeApplier = spell.OutcomeMagicCrit
+			}
+
+			// Arcane Explosion is multi-target
+			if spell.SpellCode == SpellCode_MageArcaneExplosion {
+				for _, aoeTarget := range sim.Encounter.TargetUnits {
+					spell.CalcAndDealDamage(sim, aoeTarget, baseDamage, outcomeApplier)
+				}
+				return
+			}
+
+			result := spell.CalcDamage(sim, target, baseDamage, outcomeApplier)
+			if spell.MissileSpeed != 0 {
+				spell.WaitTravelTime(sim, func(sim *core.Simulation) {
+					spell.DealDamage(sim, result)
+				})
+			} else {
+				spell.DealDamage(sim, result)
 			}
 		},
 	})
+
+	proc := resonanceCascadeProc{
+		spell:      procSpell,
+		baseDamage: &baseDamage,
+	}
+	cache[source] = proc
+
+	return proc
+}
+
+func (mage *Mage) syncResonanceCascadeProcSpell(procSpell *core.Spell, source *core.Spell) {
+	procSpell.MissileSpeed = source.MissileSpeed
+	procSpell.ThreatMultiplier = source.ThreatMultiplier
+	procSpell.BonusHitRating = source.BonusHitRating
+	procSpell.BonusCritRating = source.BonusCritRating
+	procSpell.CritDamageBonus = source.CritDamageBonus
 }
 
 func (mage *Mage) applyTemporalConvergence() {

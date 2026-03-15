@@ -12,6 +12,11 @@ type ApplySpellResults func(sim *Simulation, target *Unit, spell *Spell)
 type ExpectedDamageCalculator func(sim *Simulation, target *Unit, spell *Spell, useSnapshot bool) *SpellResult
 type CanCastCondition func(sim *Simulation, target *Unit) bool
 
+type spellExecutionState struct {
+	resolved int32
+	landed   int32
+}
+
 type SpellConfig struct {
 	// See definition of Spell (below) for comments on these.
 	ActionID
@@ -161,6 +166,11 @@ type Spell struct {
 	PushbackReduction float64
 
 	resultCache SpellResult
+
+	// Execution tracking for "first hit of this spell execution" style proc logic.
+	currentExecutionID uint64
+	nextExecutionID    uint64
+	executionStates    map[uint64]spellExecutionState
 
 	dots   DotArray
 	aoeDot *Dot
@@ -451,6 +461,10 @@ func (spell *Spell) reset(_ *Simulation) {
 	}
 	spell.casts = 0
 	spell.LastCastAt = 0
+
+	spell.currentExecutionID = 0
+	spell.nextExecutionID = 0
+	spell.executionStates = nil
 }
 
 func (spell *Spell) SetMetricsSplit(splitIdx int32) {
@@ -573,7 +587,13 @@ func (spell *Spell) applyEffects(sim *Simulation, target *Unit) {
 	spell.SpellMetrics[target.UnitIndex].Casts++
 	spell.casts++
 
+	prevExecutionID := spell.currentExecutionID
+	spell.nextExecutionID++
+	spell.currentExecutionID = spell.nextExecutionID
+
 	spell.ApplyEffects(sim, target, spell)
+
+	spell.currentExecutionID = prevExecutionID
 }
 
 func (spell *Spell) ApplyAOEThreatIgnoreMultipliers(threatAmount float64) {
@@ -629,6 +649,27 @@ func (spell *Spell) TravelTime() time.Duration {
 	} else {
 		return time.Duration(float64(time.Second) * spell.Unit.DistanceFromTarget / spell.MissileSpeed)
 	}
+}
+
+func (spell *Spell) finalizeResultSpellExecution(result *SpellResult) {
+	if result.ExecutionID == 0 {
+		return
+	}
+
+	if spell.executionStates == nil {
+		spell.executionStates = make(map[uint64]spellExecutionState)
+	}
+
+	state := spell.executionStates[result.ExecutionID]
+	state.resolved++
+	result.ExecutionIndex = state.resolved
+
+	if result.Landed() {
+		state.landed++
+		result.LandedExecutionIndex = state.landed
+	}
+
+	spell.executionStates[result.ExecutionID] = state
 }
 
 type CostType uint8

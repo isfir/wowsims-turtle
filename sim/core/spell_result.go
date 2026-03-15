@@ -18,6 +18,11 @@ type SpellResult struct {
 	ResistanceMultiplier float64 // Partial Resists / Armor multiplier
 	PreOutcomeDamage     float64 // Damage done by this cast before Outcome is applied
 
+	// Execution metadata for multi-hit / multi-target proc logic.
+	ExecutionID          uint64
+	ExecutionIndex       int32
+	LandedExecutionIndex int32
+
 	inUse bool
 }
 
@@ -31,6 +36,11 @@ func (spell *Spell) NewResult(target *Unit) *SpellResult {
 	result.Damage = 0
 	result.Threat = 0
 	result.Outcome = OutcomeEmpty // for blocks
+	result.ResistanceMultiplier = 0
+	result.PreOutcomeDamage = 0
+	result.ExecutionID = spell.currentExecutionID
+	result.ExecutionIndex = 0
+	result.LandedExecutionIndex = 0
 	result.inUse = true
 
 	return result
@@ -408,6 +418,7 @@ func (spell *Spell) CalcAndDealOutcome(sim *Simulation, target *Unit, outcomeApp
 
 // Applies the fully computed spell result to the sim.
 func (spell *Spell) dealDamageInternal(sim *Simulation, isPeriodic bool, result *SpellResult) {
+	spell.finalizeResultSpellExecution(result)
 	isPartialResist := result.DidResist()
 
 	if sim.CurrentTime >= 0 {
@@ -550,6 +561,7 @@ func (dot *Dot) SnapshotHeal(target *Unit, baseHealing float64, isRollover bool)
 
 // Applies the fully computed spell result to the sim.
 func (spell *Spell) dealHealingInternal(sim *Simulation, isPeriodic bool, result *SpellResult) {
+	spell.finalizeResultSpellExecution(result)
 	if result.DidCrit() {
 		spell.SpellMetrics[result.Target.UnitIndex].TotalCritHealing += result.Damage
 	}
@@ -600,9 +612,16 @@ func (dot *Dot) CalcAndDealPeriodicSnapshotHealing(sim *Simulation, target *Unit
 }
 
 func (spell *Spell) WaitTravelTime(sim *Simulation, callback func(*Simulation)) {
+	executionID := spell.currentExecutionID
+
 	StartDelayedAction(sim, DelayedActionOptions{
-		DoAt:     sim.CurrentTime + spell.TravelTime(),
-		OnAction: callback,
+		DoAt: sim.CurrentTime + spell.TravelTime(),
+		OnAction: func(sim *Simulation) {
+			prevExecutionID := spell.currentExecutionID
+			spell.currentExecutionID = executionID
+			callback(sim)
+			spell.currentExecutionID = prevExecutionID
+		},
 	})
 }
 

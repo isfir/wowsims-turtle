@@ -280,6 +280,11 @@ func (mage *Mage) applyArcaneInstability() {
 				return
 			}
 
+			// Roll only once per spell execution, on the first landed hit.
+			if result.LandedExecutionIndex != 1 {
+				return
+			}
+
 			if sim.Proc(procChance, "Arcane Instability") {
 				arcaneInstabilityDamage = result.Damage * 0.25
 

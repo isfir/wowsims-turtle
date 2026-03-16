@@ -3375,7 +3375,7 @@ func init() {
 			ActionID:  core.ActionID{SpellID: 51271},
 			Label:     "Wisdom of the Mak'aru",
 			Duration:  time.Second * 30,
-			MaxStacks: 20,
+			MaxStacks: 8,
 		})
 
 		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{

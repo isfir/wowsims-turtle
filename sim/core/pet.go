@@ -180,14 +180,16 @@ func (pet *Pet) Enable(sim *Simulation, petAgent PetAgent) {
 }
 
 func (pet *Pet) ApplyOnPetEnable(newOnPetEnable OnPetEnable) {
+	if newOnPetEnable == nil {
+		return
+	}
+
 	oldOnPetEnable := pet.OnPetEnable
-	if oldOnPetEnable == nil {
-		pet.OnPetEnable = oldOnPetEnable
-	} else {
-		pet.OnPetEnable = func(sim *Simulation) {
+	pet.OnPetEnable = func(sim *Simulation) {
+		if oldOnPetEnable != nil {
 			oldOnPetEnable(sim)
-			newOnPetEnable(sim)
 		}
+		newOnPetEnable(sim)
 	}
 }
 
@@ -253,6 +255,8 @@ func (pet *Pet) Disable(sim *Simulation) {
 	// If a pet is immediately re-summoned it might try to use GCD, so we need to clear it.
 	pet.Hardcast = Hardcast{}
 
+	pet.cancelActiveChannels(sim)
+
 	if pet.timeoutAction != nil {
 		pet.timeoutAction.Cancel(sim)
 		pet.timeoutAction = nil
@@ -273,13 +277,33 @@ func (pet *Pet) Disable(sim *Simulation) {
 }
 
 func (pet *Pet) ApplyOnPetDisable(newOnPetDisable OnPetDisable) {
+	if newOnPetDisable == nil {
+		return
+	}
+
 	oldOnPetDisable := pet.OnPetDisable
-	if oldOnPetDisable == nil {
-		pet.OnPetDisable = oldOnPetDisable
-	} else {
-		pet.OnPetDisable = func(sim *Simulation) {
+	pet.OnPetDisable = func(sim *Simulation) {
+		if oldOnPetDisable != nil {
 			oldOnPetDisable(sim)
-			newOnPetDisable(sim)
+		}
+		newOnPetDisable(sim)
+	}
+}
+
+func (pet *Pet) cancelActiveChannels(sim *Simulation) {
+	for _, spell := range pet.Spellbook {
+		if spell == nil || !spell.Flags.Matches(SpellFlagChanneled) {
+			continue
+		}
+
+		if aoeDot := spell.AOEDot(); aoeDot != nil && aoeDot.IsActive() {
+			aoeDot.Cancel(sim)
+		}
+
+		for _, dot := range spell.Dots() {
+			if dot != nil && dot.IsActive() {
+				dot.Cancel(sim)
+			}
 		}
 	}
 }
@@ -290,6 +314,10 @@ func (pet *Pet) UpdateStatInheritance(newStatInheritance PetStatInheritance) {
 
 func (pet *Pet) GetStatInheritance() PetStatInheritance {
 	return pet.statInheritance
+}
+
+func (pet *Pet) IsEnabled() bool {
+	return pet.enabled
 }
 
 // Default implementations for some Agent functions which most Pets don't need.

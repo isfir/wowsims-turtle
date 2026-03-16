@@ -169,6 +169,7 @@ const (
 	JomGabbar                  = 23570
 	SpellwovenNobilityDrape    = 55056
 	JewelOfWildMagics          = 55087
+	RemainsOfOverwhelmingPower = 55093
 	BindingsOfContainedMagic   = 55106
 	SphereOfTheEndlessGulch    = 55501
 	TrueBandOfSulfuras         = 58088
@@ -3177,6 +3178,43 @@ func init() {
 				}
 			},
 		}))
+	})
+
+	// https://database.turtlecraft.gg/?item=55093
+	// Use: Summons a Minor Arcane Elemental that will protect you for 60 sec. While this elemental is alive it increases your damage and healing done by magical spells and effects by up to 55.
+	core.NewItemEffect(RemainsOfOverwhelmingPower, func(agent core.Agent) {
+		character := agent.GetCharacter()
+		actionID := core.ActionID{SpellID: 51143}
+
+		spell := character.RegisterSpell(core.SpellConfig{
+			ActionID: actionID,
+			Flags:    core.SpellFlagNoOnCastComplete | core.SpellFlagOffensiveEquipment,
+
+			Cast: core.CastConfig{
+				CD: core.Cooldown{
+					Timer:    character.NewTimer(),
+					Duration: time.Minute * 5,
+				},
+				SharedCD: core.Cooldown{
+					Timer:    character.GetOffensiveTrinketCD(),
+					Duration: time.Second * 20,
+				},
+			},
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				for _, petAgent := range character.PetAgents {
+					if elemental, ok := petAgent.(*guardians.MinorArcaneElemental); ok {
+						elemental.EnableWithTimeout(sim, elemental, time.Minute)
+						break
+					}
+				}
+			},
+		})
+
+		character.AddMajorCooldown(core.MajorCooldown{
+			Type:  core.CooldownTypeDPS,
+			Spell: spell,
+		})
 	})
 
 	// https://www.wowhead.com/classic/item=19947/nat-pagles-broken-reel

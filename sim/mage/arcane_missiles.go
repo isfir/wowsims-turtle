@@ -49,7 +49,7 @@ func (mage *Mage) getArcaneMissilesSpellConfig(rank int) core.SpellConfig {
 		SpellSchool: core.SpellSchoolArcane,
 		DefenseType: core.DefenseTypeMagic,
 		ProcMask:    core.ProcMaskSpellDamage,
-		Flags:       SpellFlagMage | core.SpellFlagAPL | core.SpellFlagChanneled | core.SpellFlagNoMetrics,
+		Flags:       SpellFlagMage | core.SpellFlagAPL | core.SpellFlagChanneled,
 
 		RequiredLevel: level,
 		Rank:          rank,

@@ -172,6 +172,7 @@ const (
 	RemainsOfOverwhelmingPower = 55093
 	BindingsOfContainedMagic   = 55106
 	SphereOfTheEndlessGulch    = 55501
+	TheScytheOfElune           = 55505
 	TrueBandOfSulfuras         = 58088
 	SigilOfAncientAccord       = 58244
 )
@@ -2372,6 +2373,504 @@ func init() {
 
 	// https://www.wowhead.com/classic/item=13060/the-needler
 	itemhelpers.CreateWeaponCoHProcDamage(TheNeedler, "The Needler", 3.0, 13060, core.SpellSchoolPhysical, 75, 0, 0, core.DefenseTypeMelee)
+
+	// https://database.turtlecraft.gg/?item=55505
+	// Equip: Elune infuses your magic with astral power, giving a 5% chance when your harmful spells are cast to unleash astral energy, dealing 375 to 501 Arcane damage and imbuing your next harmful spell with moonlight. Spells imbued by moonlight increase the damage the target takes from its spell school by 8% and trigger an additional effect for 10 sec depending on the spell school of the harmful spell.
+	// Use: Pierce the veil between Azeroth and Vorgendor, summoning a Scytheclaw Pureborn to protect you for 60 sec.
+	core.NewItemEffect(TheScytheOfElune, func(agent core.Agent) {
+		character := agent.GetCharacter()
+
+		eluneInfusion := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 57658},
+			SpellSchool: core.SpellSchoolArcane,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			BonusCoefficient: 0.25,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.CalcAndDealDamage(sim, target, sim.Roll(375, 501), spell.OutcomeMagicHitAndCrit)
+			},
+		})
+
+		elunesMoonlightTriggerICD := core.Cooldown{
+			Timer:    character.NewTimer(),
+			Duration: time.Second * 15,
+		}
+		elunesMoonlightAura := character.GetOrRegisterAura(core.Aura{
+			ActionID: core.ActionID{SpellID: 57663},
+			Label:    "Elune's Wrath (Moonlight)",
+			Duration: time.Second * 10,
+
+			OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				if !result.Landed() {
+					return
+				}
+				if !spell.ProcMask.Matches(core.ProcMaskSpellDamage) {
+					return
+				}
+				if spell.Flags.Matches(core.SpellFlagHelpful | core.SpellFlagPassiveSpell) {
+					return
+				}
+				if !elunesMoonlightTriggerICD.IsReady(sim) {
+					return
+				}
+
+				elunesMoonlightTriggerICD.Use(sim)
+				aura.Deactivate(sim)
+				eluneInfusion.Cast(sim, result.Target)
+			},
+		})
+
+		applyElunesMoonlight := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 57663},
+			SpellSchool: core.SpellSchoolArcane,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				elunesMoonlightAura.Activate(sim)
+			},
+		})
+
+		elunesWrathAuras := character.NewEnemyAuraArray(func(target *core.Unit) *core.Aura {
+			return target.GetOrRegisterAura(core.Aura{
+				ActionID: core.ActionID{SpellID: 52408},
+				Label:    "Elune's Wrath",
+				Duration: time.Second * 10,
+
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexArcane] *= 1.08
+				},
+				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexArcane] /= 1.08
+				},
+			})
+		})
+
+		applyElunesWrath := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52408},
+			SpellSchool: core.SpellSchoolArcane,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagNoOnDamageDealt | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					elunesWrathAuras.Get(target).Activate(sim)
+				}
+
+				applyElunesMoonlight.Cast(sim, &character.Unit)
+			},
+		})
+
+		elunesRageTriggerDamage := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52375},
+			SpellSchool: core.SpellSchoolFire,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.CalcAndDealDamage(sim, target, 325, spell.OutcomeMagicHitAndCrit)
+			},
+		})
+
+		magicCritTakenSchools := []stats.SchoolIndex{
+			stats.SchoolIndexArcane,
+			stats.SchoolIndexFire,
+			stats.SchoolIndexFrost,
+			stats.SchoolIndexHoly,
+			stats.SchoolIndexNature,
+			stats.SchoolIndexShadow,
+		}
+		elunesRageAuras := character.NewEnemyAuraArray(func(target *core.Unit) *core.Aura {
+			icd := core.Cooldown{
+				Timer:    target.NewTimer(),
+				Duration: time.Second * 2,
+			}
+
+			return target.GetOrRegisterAura(core.Aura{
+				ActionID: core.ActionID{SpellID: 52404},
+				Label:    "Elune's Rage",
+				Duration: time.Second * 10,
+
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFire] *= 1.08
+					for _, school := range magicCritTakenSchools {
+						aura.Unit.PseudoStats.SchoolCritTakenChance[school] += 0.02
+					}
+				},
+				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFire] /= 1.08
+					for _, school := range magicCritTakenSchools {
+						aura.Unit.PseudoStats.SchoolCritTakenChance[school] -= 0.02
+					}
+				},
+				OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+					if !result.Landed() || !result.DidCrit() {
+						return
+					}
+					if spell.Flags.Matches(core.SpellFlagHelpful) {
+						return
+					}
+					if spell.DefenseType != core.DefenseTypeMagic {
+						return
+					}
+					if !icd.IsReady(sim) {
+						return
+					}
+
+					icd.Use(sim)
+					elunesRageTriggerDamage.Cast(sim, aura.Unit)
+				},
+			})
+		})
+
+		applyElunesRage := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52404},
+			SpellSchool: core.SpellSchoolFire,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagNoOnDamageDealt | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					elunesRageAuras.Get(target).Activate(sim)
+				}
+			},
+		})
+
+		elunesIreTriggerDamage := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52411},
+			SpellSchool: core.SpellSchoolFrost,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagNoOnDamageDealt,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.CalcAndDealDamage(sim, target, 275, spell.OutcomeMagicHitAndCrit)
+			},
+		})
+
+		elunesIreAuras := character.NewEnemyAuraArray(func(target *core.Unit) *core.Aura {
+			icd := core.Cooldown{
+				Timer:    target.NewTimer(),
+				Duration: time.Second * 2,
+			}
+
+			aura := target.GetOrRegisterAura(core.Aura{
+				ActionID: core.ActionID{SpellID: 57662},
+				Label:    "Elune's Ire",
+				Duration: time.Second * 10,
+
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFrost] *= 1.08
+				},
+				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFrost] /= 1.08
+				},
+				OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+					if !result.Landed() {
+						return
+					}
+					if spell.Flags.Matches(core.SpellFlagHelpful) {
+						return
+					}
+					if spell.DefenseType != core.DefenseTypeMagic {
+						return
+					}
+					if !icd.IsReady(sim) {
+						return
+					}
+
+					icd.Use(sim)
+					elunesIreTriggerDamage.Cast(sim, aura.Unit)
+				},
+			})
+			core.AtkSpeedReductionEffect(aura, 1.25)
+			return aura
+		})
+
+		applyElunesIre := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52406},
+			SpellSchool: core.SpellSchoolFrost,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagNoOnDamageDealt | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					elunesIreAuras.Get(target).Activate(sim)
+				}
+			},
+		})
+
+		elunesRadianceAttackerHeal := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52409},
+			SpellSchool: core.SpellSchoolHoly,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagHelpful,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.CalcAndDealHealing(sim, target, 130, spell.OutcomeHealingCrit)
+			},
+		})
+
+		elunesRadianceHitPenalty := stats.Stats{
+			stats.MeleeHit: -3 * core.MeleeHitRatingPerHitChance,
+			stats.SpellHit: -3 * core.SpellHitRatingPerHitChance,
+		}
+		elunesRadianceAuras := character.NewEnemyAuraArray(func(target *core.Unit) *core.Aura {
+			return target.GetOrRegisterAura(core.Aura{
+				ActionID: core.ActionID{SpellID: 57666},
+				Label:    "Elune's Radiance",
+				Duration: time.Second * 10,
+
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexHoly] *= 1.08
+					aura.Unit.AddStatsDynamic(sim, elunesRadianceHitPenalty)
+				},
+				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexHoly] /= 1.08
+					aura.Unit.AddStatsDynamic(sim, elunesRadianceHitPenalty.Invert())
+				},
+				OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+					if !result.Landed() {
+						return
+					}
+					if spell.Flags.Matches(core.SpellFlagHelpful) {
+						return
+					}
+
+					elunesRadianceAttackerHeal.Cast(sim, spell.Unit)
+				},
+			})
+		})
+
+		applyElunesRadiance := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 57661},
+			SpellSchool: core.SpellSchoolHoly,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagNoOnDamageDealt | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					elunesRadianceAuras.Get(target).Activate(sim)
+				}
+			},
+		})
+
+		elunesGraceTriggerDamage := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52410},
+			SpellSchool: core.SpellSchoolNature,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagNoOnDamageDealt,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.CalcAndDealDamage(sim, target, 200, spell.OutcomeMagicHitAndCrit)
+			},
+		})
+
+		elunesGraceAuras := character.NewEnemyAuraArray(func(target *core.Unit) *core.Aura {
+			icd := core.Cooldown{
+				Timer:    target.NewTimer(),
+				Duration: time.Second * 2,
+			}
+
+			return target.GetOrRegisterAura(core.Aura{
+				ActionID: core.ActionID{SpellID: 57664},
+				Label:    "Elune's Grace",
+				Duration: time.Second * 10,
+
+				OnGain: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexNature] *= 1.08
+					aura.Unit.PseudoStats.DamageDealtMultiplier *= 0.92
+				},
+				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexNature] /= 1.08
+					aura.Unit.PseudoStats.DamageDealtMultiplier /= 0.92
+				},
+				OnCastComplete: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell) {
+					if spell.Flags.Matches(core.SpellFlagPassiveSpell) {
+						return
+					}
+					if !icd.IsReady(sim) {
+						return
+					}
+
+					icd.Use(sim)
+					elunesGraceTriggerDamage.Cast(sim, aura.Unit)
+				},
+			})
+		})
+		applyElunesGrace := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52405},
+			SpellSchool: core.SpellSchoolNature,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagNoOnDamageDealt | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					elunesGraceAuras.Get(target).Activate(sim)
+				}
+			},
+		})
+
+		elunesTwilightManaDrainMetrics := map[int32]*core.ResourceMetrics{}
+
+		elunesTwilightDot := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 57665},
+			SpellSchool: core.SpellSchoolShadow,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagPureDot | core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			Dot: core.DotConfig{
+				Aura: core.Aura{
+					ActionID: core.ActionID{SpellID: 57665},
+					Label:    "Elune's Twilight",
+
+					OnGain: func(aura *core.Aura, sim *core.Simulation) {
+						aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexShadow] *= 1.08
+						aura.Unit.PseudoStats.HealingTakenMultiplier *= 0.75
+					},
+					OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+						aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexShadow] /= 1.08
+						aura.Unit.PseudoStats.HealingTakenMultiplier /= 0.75
+					},
+				},
+				NumberOfTicks: 10,
+				TickLength:    time.Second,
+
+				OnSnapshot: func(sim *core.Simulation, target *core.Unit, dot *core.Dot, isRollover bool) {
+					dot.Snapshot(target, 120, isRollover)
+				},
+				OnTick: func(sim *core.Simulation, target *core.Unit, dot *core.Dot) {
+					dot.CalcAndDealPeriodicSnapshotDamage(sim, target, dot.OutcomeTick)
+
+					if target.HasManaBar() {
+						metrics := elunesTwilightManaDrainMetrics[target.UnitIndex]
+						if metrics == nil {
+							metrics = target.NewManaMetrics(core.ActionID{SpellID: 57665})
+							elunesTwilightManaDrainMetrics[target.UnitIndex] = metrics
+						}
+						target.AddMana(sim, -100, metrics)
+					}
+				},
+			},
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				spell.Dot(target).Apply(sim)
+			},
+		})
+
+		applyElunesTwilight := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52407},
+			SpellSchool: core.SpellSchoolShadow,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagBinary | core.SpellFlagNoOnCastComplete | core.SpellFlagNoOnDamageDealt | core.SpellFlagPassiveSpell,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					elunesTwilightDot.Dot(target).Apply(sim)
+				}
+			},
+		})
+
+		core.MakePermanent(character.GetOrRegisterAura(core.Aura{
+			Label: "Elune Infusion Passive",
+			OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				if !result.Landed() || !spell.ProcMask.Matches(core.ProcMaskSpellDamage) {
+					return
+				}
+
+				if result.LandedExecutionIndex != 1 {
+					return
+				}
+
+				if !sim.Proc(0.05, "Elune Infusion Passive") {
+					return
+				}
+
+				switch {
+				case spell.SpellSchool.Matches(core.SpellSchoolArcane):
+					applyElunesWrath.Cast(sim, result.Target)
+				case spell.SpellSchool.Matches(core.SpellSchoolFire):
+					applyElunesRage.Cast(sim, result.Target)
+				case spell.SpellSchool.Matches(core.SpellSchoolFrost):
+					applyElunesIre.Cast(sim, result.Target)
+				case spell.SpellSchool.Matches(core.SpellSchoolHoly):
+					applyElunesRadiance.Cast(sim, result.Target)
+				case spell.SpellSchool.Matches(core.SpellSchoolNature):
+					applyElunesGrace.Cast(sim, result.Target)
+				case spell.SpellSchool.Matches(core.SpellSchoolShadow):
+					applyElunesTwilight.Cast(sim, result.Target)
+				}
+
+				eluneInfusion.Cast(sim, result.Target)
+			},
+		}))
+
+		useSpell := character.RegisterSpell(core.SpellConfig{
+			ActionID: core.ActionID{ItemID: TheScytheOfElune},
+			Flags:    core.SpellFlagNoOnCastComplete | core.SpellFlagOffensiveEquipment,
+
+			Cast: core.CastConfig{
+				CD: core.Cooldown{
+					Timer:    character.NewTimer(),
+					Duration: time.Minute * 10,
+				},
+				SharedCD: core.Cooldown{
+					Timer:    character.GetOffensiveTrinketCD(),
+					Duration: time.Minute,
+				},
+			},
+
+			ApplyEffects: func(sim *core.Simulation, _ *core.Unit, spell *core.Spell) {
+				for _, petAgent := range character.PetAgents {
+					if pureborn, ok := petAgent.(*guardians.ScytheclawPureborn); ok {
+						pureborn.EnableWithTimeout(sim, pureborn, time.Minute)
+						break
+					}
+				}
+			},
+		})
+
+		character.AddMajorCooldown(core.MajorCooldown{
+			Type:  core.CooldownTypeDPS,
+			Spell: useSpell,
+		})
+	})
 
 	// https://www.wowhead.com/classic/item=19334/the-untamed-blade
 	// Chance on hit: Increases Strength by 300 for 8 sec.

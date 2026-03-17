@@ -7,4 +7,5 @@ func ConstructGuardians(character *core.Character) {
 	constructEskhandar(character)
 	constructCoreHound(character)
 	constructMinorArcaneElemental(character)
+	constructScytheclawPureborn(character)
 }

@@ -408,7 +408,8 @@ func (mage *Mage) applyResonanceCascade() {
 				return
 			}
 
-			if spell.ActionID.Tag >= 5 {
+			// Resonance Cascade is apparently limited to 4 duplicates.
+			if spell.ActionID.Tag >= 4 {
 				return
 			}
 

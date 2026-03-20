@@ -31,6 +31,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 		Stat.StatSpellCrit,
 		Stat.StatSpellHaste,
 		Stat.StatMP5,
+		Stat.StatFortune,
 	],
 	epPseudoStats: [],
 	// Reference stat against which to calculate EP. I think all classes use either spell power or attack power.
@@ -51,6 +52,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 		Stat.StatSpellCrit,
 		Stat.StatSpellHaste,
 		Stat.StatMP5,
+		Stat.StatFortune,
 	],
 	displayPseudoStats: [],
 
@@ -70,6 +72,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 				[Stat.StatSpellHit]: 0,
 				[Stat.StatSpellCrit]: 14.24,
 				[Stat.StatSpellHaste]: 17.74,
+				[Stat.StatFortune]: 1,
 			},
 			{},
 		),

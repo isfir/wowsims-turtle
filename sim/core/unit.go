@@ -474,6 +474,14 @@ func (unit *Unit) AddBonusRangedCritRating(amount float64) {
 	})
 }
 
+func (unit *Unit) ApplyFortuneToProcChance(baseChance float64) float64 {
+	return min(1.0, baseChance*(1+unit.stats[stats.Fortune]/100))
+}
+
+func (unit *Unit) ApplyFortuneToPPM(basePPM float64) float64 {
+	return basePPM * (1 + unit.stats[stats.Fortune]/100)
+}
+
 func (unit *Unit) SetCurrentPowerBar(bar PowerBarType) {
 	unit.currentPowerBar = bar
 }

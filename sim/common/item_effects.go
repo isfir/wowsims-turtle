@@ -577,7 +577,7 @@ func init() {
 		})
 
 		castableSpells := []*core.Spell{curseOfShahram, mightOfShahram, fistOfShahram, blessingOfShahram, willOfShahram, flamesOfShahram}
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Summon Shahram",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -625,7 +625,7 @@ func init() {
 			}
 		}
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Engulfing Shadows",
 			Callback:   core.CallbackOnSpellHitDealt,
 			ProcMask:   core.ProcMaskSpellDamage,
@@ -824,7 +824,7 @@ func init() {
 
 		procMask := character.GetProcMaskForItem(DragonsCall)
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Emerald Dragon Whelp Proc",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -976,7 +976,7 @@ func init() {
 		})
 
 		procMask := character.GetProcMaskForItem(FangOfTheCrystalSpider)
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Fang of the Crystal Spider Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -996,7 +996,7 @@ func init() {
 
 		effectAura := character.NewTemporaryStatsAura("Felstriker", core.ActionID{SpellID: 16551}, stats.Stats{stats.MeleeCrit: 100 * core.CritRatingPerCritChance, stats.MeleeHit: 100 * core.MeleeHitRatingPerHitChance}, time.Second*3)
 		procMask := character.GetProcMaskForItem(Felstriker)
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Felstriker Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -1175,7 +1175,7 @@ func init() {
 			})
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Frightalon Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -1249,7 +1249,7 @@ func init() {
 			return aura
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Frostguard",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -1747,7 +1747,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              label,
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -1793,7 +1793,7 @@ func init() {
 			})
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Nightfall Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -2194,7 +2194,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Hand of Ragnaros Trigger",
 			Callback: core.CallbackOnSpellHitDealt,
 			Outcome:  core.OutcomeLanded,
@@ -2244,7 +2244,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Sulfuron Hammer Trigger",
 			Callback: core.CallbackOnSpellHitDealt,
 			Outcome:  core.OutcomeLanded,
@@ -2313,7 +2313,7 @@ func init() {
 			})
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Curse of Timmy Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -2818,7 +2818,7 @@ func init() {
 					return
 				}
 
-				if !sim.Proc(0.05, "Elune Infusion Passive") {
+				if !sim.Proc(character.Unit.ApplyFortuneToProcChance(0.05), "Elune Infusion Passive") {
 					return
 				}
 
@@ -3142,7 +3142,7 @@ func init() {
 
 		auraLabel := "Badge of the Swarmguard"
 		actionID := core.ActionID{ItemID: BadgeOfTheSwarmguard}
-		trinketAura := core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		trinketAura := core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              auraLabel,
 			ActionID:          actionID,
 			Duration:          time.Second * 30,
@@ -3243,7 +3243,7 @@ func init() {
 			Duration: time.Second * 15,
 		}).AttachAdditivePseudoStatBuff(&character.PseudoStats.SpiritRegenRateCasting, 1)
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Aura of the Blue Dragon Trigger",
 			Callback:   core.CallbackOnCastComplete,
 			ProcMask:   core.ProcMaskSpellDamage | core.ProcMaskSpellHealing,
@@ -3272,7 +3272,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Heroism Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -3307,7 +3307,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Lightning Strike Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -3344,7 +3344,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Fiery Aura Proc",
 			Callback: core.CallbackOnSpellHitTaken,
 			Outcome:  core.OutcomeLanded,
@@ -3380,7 +3380,7 @@ func init() {
 				if spell.Flags.Matches(core.SpellFlagSuppressEquipProcs) {
 					return
 				}
-				if result.Landed() && spell.ProcMask.Matches(core.ProcMaskMelee) && icd.IsReady(sim) && sim.Proc(0.02, "HandOfJustice") {
+				if result.Landed() && spell.ProcMask.Matches(core.ProcMaskMelee) && icd.IsReady(sim) && sim.Proc(character.Unit.ApplyFortuneToProcChance(0.02), "HandOfJustice") {
 					icd.Use(sim)
 					aura.Unit.AutoAttacks.ExtraMHAttackProc(sim, 1, core.ActionID{SpellID: 15600}, spell)
 				}
@@ -3404,7 +3404,7 @@ func init() {
 				spell.CalcAndDealDamage(sim, target, sim.Roll(120, 180), spell.OutcomeMagicHitAndCrit)
 			},
 		})
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Heart of Wyrmthalak Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -3672,7 +3672,7 @@ func init() {
 		core.MakePermanent(character.GetOrRegisterAura(core.Aura{
 			Label: "Mark of the Chosen",
 			OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-				if result.Landed() && spell.ProcMask.Matches(core.ProcMaskMelee) && sim.RandomFloat("Mark of the Chosen") < markProcChance {
+				if result.Landed() && spell.ProcMask.Matches(core.ProcMaskMelee) && sim.Proc(character.Unit.ApplyFortuneToProcChance(markProcChance), "Mark of the Chosen") {
 					procAura.Activate(sim)
 				}
 			},
@@ -3748,7 +3748,7 @@ func init() {
 			},
 		})
 
-		activeAura := core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		activeAura := core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Persistent Shield",
 			Callback: core.CallbackOnHealDealt,
 			Duration: time.Second * 30,
@@ -3838,7 +3838,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Ancient Accord Passive",
 			Callback:   core.CallbackOnSpellHitDealt,
 			Outcome:    core.OutcomeLanded,
@@ -3915,7 +3915,7 @@ func init() {
 			MaxStacks: 8,
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Wisdom of the Mak'aru Passive",
 			Callback:   core.CallbackOnSpellHitDealt,
 			Outcome:    core.OutcomeLanded,
@@ -4232,7 +4232,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&agent.GetCharacter().Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&agent.GetCharacter().Unit, core.ProcTrigger{
 			Name:       "Uncontained Magic Passive",
 			Callback:   core.CallbackOnSpellHitDealt,
 			Outcome:    core.OutcomeLanded,
@@ -4263,7 +4263,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:              "Blazefury Medallion Trigger",
 			Callback:          core.CallbackOnSpellHitDealt,
 			Outcome:           core.OutcomeLanded,
@@ -4312,7 +4312,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Force Reactive Disk",
 			Callback: core.CallbackOnSpellHitTaken,
 			ProcMask: core.ProcMaskMelee,
@@ -4378,7 +4378,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Drain Life Trigger",
 			Callback:   core.CallbackOnSpellHitTaken,
 			Outcome:    core.OutcomeLanded,
@@ -4389,7 +4389,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Flamestrike Trigger",
 			Callback:   core.CallbackOnSpellHitTaken,
 			Outcome:    core.OutcomeLanded,
@@ -4414,7 +4414,7 @@ func init() {
 			time.Second*6,
 		)
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Highborne Insight Passive",
 			Callback:   core.CallbackOnSpellHitDealt,
 			Outcome:    core.OutcomeLanded,
@@ -4436,7 +4436,7 @@ func init() {
 			Duration: time.Second * 6,
 		}).AttachMultiplyCastSpeed(&character.Unit, 1.05)
 
-		core.MakeProcTriggerAura(&character.Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Sulfuron Blaze Passive",
 			Callback: core.CallbackOnSpellHitDealt,
 			Outcome:  core.OutcomeLanded,
@@ -4447,7 +4447,7 @@ func init() {
 					procChance *= 1.5
 				}
 
-				if sim.Proc(procChance, "Sulfuron Blaze Passive") {
+				if sim.Proc(character.Unit.ApplyFortuneToProcChance(procChance), "Sulfuron Blaze Passive") {
 					buffAura.Activate(sim)
 				}
 			},
@@ -4471,7 +4471,7 @@ func init() {
 			},
 		})
 
-		core.MakeProcTriggerAura(&agent.GetCharacter().Unit, core.ProcTrigger{
+		core.MakeItemProcTriggerAura(&agent.GetCharacter().Unit, core.ProcTrigger{
 			Name:       "Spell Blasting Trigger",
 			Callback:   core.CallbackOnSpellHitDealt,
 			Outcome:    core.OutcomeLanded,

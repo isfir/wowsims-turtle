@@ -91,6 +91,7 @@ export class Individual60UEPExporter<SpecType extends Spec> extends IndividualEx
 		[Stat.StatBonusArmor]: 'armorBonus',
 		[Stat.StatHealingPower]: 'healing',
 		[Stat.StatFeralAttackPower]: 'feralAttackPower',
+		[Stat.StatFortune]: 'fortune',
 	};
 	static pseudoStatNames: Partial<Record<PseudoStat, string>> = {
 		[PseudoStat.PseudoStatMainHandDps]: 'dps',

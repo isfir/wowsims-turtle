@@ -80,7 +80,12 @@ const statGroups = new Map<string, Array<UnitStat>>([
 			UnitStat.fromStat(Stat.StatShadowResistance),
 		],
 	],
-	['Misc', []],
+	[
+		'Misc',
+		[
+			UnitStat.fromStat(Stat.StatFortune),
+		]
+	],
 ]);
 
 export class CharacterStats extends Component {
@@ -492,6 +497,8 @@ export class CharacterStats extends Component {
 				displayStr = `${(rawValue / Mechanics.PARRY_RATING_PER_PARRY_CHANCE).toFixed(2)}%`;
 			} else if (stat === Stat.StatResilience) {
 				displayStr = `${rawValue} (${(rawValue / Mechanics.RESILIENCE_RATING_PER_CRIT_REDUCTION_CHANCE).toFixed(2)}%)`;
+			} else if (stat === Stat.StatFortune) {
+				displayStr = `${rawValue}%`;
 			}
 		} else {
 			const pseudoStat = unitStat.getPseudoStat();

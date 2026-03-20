@@ -41,6 +41,7 @@ type ProcTrigger struct {
 	ProcChance        float64
 	PPM               float64
 	ICD               time.Duration
+	AffectedByFortune bool
 	Handler           ProcHandler
 }
 
@@ -54,9 +55,17 @@ func ApplyProcTriggerCallback(unit *Unit, aura *Aura, config ProcTrigger) {
 		aura.Icd = &icd
 	}
 
+	procChance := config.ProcChance
+	procPPM := config.PPM
+
+	if config.AffectedByFortune {
+		procChance = unit.ApplyFortuneToProcChance(procChance)
+		procPPM = unit.ApplyFortuneToPPM(procPPM)
+	}
+
 	var ppmm PPMManager
-	if config.PPM > 0 {
-		ppmm = unit.AutoAttacks.NewPPMManager(config.PPM, config.ProcMask)
+	if procPPM > 0 {
+		ppmm = unit.AutoAttacks.NewPPMManager(procPPM, config.ProcMask)
 	}
 
 	handler := config.Handler
@@ -79,9 +88,9 @@ func ApplyProcTriggerCallback(unit *Unit, aura *Aura, config ProcTrigger) {
 		if icd.Duration != 0 && !icd.IsReady(sim) {
 			return
 		}
-		if config.ProcChance != 1 && sim.RandomFloat(config.Name) > config.ProcChance {
+		if procChance != 1 && sim.RandomFloat(config.Name) > procChance {
 			return
-		} else if config.PPM != 0 && !ppmm.ProcWithWeaponSpecials(sim, spell.ProcMask, config.Name) {
+		} else if procPPM != 0 && !ppmm.ProcWithWeaponSpecials(sim, spell.ProcMask, config.Name) {
 			return
 		}
 
@@ -91,8 +100,8 @@ func ApplyProcTriggerCallback(unit *Unit, aura *Aura, config ProcTrigger) {
 		handler(sim, spell, result)
 	}
 
-	if config.ProcChance == 0 {
-		config.ProcChance = 1
+	if procChance == 0 {
+		procChance = 1
 	}
 
 	if config.Callback.Matches(CallbackOnSpellHitDealt) {
@@ -124,7 +133,7 @@ func ApplyProcTriggerCallback(unit *Unit, aura *Aura, config ProcTrigger) {
 			if icd.Duration != 0 && !icd.IsReady(sim) {
 				return
 			}
-			if config.ProcChance != 1 && sim.RandomFloat(config.Name) > config.ProcChance {
+			if procChance != 1 && sim.RandomFloat(config.Name) > procChance {
 				return
 			}
 
@@ -153,6 +162,11 @@ func MakeProcTriggerAura(unit *Unit, config ProcTrigger) *Aura {
 	ApplyProcTriggerCallback(unit, &aura, config)
 
 	return unit.GetOrRegisterAura(aura)
+}
+
+func MakeItemProcTriggerAura(unit *Unit, config ProcTrigger) *Aura {
+	config.AffectedByFortune = true
+	return MakeProcTriggerAura(unit, config)
 }
 
 type StackingStatAura struct {

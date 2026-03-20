@@ -353,6 +353,8 @@ function formatEffectStatLine(stat: Stat, value: number): string | null {
 		case Stat.StatBlock:
 			return `Equip: Improves your chance to block by ${formatNumber(value)}%.`;
 
+		case Stat.StatFortune:
+			return `Equip: Increases your chance to trigger chance based item effects by ${formatNumber(value)}%.`;
 		case Stat.StatResilience:
 			return `Equip: Improves your resilience rating by ${formatNumber(value)}.`;
 

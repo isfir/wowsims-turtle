@@ -31,7 +31,7 @@ type SpellAnalysis struct {
 }
 
 const (
-	statsLen       = int(proto.Stat_StatFeralAttackPower) + 1
+	statsLen       = int(proto.Stat_StatFortune) + 1
 	weaponSkillLen = int(proto.WeaponSkill_WeaponSkillFeralCombat) + 1
 )
 
@@ -108,6 +108,7 @@ const (
 	auraModAttackerMeleeHitChance  = 184
 	auraModAttackerRangedHitChance = 185
 	auraModTargetResistance        = 123
+	auraModFortune                 = 223
 )
 
 const (
@@ -959,6 +960,9 @@ func auraTypeToEffects(auraType, miscValue int32, value float64) ([]SpellEffect,
 
 	case auraModTargetResistance:
 		return []SpellEffect{{Stat: proto.Stat_StatSpellPenetration, Value: math.Abs(value)}}, true
+
+	case auraModFortune:
+		return []SpellEffect{{Stat: proto.Stat_StatFortune, Value: value}}, true
 
 	default:
 		return nil, false

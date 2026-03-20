@@ -2737,7 +2737,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 4769,,,,,INV_Misc_Orb_03,0,0,0,0,0,16,0,0,,,,,,,,,0
 4770,Mace_1H_Flanged_A_03.mdx,,Mace_1H_Flanged_A_03Gold,,INV_Mace_06,0,0,0,0,0,8,0,0,,,,,,,,,0
 4771,,,,,INV_Letter_04,0,0,0,0,0,20,0,0,,,,,,,,,0
-4772,,,,,INV_Stone_08,0,0,0,0,0,0,0,0,,,,,,,,,0
+4772,,,,,petrock_01,0,0,0,0,0,0,0,0,,,,,,,,,0
 4773,,,,,INV_Weapon_ShortBlade_05,0,0,0,0,0,0,0,0,,,,,,,,,0
 4774,,,,,INV_Stone_07,0,0,0,0,0,0,0,0,,,,,,,,,0
 4775,,,,,INV_Misc_Gem_Diamond_01,0,0,0,0,0,24,0,0,,,,,,,,,0
@@ -4628,7 +4628,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 6661,,,,,INV_Misc_Herb_08,0,0,0,0,0,23,0,0,,,,,,,,,0
 6662,,,,,,0,0,0,0,0,0,0,0,Leather_B_02Green_Sleeve_AU,,,Leather_B_02Green_Chest_TU,Leather_B_02Green_Chest_TL,,,,0
 6663,,,,,INV_Misc_Gem_Emerald_03,0,0,0,0,0,24,0,0,,,,,,,,,0
-6664,,,,,INV_Stone_06,0,0,0,0,0,16,0,0,,,,,,,,,0
+6664,,,,,inv_misc_shortblade_21,0,0,0,0,0,16,0,0,,,,,,,,,0
 6665,,,,,INV_Misc_Root_02,0,0,0,0,0,15,0,0,,,,,,,,,0
 6666,,,,,INV_Misc_MonsterFang_01,0,0,0,0,0,16,0,0,,,,,,,,,0
 6667,,,,,INV_Jewelry_Talisman_02,0,0,0,0,0,16,0,0,,,,,,,,,0
@@ -5001,7 +5001,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 7034,,,,,,1,0,0,0,0,0,0,0,,,Leather_B_03_Glove_HA,,,,,,0
 7035,,,,,INV_Ammo_Arrow_01,0,0,0,0,0,16,0,0,,,,,,,,,0
 7036,,,,,INV_Misc_Bone_HumanSkull_01,0,0,0,0,0,12,0,0,,,,,,,,,0
-7037,,,,,INV_Stone_07,0,0,0,0,0,16,0,0,,,,,,,,,0
+7037,,,,,inv_misc_stonetablet_03,0,0,0,0,0,16,0,0,,,,,,,,,0
 7038,,,,,INV_Misc_Head_Human_01,0,0,0,0,0,15,0,0,,,,,,,,,0
 7039,,,,,INV_Misc_Food_02,0,0,0,0,0,15,0,0,,,,,,,,,0
 7040,,,,,INV_Axe_01,0,0,0,0,0,8,0,0,,,,,,,,,0
@@ -5121,7 +5121,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 7154,,,,,INV_Misc_Bone_05,0,0,0,0,0,16,0,0,,,,,,,,,0
 7155,,,,,INV_Misc_Urn_01,0,0,0,0,0,9,0,0,,,,,,,,,0
 7156,,,,,INV_Shoulder_04,0,0,0,0,0,8,0,0,,,,,,,,,0
-7157,,,,,INV_Stone_08,0,0,0,0,0,8,0,0,,,,,,,,,0
+7157,,,,,inv_misc_stonetablet_02,0,0,0,0,0,8,0,0,,,,,,,,,0
 7158,,,,,INV_Ingot_04,0,0,0,0,0,22,0,0,,,,,,,,,0
 7159,,,,,INV_Bracer_09,0,0,0,0,0,10,0,0,,,,,,,,,0
 7160,,,,,INV_Misc_EmptyFlask_02,0,0,0,0,0,17,0,0,,,,,,,,,0
@@ -5430,7 +5430,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 7463,Misc_1H_Mutton_B_02.mdx,,Misc_1H_Mutton_B_02Cooked,,INV_Misc_Food_18,0,0,0,0,0,8,0,0,,,,,,,,,0
 7464,Misc_2H_Pitchfork_A_01.mdx,,Misc_2H_Pitchfork_A_01Brown,,INV_Spear_04,0,0,0,0,0,9,0,0,,,,,,,,,0
 7465,Misc_1H_Potion_B_01.mdx,,Misc_1H_Potion_B_01Blue,,INV_Potion_03,0,0,0,0,0,17,0,0,,,,,,,,,0
-7466,Misc_1H_Potion_B_01.mdx,,Misc_1H_Potion_B_01Green,,INV_Potion_06,0,0,0,0,0,17,0,0,,,,,,,,,0
+7466,Misc_1H_Potion_B_01.mdx,Misc_1H_Potion_B_01.mdx,Misc_1H_Potion_B_01Green,Misc_1H_Potion_B_01Green,INV_Potion_06,0,0,0,0,98,17,0,0,,,,,,,,,0
 7467,Misc_1H_Potion_B_01.mdx,,Misc_1H_Potion_B_01Red,,INV_Potion_16,0,0,0,0,0,17,0,0,,,,,,,,,0
 7468,Misc_1H_RollingPin_A_01.mdx,,Misc_1H_RollingPin_A_01Light,,INV_Misc_Flute_01,0,0,0,0,0,12,0,0,,,,,,,,,0
 7469,Misc_1H_Skull_B_01.mdx,,Misc_1H_Skull_B_01White,,INV_Misc_Bone_ElfSkull_01,0,0,0,0,0,8,0,0,,,,,,,,,0
@@ -8366,7 +8366,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 10548,,,,,,0,0,0,0,0,0,0,0,,,Cloth_B_01Yellow_Glove_HA,,,,,,0
 10549,,,,,,2,0,0,0,0,0,0,0,,,,,,,Leather_B_03Green_Boot_LL,Leather_A_03Brown_Boot_FO,0
 10550,,,,,,0,0,0,0,0,0,0,0,,Leather_B_03Green_Bracer_AL,Leather_B_03Green_Glove_HA,,,,,,0
-10551,Helm_Leather_A_03Defias.mdx,,Helm_Leather_Blood_C_02,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+10551,Helm_Leather_A_03Defias.mdx,,Helm_Leather_Blood_C_02,,INV_Misc_Bandana_03,0,0,0,0,0,0,0,0,,,,,,,,,0
 10552,,,,,,0,0,0,0,0,0,0,0,Leather_B_01Black_Sleeve_AU,Leather_B_01Black_Bracer_AL,,Leather_B_01Black_Chest_TU,Leather_B_01Black_Chest_TL,,,,0
 10553,Helm_Cloth_B_04WideBrim.mdx,,Helm_Cloth_A_01RedFaded,,,0,0,0,0,0,0,0,0,,,,,,,,,0
 10554,,,,,,2,0,0,0,0,0,0,0,,,,,,,Leather_B_03Brown_Boot_LL,Leather_A_03Brown_Boot_FO,0
@@ -15086,7 +15086,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 18101,,,,,INV_Drink_03,0,0,0,0,0,0,0,0,,,,,,,,,0
 18102,,,,,INV_Drink_08,0,0,0,0,0,17,0,0,,,,,,,,,0
 18103,,,,,INV_Stone_09,0,0,0,0,0,24,0,0,,,,,,,,,0
-18104,,,,,INV_Stone_10,0,0,0,0,0,24,0,0,,,,,,,,,0
+18104,,,,,inv_stone_08,0,0,0,0,0,24,0,0,,,,,,,,,0
 18105,,,,,INV_Stone_11,0,0,0,0,0,24,0,0,,,,,,,,,0
 18106,,,,,INV_Stone_12,0,0,0,0,0,24,0,0,,,,,,,,,0
 18107,,,,,INV_Stone_16,0,0,0,0,0,22,0,0,,,,,,,,,0
@@ -16471,7 +16471,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 19829,,,,,,0,0,0,0,0,0,0,0,Plate_B_03Red_Sleeve_AU,,,Plate_B_03Red_Chest_TU,Plate_B_03Red_Chest_TL,,,,0
 19830,,,,,INV_Misc_StoneTablet_04,0,0,0,0,0,9,0,0,,,,,,,,,0
 19831,,,,,INV_Misc_StoneTablet_01,0,0,0,0,0,9,0,0,,,,,,,,,0
-19832,,,,,INV_Misc_StoneTablet_02,0,0,0,0,0,9,0,0,,,,,,,,,0
+19832,,,,,inv_misc_stonetablet_08,0,0,0,0,0,9,0,0,,,,,,,,,0
 19833,,,,,,1,1,0,0,0,0,0,0,Cloth_A_08Brown_Sleeve_AU,Cloth_A_08Brown_Sleeve_AL,,Cloth_A_08Brown_Chest_TU,,,,,0
 19834,,,,,,2,0,0,0,0,0,0,0,,,,,,,Leather_D_03White_Boot_LL,Leather_C_02Brown_Boot_FO,0
 19835,Sword_1H_Long_B_03.mdx,,Sword_1H_Short_B_01Red,,INV_Sword_07,0,0,0,0,0,8,0,0,,,,,,,,,0
@@ -17928,7 +17928,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 22235,Polearm_2H_Bladed_A_02.mdx,,Polearm_2H_Bladed_A_02Purple,,INV_Spear_05,0,0,0,0,0,9,0,0,,,,,,,,,0
 22236,Polearm_2H_Bladed_A_02.mdx,,Polearm_2H_Trident_A_01White,,INV_Spear_06,0,0,0,0,0,9,0,0,,,,,,,,,0
 22237,Polearm_2H_Bladed_A_02.mdx,,Polearm_2H_Trident_A_01White,,INV_Spear_05,0,0,0,0,0,9,0,0,,,,,,,,,0
-22238,Polearm_2H_Bladed_A_01.mdx,,Polearm_2H_Trident_A_02Black,,INV_Spear_08,0,0,0,0,0,9,0,0,,,,,,,,,0
+22238,Polearm_2H_Bladed_A_01.mdx,Polearm_2H_Bladed_A_01.mdx,Polearm_2H_Trident_A_02Black,Polearm_2H_Trident_A_02Black,INV_Spear_08,0,0,0,0,98,9,0,0,,,,,,,,,0
 22239,Polearm_2H_Bladed_A_02.mdx,,Polearm_2H_Trident_A_02Copper,,INV_Spear_05,0,0,0,0,0,9,0,0,,,,,,,,,0
 22240,Polearm_2H_Bladed_A_01.mdx,,Polearm_2H_Bladed_A_01,,INV_Spear_04,0,0,0,0,0,9,0,0,,,,,,,,,0
 22241,Polearm_2H_Bladed_A_01.mdx,,Polearm_2H_Bladed_A_01,,INV_Spear_05,0,0,0,0,0,9,0,0,,,,,,,,,0
@@ -18119,7 +18119,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 22480,,,,,INV_Chest_Chain_07,0,0,0,0,0,10,0,0,Mail_B_03Quest01_Sleeve_AU,,,Mail_B_03Quest01_Chest_TU,Mail_B_03Quest01_Chest_TL,,,,0
 22481,,,,,INV_Pants_03,0,0,0,0,0,10,0,0,,,,,,Mail_B_03Quest01_Pant_LU,Mail_B_03Quest01_Pant_LL,,0
 22482,,,,,INV_Gauntlets_04,1,0,0,0,0,10,0,0,,Mail_B_03Quest01_Glove_AL,Mail_B_03Quest01_Glove_HA,,,,,,0
-22483,,,,,INV_Jewelry_Necklace_09,0,0,0,0,0,8,0,0,,,,,,,,,0
+22483,,,,,spell_frost_wizardmark,0,0,0,0,0,8,0,0,,,,,,,,,0
 22484,,,,,INV_Misc_Rune_04,0,0,0,0,0,16,0,0,,,,,,,,,0
 22485,,,,,Spell_Arcane_Blink,0,0,0,0,0,0,0,0,,,,,,Leather_Horde_A_05Brown_Pant_LU,,,0
 22486,,,,,,0,0,0,0,0,0,0,0,,,,Plate_B_02Red_Chest_TU,Plate_B_02Red_Chest_TL,,,,0
@@ -23723,7 +23723,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 28839,Helm_Plate_D_02.mdx,,Helm_Plate_D_03GreenSilver,,INV_Helmet_10,0,0,0,0,0,11,248,306,,,,,,,,,0
 28840,,,,,Spell_Fire_FlameBolt,0,0,0,0,0,22,0,0,,,,,,,,,0
 28841,,,,,Spell_Nature_Earthquake,0,0,0,0,0,22,0,0,,,,,,,,,0
-28842,,,,,INV_Ammo_FireTar,0,0,0,0,0,7,0,0,,,,,,,,,0
+28842,,,,,leather_core_01,0,0,0,0,0,7,0,0,,,,,,,,,0
 28843,,,,,Inv_pants_plate_07,0,0,0,0,0,11,0,0,Plate_D_02Copper_Sleeve_AU,Plate_D_02Copper_Sleeve_AL,,Plate_D_02Copper_Chest_TU,Plate_D_02Copper_Chest_TL,Plate_D_02Black_Pant_LU,Plate_D_02Black_Pant_LL,,0
 28844,,,,,INV_Bracer_07,0,0,0,0,0,11,0,0,,Plate_Horde_B_03Black_Bracer_AL,,,,,,,0
 28845,Sword_1H_Horde_C_01.mdx,,Sword_1H_Horde_C_02Black,,INV_Sword_11,0,0,0,0,0,8,0,0,,,,,,,,,33
@@ -26981,7 +26981,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 32928,,,,,INV_Belt_14,0,0,0,0,0,11,0,0,,,,,,Mail_C_01Dreadguard_Belt_LU,,,0
 32929,,,,,INV_Chest_Cloth_09,1,0,1,0,0,7,0,0,Robe_B_03Red_Sleeve_AU,Robe_B_03Red_Sleeve_AL,,Robe_B_03Red_Chest_TU,Robe_B_03Red_Chest_TL,Robe_B_03Red_Pants_LU,Robe_B_03Red_Pant_LL,,0
 32930,Stave_2H_Jeweled_B_02.mdx,,Stave_2H_Jeweled_B_02Red,,INV_Staff_31,0,0,0,0,0,13,0,0,,,,,,,,,0
-32931,,,,,INV_Wand_11,0,0,0,0,0,8,0,0,,,,,,,,,0
+32931,,,,,inv_wand_01,0,0,0,0,0,8,0,0,,,,,,,,,0
 32932,,,,,INV_Wand_11,0,0,0,0,0,9,0,0,,,,,,,,,0
 32933,,,,,INV_Misc_StoneTablet_04,0,0,0,0,0,7,0,0,,,,,,,,,0
 32934,Helm_Plate_D_01.mdx,,Helm_Plate_B_03Sentinel,,INV_Helmet_10,0,0,0,0,0,11,248,306,,,,,,,,,0
@@ -27597,7 +27597,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 33544,,,,,INV_Misc_ArmorKit_06,0,0,0,0,0,16,0,0,,,,,,,,,0
 33545,,,,,INV_Misc_MonsterScales_06,0,0,0,0,0,16,0,0,,,,,,,,,0
 33546,,,,,INV_Misc_StoneTablet_10,0,0,0,0,0,16,0,0,,,,,,,,,0
-33547,,,,,INV_Misc_Idol_03,0,0,0,0,0,24,0,0,,,,,,,,,0
+33547,,,,,inv_ancient_qiraji_artifact_1,0,0,0,0,0,24,0,0,,,,,,,,,0
 33548,,,,,INV_Sword_13,0,0,0,0,0,9,0,0,,,,,,,,,0
 33549,,,,,INV_Staff_24,0,0,0,0,0,13,0,0,,,,,,,,,0
 33550,,,,,INV_Shield_18,0,0,0,0,0,9,0,0,,,,,,,,,0
@@ -43110,7 +43110,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 66326,LShoulder_Leather_D_02.mdx,RShoulder_Leather_D_02.mdx,Shoulder_Leather_D_02Gray,Shoulder_Leather_D_02Gray,inv_shoulder_24,0,0,0,0,0,7,0,0,,,,,,,,,0
 66327,,,,,Inv_misc_head_dragon_green,0,0,0,0,0,21,0,0,,,,,,,,,0
 66328,helm_cloth_mail.mdx,,,,INV_Helmet_44,0,0,0,0,0,10,246,307,,,,,,,,,0
-66329,Stave_2H_HunterEpic_D_01.mdx,,Stave_2H_HunterEpic_D_01,,INV_Staff_42,0,0,0,0,0,13,0,0,,,,,,,,,0
+66329,Stave_2H_HunterEpic_D_01.mdx,,Stave_2H_HunterEpic_D_01,,INV_Staff_42,0,0,0,0,0,13,0,0,,,,,,,,,127
 66330,Helm_Robe_RaidMage_E_01.mdx,,Helm_Cloth_A_01BlackTamamo,,BTNLeatherHood,0,0,0,0,0,10,246,307,,,,,,,,,0
 66331,Helm_Robe_RaidMage_E_01.mdx,,Helm_Cloth_A_01Deathguard,,BTNLeatherHood,0,0,0,0,0,10,246,307,,,,,,,,,0
 66332,Helm_Robe_RaidMage_E_01.mdx,,Helm_Cloth_A_01Black,,BTNLeatherHood,0,0,0,0,0,10,246,307,,,,,,,,,0
@@ -44335,7 +44335,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 68235,polearm_2h_zulgurub_d_01.mdx,,Polearm_2H_ZulGurub_D_02,,inv_spear_04,0,0,0,0,0,9,0,0,,,,,,,,,0
 68236,ClamShield.mdx,,ClamShield,,inv_misc_shell_03,0,0,0,0,0,9,0,0,,,,,,,,,0
 68238,wand_1h_outlandraid_d_01.mdx,,wand_1h_outlandraid_d_01red,,Inv_Wand_06,0,0,0,0,225,12,0,0,,,,,,,,,0
-68239,thrown_1h_giant_weaponboulder.mdx,thrown_1h_giant_weaponboulder2.mdx,THROWN_1H_GIANT_WEAPONBOULDER,THROWN_1H_GIANT_WEAPONBOULDER,inv_stone_10,0,0,0,0,98,12,0,0,,,,,,,,,0
+68239,thrown_1h_giant_weaponboulder.mdx,thrown_1h_giant_weaponboulder2.mdx,THROWN_1H_GIANT_WEAPONBOULDER,THROWN_1H_GIANT_WEAPONBOULDER,inv_fragment_of_aldrach_1,0,0,0,0,98,12,0,0,,,,,,,,,0
 68240,lshoulder_mail_raidhunter_d_01.mdx,rshoulder_mail_raidhunter_d_01.mdx,Shoulder_Mail_RaidHunter_D_01PVP,Shoulder_Mail_RaidHunter_D_01PVP,inv_shoulder_01,0,0,0,0,0,11,0,0,,,,,,,,,0
 68241,,,,,INV_Chest_Chain_07,0,0,0,0,0,11,0,0,Mail_DungeonHunter_B_02DarkGreen_Sleeve_AU,,,Mail_DungeonHunter_B_02DarkGreen_Chest_TU,Mail_DungeonHunter_B_02DarkGreen_Chest_TL,,,,0
 68242,,,,,INV_BlueGem,0,0,0,0,0,14,0,0,,,,,,,,,0
@@ -44660,23 +44660,23 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 68568,,,,,INV_Potion_139,0,0,0,0,0,17,0,0,,,,,,,,,0
 68569,,,,,INV_Potion_140,0,0,0,0,0,17,0,0,,,,,,,,,0
 68570,,,,,inv_stone_sharpeningstone_06,0,0,0,0,0,22,0,0,,,,,,,,,0
-68571,,,,,inv_misc_monsterscales_19,0,0,0,0,0,7,0,0,,,,,,,,,0
-68572,,,,,inv_misc_monsterscales_20,0,0,0,0,0,7,0,0,,,,,,,,,0
-68573,,,,,inv_misc_monsterscales_21,0,0,0,0,0,7,0,0,,,,,,,,,0
-68574,,,,,inv_misc_monsterscales_22,0,0,0,0,0,7,0,0,,,,,,,,,0
-68575,,,,,inv_misc_monsterscales_23,0,0,0,0,0,7,0,0,,,,,,,,,0
-68576,,,,,inv_misc_monsterscales_24,0,0,0,0,0,7,0,0,,,,,,,,,0
-68577,,,,,inv_misc_monsterscales_25,0,0,0,0,0,7,0,0,,,,,,,,,0
-68578,,,,,inv_misc_monsterscales_25,0,0,0,0,0,7,0,0,,,,,,,,,0
+68571,,,,,inv_misc_monsterscales_19,0,0,0,0,0,16,0,0,,,,,,,,,0
+68572,,,,,inv_misc_monsterscales_20,0,0,0,0,0,16,0,0,,,,,,,,,0
+68573,,,,,inv_misc_monsterscales_21,0,0,0,0,0,16,0,0,,,,,,,,,0
+68574,,,,,inv_misc_monsterscales_22,0,0,0,0,0,16,0,0,,,,,,,,,0
+68575,,,,,inv_misc_monsterscales_23,0,0,0,0,0,16,0,0,,,,,,,,,0
+68576,,,,,inv_misc_monsterscales_24,0,0,0,0,0,16,0,0,,,,,,,,,0
+68577,,,,,inv_misc_monsterscales_25,0,0,0,0,0,16,0,0,,,,,,,,,0
+68578,,,,,inv_misc_monsterscales_25,0,0,0,0,0,16,0,0,,,,,,,,,0
 68579,,,,,inv_misc_shell_04,0,0,0,0,0,15,0,0,,,,,,,,,0
-68580,,,,,inv_misc_monsterscales_26,0,0,0,0,0,7,0,0,,,,,,,,,0
-68581,,,,,inv_misc_monsterscales_27,0,0,0,0,0,7,0,0,,,,,,,,,0
-68582,,,,,inv_misc_monsterscales_28,0,0,0,0,0,7,0,0,,,,,,,,,0
-68583,,,,,inv_misc_monsterscales_29,0,0,0,0,0,7,0,0,,,,,,,,,0
-68584,,,,,inv_misc_monsterscales_30,0,0,0,0,0,7,0,0,,,,,,,,,0
-68585,,,,,inv_misc_monsterscales_31,0,0,0,0,0,7,0,0,,,,,,,,,0
+68580,,,,,inv_misc_monsterscales_26,0,0,0,0,0,16,0,0,,,,,,,,,0
+68581,,,,,inv_misc_monsterscales_27,0,0,0,0,0,16,0,0,,,,,,,,,0
+68582,,,,,inv_misc_monsterscales_28,0,0,0,0,0,16,0,0,,,,,,,,,0
+68583,,,,,inv_misc_monsterscales_29,0,0,0,0,0,16,0,0,,,,,,,,,0
+68584,,,,,inv_misc_monsterscales_30,0,0,0,0,0,16,0,0,,,,,,,,,0
+68585,,,,,inv_misc_monsterscales_31,0,0,0,0,0,16,0,0,,,,,,,,,0
 68587,,,,,inv_drink_waterskin_03,0,0,0,0,0,17,0,0,,,,,,,,,0
-68588,,,,,INV_Pants_10,0,0,1,0,0,7,0,0,,,,,,Cosmetic_A_01blackskirt_Pants_LU,Cosmetic_A_01lblackskirt_Pants_LL,,0
+68588,,,,,INV_Pants_10,0,0,1,0,0,7,0,0,,,,,,Cosmetic_A_01blackskirt_Pants_LU,Cosmetic_A_01blackskirt_Pants_LL,,0
 68589,,,,,INV_Gauntlets_16,0,0,0,0,0,7,0,0,,,Cosmetic_A_01greyglove_Glove_HA,,,,,,0
 68591,,,,,INV_Gauntlets_16,0,0,0,0,0,7,0,0,,,Cosmetic_A_01purpleglove_Glove_HA,,,,,,0
 68593,,,,,INV_Gauntlets_16,0,0,0,0,0,7,0,0,,,Cosmetic_A_01plumglove_Glove_HA,,,,,,0
@@ -44932,18 +44932,321 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 68853,,,,,spell_nature_web_01,0,0,0,0,0,7,0,0,,,,,,,,,0
 68854,,,,,inv_misc_herb_heart,0,0,0,0,0,22,0,0,,,,,,,,,0
 68855,Mace_1H_Flail_A_01.mdx,,Mace_1H_Flail_A_01Iron,,INV_Mace_01,0,0,0,0,0,8,0,0,,,,,,,,,0
-68856,axegun,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68857,2h axe,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68858,pike,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68859,polearm,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68860,totem mace,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68861,shield,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68862,crossbow,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68863,1h axe,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
-68864,bow,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68856,firearm_2h_axe_b_02.mdx,,firearm_2h_axe_b_02silver,,INV_Weapon_Rifle_05,0,0,0,0,224,8,0,0,,,,,,,,,0
+68857,bg_tauren_axe_2h_002.mdx,,bg_tauren_axe_001,,INV_Axe_05,0,0,0,0,0,8,0,0,,,,,,,,,0
+68858,bg_tauren_axe_2h_001.mdx,,bg_tauren_axe_001,,INV_Axe_21,0,0,0,0,0,8,0,0,,,,,,,,,0
+68859,bg_tauren_polearm_2h_002.mdx,,bg_tauren_polearm_2h_002,,INV_Spear_06,0,0,0,0,0,9,0,0,,,,,,,,,0
+68860,bg_tauren_totem_1h_001.mdx,,bg_tauren_bow_1h_001,,INV_Staff_03,0,0,0,0,0,9,0,0,,,,,,,,,0
+68861,shield_horde_B_03.mdx,,bg_tauren_shield_002,,INV_Shield_06,0,0,0,0,0,9,0,0,,,,,,,,,0
+68862,bg_tauren_crossbow_2h_001.mdx,,bg_tauren_crossbow_2h_001,,INV_Weapon_Crossbow_02,0,0,0,0,224,13,0,0,,,,,,,,,0
+68863,bg_tauren_axe_1h_001.mdx,,bg_tauren_axe_001,,INV_Axe_01,0,0,0,0,0,8,0,0,,,,,,,,,0
+68864,bg_tauren_bow_1h_001.mdx,,bg_tauren_bow_1h_001,,INV_Weapon_Bow_05,0,0,0,0,5,13,0,0,,,,,,,,,0
 68865,,,,,INV_Chest_Cloth_04,0,0,1,0,0,7,0,0,,,,cosmetic_lacedress_01blackred_Chest_TU,cosmetic_lacedress_01blackred_Chest_TL,cosmetic_lacedress_01blackred_Chest_LU,cosmetic_lacedress_01blackred_Chest_LL,,0
 68866,,,,,INV_Chest_Cloth_04,0,0,1,0,0,7,0,0,,,,cosmetic_lacedress_01blue_Chest_TU,cosmetic_lacedress_01blue_Chest_TL,cosmetic_lacedress_01blue_Chest_LU,cosmetic_lacedress_01blue_Chest_LL,,0
 68867,,,,,INV_Chest_Cloth_04,0,0,1,0,0,7,0,0,,,,cosmetic_lacedress_01cyan_Chest_TU,cosmetic_lacedress_01cyan_Chest_TL,cosmetic_lacedress_01cyan_Chest_LU,cosmetic_lacedress_01cyan_Chest_LL,,0
 68868,,,,,INV_Chest_Cloth_04,0,0,1,0,0,7,0,0,,,,cosmetic_lacedress_01purple_Chest_TU,cosmetic_lacedress_01purple_Chest_TL,cosmetic_lacedress_01purple_Chest_LU,cosmetic_lacedress_01purple_Chest_LL,,0
 68869,,,,,INV_Chest_Cloth_04,0,0,1,0,0,7,0,0,,,,cosmetic_lacedress_01red_Chest_TU,cosmetic_lacedress_01red_Chest_TL,cosmetic_lacedress_01red_Chest_LU,cosmetic_lacedress_01red_Chest_LL,,0
 68870,,,,,INV_Chest_Cloth_04,0,0,1,0,0,7,0,0,,,,cosmetic_lacedress_01yellow_Chest_TU,cosmetic_lacedress_01yellow_Chest_TL,cosmetic_lacedress_01yellow_Chest_LU,cosmetic_lacedress_01yellow_Chest_LL,,0
+68871,shield_2h_outlandraid_d_07.mdx,,shield_2h_outlandraid_d_07black,shield_2h_outlandraid_d_07black,Spell_Shadow_GrimWard,0,0,0,0,0,9,0,0,,,,,,,,,0
+68872,,,,,INV_Boots_Chain_09,1,0,0,0,0,7,0,0,,,,,,,Leather_D_03Red_Boot_LL,Leather_D_03Red_Boot_FO,0
+68873,Stave_2H_Alchemy_D_01.mdx,,Stave_2H_Jeweled_D_01Redwing,,INV_Potion_11,0,0,0,0,0,13,0,0,,,,,,,,,0
+68874,Misc_1H_WaterWand_A_01.mdx,,Misc_1H_WaterWand_A_01,,INV_Staff_23,0,0,0,0,0,8,0,0,,,,,,,,,27
+68875,nature resist chest,,,,INV_Shirt_15,1,0,1,0,0,7,0,0,alchemycoat_a_01white_AU,alchemycoat_a_01white_AL,,alchemycoat_a_01white_TU,alchemycoat_a_01white_TL,alchemycoat_a_01white_LU,alchemycoat_a_01white_LL,,0
+68876,thrown vial,,,,,0,0,0,0,0,17,0,0,,,,,,,,,0
+68877,Offhand_Blackwing_A_01.mdx,,Blackwing_stone,,INV_Misc_Orb_03,0,0,0,0,0,21,0,0,,,,,,,,,0
+68878,,,,,INV_Bracer_18,0,0,0,0,0,10,0,0,,Mail_AhnQuiraj_A_01Black_Bracer_AL,,,,,,,0
+68879,gold trinket,,,,,0,0,0,0,0,21,0,0,,,,,,,,,0
+68880,standard trinket,,,,battle_standard_of_the_broodcommander_2,0,0,0,0,0,21,0,0,,,,,,,,,0
+68881,Polearm_2H_Onyxia_A_01.mdx,,axe_1h_onyxia_a_01,,yoxtez_black_breath_of_the_dragonflight_2,0,0,0,0,0,9,0,0,,,,,,,,,0
+68882,egg trinket,,,,onyxia_brood_egg_1,0,0,0,0,0,15,0,0,,,,,,,,,0
+68883,stave_2h_draconic_b_03.mdx,,Stave_2h_long_A_02blackwingony,,prestors_rod_of_command_2,0,0,0,0,0,13,0,0,,,,,,,,,0
+68884,scale trinket,,,,ignited_obsidian_scale_1,0,0,0,0,0,21,0,0,,,,,,,,,0
+68885,fire ring,,,,ring_of_burning_talons_2,0,0,0,0,0,14,0,0,,,,,,,,,0
+68886,onyxia shield,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68887,thrown weapon javelin,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68888,sword_1h_draconicony_b_01.mdx,,Stave_2h_long_A_02blackwingony,,INV_Sword_01,0,0,0,0,0,9,0,0,,,,,,,,,0
+68889,free slot ,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68890,free slot,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68891,free slot,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68892,free slot,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68893,free slot,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68894,helm_taurenmask_b_02.mdx,,helm_circlet_b_02goldblue,,INV_Banner_01,0,0,0,0,0,9,248,307,,,,,,,,,0
+68895,bg_tauren_leather_t2_helm_001.mdx,,bg_tauren_leather_helm_t2_002,,INV_Helmet_24,0,0,0,0,0,7,247,247,,,,,,,,,0
+68896,bg_tauren_leather_t2_Lshoulder_001.mdx,bg_tauren_leather_t2_Rshoulder_001.mdx,bg_tauren_leather_shoulder_t2_001,bg_tauren_leather_shoulder_t2_001,INV_Shoulder_04,0,0,0,0,0,7,0,0,,,,,,,,,0
+68897,whc cloth chest,,,,INV_Chest_Leather_01,0,0,1,0,0,7,0,0,bg_tauren_leather_t2_Sleeve_AU,,,bg_tauren_leather_t2_Chest_TU,bg_tauren_leather_t2_Chest_TL,bg_tauren_leather_t2_Pant_LU,bg_tauren_leather_t2_Pant_LL,,0
+68898,whc cloth legs,,,,Inv_pants_wolf,0,0,1,0,0,7,0,0,,,,,,bg_tauren_leather_t2_Pant_LU,bg_tauren_leather_t2_Pant_LL,,0
+68899,whc cloth  hands,,,,INV_Gauntlets_18,0,0,0,0,0,7,0,0,,bg_tauren_leather_t2_Glove_AL,bg_tauren_leather_t2_Glove_HA,,,,,,0
+68900,whc cloth boots,,,,INV_Boots_Wolf,0,0,0,0,0,7,0,0,,,,,,,bg_tauren_leather_t2_Boot_LL,,0
+68901,helm_tauren.mdx,,Helm_Leather_A_02blue,,INV_Helmet_04,0,0,0,0,0,10,0,0,,,,,,,,,0
+68902,bg_tauren_cloth_t3_Lshoulder_001.mdx,bg_tauren_cloth_t3_Rshoulder_001.mdx,bg_tauren_cloth_t3_shoulder_001,bg_tauren_cloth_t3_shoulder_002,INV_Shoulder_05,0,0,0,0,0,7,0,0,,,,,,,,,0
+68903,whc leather chest,,,,INV_Chest_Leather_06,0,0,0,0,0,7,0,0,bg_tauren_cloth_t3_Sleeve_AU,,,bg_tauren_cloth_t3_Chest_TU,bg_tauren_cloth_t3_Chest_TL,,,,0
+68904,whc leather  legs,,,,INV_Pants_12,0,0,1,0,0,7,0,0,,,,,,bg_tauren_cloth_t3_Pant_LU,bg_tauren_cloth_t3_Pant_LL,,0
+68905,whc leather  hand,,,,INV_Gauntlets_25,0,0,0,0,0,7,0,0,,bg_tauren_cloth_t3_Glove_AL,bg_tauren_cloth_t3_Glove_HA,,,,,,0
+68906,whc leather boots,,,,INV_Bracer_08,0,0,0,0,0,7,0,0,,,,,,,bg_tauren_cloth_t3_Boot_LL,,0
+68907,bg_tauren_mail_t3_helm_001.mdx,,bg_tauren_mail_shoulder_t3_001,bg_tauren_mail_shoulder_t3_001,INV_misc_bone_taurenskull_01,0,0,0,0,0,10,265,265,,,,,,,,,0
+68908,bg_tauren_mail_t3_Lshoulder_001.mdx,bg_tauren_mail_t3_Rshoulder_001.mdx,bg_tauren_mail_shoulder_t3_001,bg_tauren_mail_shoulder_t3_001,INV_Misc_Bone_09,0,0,0,0,0,10,0,0,,,,,,,,,0
+68909,whc mail chest,,,,INV_Chest_Leather_05,0,0,0,0,0,10,0,0,bg_tauren_mail_t3_Sleeve_AU,,,bg_tauren_mail_t3_Chest_TU,bg_tauren_mail_t3_Chest_TL,,,,0
+68910,whc mail legs,,,,INV_Pants_Leather_05,0,0,0,0,0,10,0,0,,,,,,bg_tauren_mail_t3_Pant_LU,bg_tauren_mail_t3_Pant_LL,,0
+68911,whc mail hands,,,,INV_Gauntlets_04,3,0,0,0,0,10,0,0,,bg_tauren_mail_t3_glove_AL,bg_tauren_mail_t3_Glove_HA,,,,,,0
+68912,whc mail boots,,,,INV_Boots_Chain_13,0,0,0,0,0,10,0,0,,,,,,,bg_tauren_mail_t3_Boot_LL,,0
+68913,bg_tauren_plate_head_t2_001.mdx,,bg_tauren_plate_helm_t2_001,,,0,0,0,0,0,0,248,307,,,,,,,,,0
+68914,bg_tauren_plate_Lshoulder_t2_001.mdx,bg_tauren_plate_Rshoulder_t2_001.mdx,bg_tauren_plate_shoulder_t2_001,bg_tauren_plate_shoulder_t2_001,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68915,Helm_cloth_timber_01.mdx,,tm_cloth_helm_002,tm_cloth_helm_001,INV_Misc_Cape_04,0,0,0,0,0,7,246,307,,,,,,,,,0
+68916,LShoulder_cloth_timber_01.mdx,RShoulder_cloth_timber_01.mdx,tm_cloth_shoulder_001,tm_cloth_shoulder_001,INV_Shoulder_25,0,0,0,0,0,7,0,0,,,,,,,,,0
+68917,tmh cloth chest,,,,INV_Chest_Cloth_43,0,0,1,0,0,7,0,0,tm_cloth_01_Sleeve_AU,,,tm_cloth_01_Chest_TU,tm_cloth_01_Chest_TL,tm_cloth_01_Robe_LU,tm_cloth_01_Robe_LL,,0
+68918,tmh cloth legs,,,,INV_Pants_Cloth_05,0,0,1,0,0,7,0,0,,,,,,tm_cloth_01_Robe_LU,tm_cloth_01_Robe_LL,,0
+68919,tmh cloth hands,,,,INV_Gauntlets_17,1,0,0,0,0,7,0,0,,tm_cloth_01_Glove_AL,tm_cloth_01_Glove_HA,,,,,,0
+68920,tmh cloth boots,,,,INV_Boots_Cloth_09,0,0,0,0,0,7,0,0,,,,,,,tm_cloth_01_Boot_LL,tm_cloth_01_Boot_FO,0
+68921,Helm_leather_timber_01.mdx,,tm_leather_helm_main_001,tm_leather_helm_main_002,INV_Helmet_15,0,0,0,0,0,7,246,307,,,,,,,,,0
+68922,LShoulder_leather_timber_01.mdx,RShoulder_leather_timber_01.mdx,tm_leather_shoulder_main_001,tm_leather_shoulder_main_001,INV_Shoulder_14,0,0,0,0,0,7,0,0,,,,,,,,,0
+68923,tmh leather chest,,,,INV_Chest_Chain_15,0,0,0,0,0,7,0,0,tm_leather_01_Sleeve_AU,,,tm_leather_01_Chest_TU,tm_leather_01_Chest_TL,,,,0
+68924,tmh leather legs,,,,INV_Pants_Mail_15,0,0,0,0,0,7,0,0,,,,,,tm_leather_01_Pants_LU,tm_leather_01_Pants_LL,,0
+68925,tmh leather hands,,,,INV_Gauntlets_25,1,0,0,0,0,7,0,0,,tm_leather_01_Glove_AL,tm_leather_01_Glove_HA,,,,,,0
+68926,tmh leather boots,,,,INV_Boots_Chain_05,1,0,0,0,0,7,0,0,,,,,,,tm_leather_01_Pants_LL,tm_leather_01_Boot_FO,0
+68927,Helm_plate_timber_01.mdx,,tm_plate_helm_001,tm_plate_helm_002,INV_Helmet_58,0,0,0,0,0,10,248,306,,,,,,,,,0
+68928,LShoulder_plate_timber_01.mdx,RShoulder_plate_timber_01.mdx,tm_plate_shoulder_main_001,tm_plate_shoulder_detail_001,INV_Shoulder_29,0,0,0,0,0,10,0,0,,,,,,,,,0
+68929,tmh heavy chest,,,,INV_Chest_Plate02,0,0,0,0,0,10,0,0,tm_plate_01_Sleeve_AU,,,tm_plate_01_Chest_TU,tm_plate_01_Chest_TL,,,,0
+68930,tmh heavy legs,,,,INV_Pants_Plate_05,0,0,0,0,0,10,0,0,,,,,,tm_plate_01_Pants_LU,tm_plate_01_Pants_LL,,0
+68931,tmh heavy hands,,,,INV_Gauntlets_28,3,0,0,0,0,10,0,0,,tm_plate_01_Glove_AL,tm_plate_01_Glove_HA,,,,,,0
+68932,tmh heavy boots,,,,INV_Boots_Plate_06,3,0,0,0,0,10,0,0,,,,,,,tm_plate_01_Pants_LL,tm_plate_01_Boot_FO,0
+68933,,,,,INV_MISC_PETMOONKINNE,0,0,0,0,0,0,0,0,,,,,,,,,0
+68934,,,,,Ability_Hunter_Pet_TallStrider,0,0,0,0,0,0,0,0,,,,,,,,,0
+68935,,,,,inv_misc_petmoonkinta,0,0,0,0,0,0,0,0,,,,,,,,,0
+68936,,,,,inv_pet_diseasedbearcub,0,0,0,0,0,0,0,0,,,,,,,,,0
+68937,epic shoulder,,,,,0,0,0,0,0,0,0,0,,,,,,,,,0
+68938,bg_tauren_shield_001.mdx,,bg_tauren_shield_002,,INV_Shield_07,0,0,0,0,0,9,0,0,,,,,,,,,0
+68939,,,,,pristine_chromatic_scale_1,0,0,0,0,0,16,0,0,,,,,,,,,0
+68940,,,,,elementium_sharpening_stone_2,0,0,0,0,0,22,0,0,,,,,,,,,0
+68941,,,,,elementium_sharpening_stone_1,0,0,0,0,0,22,0,0,,,,,,,,,0
+68942,,,,,over-tinkered_lens_1,0,0,0,0,0,24,0,0,,,,,,,,,0
+68943,,,,,over-tinkered_lens_2,0,0,0,0,0,24,0,0,,,,,,,,,0
+68944,,,,,over-tinkered_lens_3,0,0,0,0,0,24,0,0,,,,,,,,,0
+68945,,,,,prospectors_magnifying_lens_1,0,0,0,0,0,24,0,0,,,,,,,,,0
+68946,,,,,prospectors_magnifying_lens_2,0,0,0,0,0,24,0,0,,,,,,,,,0
+68947,,,,,prospectors_magnifying_lens_3,0,0,0,0,0,24,0,0,,,,,,,,,0
+68948,,,,,bundle_of_oak_sticks_,0,0,0,0,0,12,0,0,,,,,,,,,0
+68949,,,,,bundle_of_pine_sticks_,0,0,0,0,0,12,0,0,,,,,,,,,0
+68950,,,,,bundle_of_simple_sticks_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68951,,,,,bundle_of_star_wood_sticks_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68952,,,,,bundle_of_tropical_sticks_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68953,,,,,pine_wood_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68954,,,,,simple_wood_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68955,,,,,oak_wood_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68956,,,,,star_log_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68957,,,,,star_log_2,0,0,0,0,0,12,0,0,,,,,,,,,0
+68958,,,,,tropical_logs_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68959,,,,,seed_shooter_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68960,,,,,seed_shooter_2,0,0,0,0,0,12,0,0,,,,,,,,,0
+68961,,,,,wooden_fishing_traps_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68962,,,,,stonescale_fishing_trap_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68963,,,,,firefin_fishing_trap_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68964,,,,,blackmouth_fishing_trap_1,0,0,0,0,0,12,0,0,,,,,,,,,0
+68965,,,,,slowing_bolas_1,0,0,0,0,0,8,0,0,,,,,,,,,0
+68966,,,,,slowing_bolas_2,0,0,0,0,0,8,0,0,,,,,,,,,0
+68967,,,,,snap_trap_1,0,0,0,0,0,8,0,0,,,,,,,,,0
+68968,,,,,snap_trap_2,0,0,0,0,0,8,0,0,,,,,,,,,0
+68969,,,,,snap_trap_3,0,0,0,0,0,8,0,0,,,,,,,,,0
+68970,,,,,spirited_precision_sickle_1,0,0,0,0,0,8,0,0,,,,,,,,,0
+68971,,,,,spirited_precision_sickle_2,0,0,0,0,0,8,0,0,,,,,,,,,0
+68972,,,,,spirited_precision_sickle_3,0,0,0,0,0,8,0,0,,,,,,,,,0
+68973,,,,,spirited_precision_sickle_4,0,0,0,0,0,8,0,0,,,,,,,,,0
+68974,,,,,oil-powered_cooker_1,0,0,0,0,0,8,0,0,,,,,,,,,0
+68975,,,,,oil-powered_cooker_3,0,0,0,0,0,8,0,0,,,,,,,,,0
+68976,,,,,oil-powered_cooker_4,0,0,0,0,0,8,0,0,,,,,,,,,0
+68977,,,,,fishermans_backpack_1,0,0,0,0,0,18,0,0,,,,,,,,,0
+68978,,,,,miners_rucksack_1,0,0,0,0,0,18,0,0,,,,,,,,,0
+68979,,,,,herbalists_knapsack_1,0,0,0,0,0,18,0,0,,,,,,,,,0
+68980,,,,,skinners_pack_1,0,0,0,0,0,18,0,0,,,,,,,,,0
+68981,,,,,simple_herbalists_backpack_2,0,0,0,0,0,18,0,0,,,,,,,,,0
+68982,,,,,aromatic_berries_1,0,0,0,0,0,16,0,0,,,,,,,,,0
+68983,,,,,aromatic_berries_2,0,0,0,0,0,16,0,0,,,,,,,,,0
+68984,,,,,nutritious_rations_1,0,0,0,0,0,16,0,0,,,,,,,,,0
+68985,,,,,nutritious_rations_2,0,0,0,0,0,16,0,0,,,,,,,,,0
+68986,,,,,sandswept_carrots_1,0,0,0,0,0,16,0,0,,,,,,,,,0
+68987,,,,,sandswept_carrots_2,0,0,0,0,0,16,0,0,,,,,,,,,0
+68988,,,,,sandswept_carrots_3,0,0,0,0,0,16,0,0,,,,,,,,,0
+68989,,,,,sandswept_carrots_4,0,0,0,0,0,16,0,0,,,,,,,,,0
+68990,,,,,spiced_berries_1,0,0,0,0,0,16,0,0,,,,,,,,,0
+68991,,,,,spiced_berries_2,0,0,0,0,0,16,0,0,,,,,,,,,0
+68992,Helm_Cloth_B_05.mdx,,Helm_Cloth_A_01Black,,hat_of_the_junior_chef_1,0,0,0,0,0,7,249,305,,,,,,,,,0
+68993,Helm_Cloth_B_05.mdx,,Helm_Cloth_A_01Black,,hat_of_the_junior_chef_2,0,0,0,0,0,7,249,305,,,,,,,,,0
+68994,Helm_Cloth_B_05.mdx,,Helm_Cloth_A_01Black,,chef_hat_1,0,0,0,0,0,7,249,305,,,,,,,,,0
+68995,Helm_Cloth_B_05.mdx,,Helm_Cloth_A_01Black,,chef_hat_2,0,0,0,0,0,7,249,305,,,,,,,,,0
+68996,,,,,advanced_camouflage_1,0,0,0,0,0,23,0,0,,,,,,,,,0
+68997,,,,,advanced_camouflage_2,0,0,0,0,0,23,0,0,,,,,,,,,0
+68998,,,,,wildhammer_yams_1,0,0,0,0,0,16,0,0,,,,,,,,,0
+68999,,,,,wildhammer_yams_2,0,0,0,0,0,16,0,0,,,,,,,,,0
+69000,,,,,ability_hunter_pet_moth,0,0,0,0,0,12,0,0,,,,,,,,,0
+69001,Sword_2H_Broadsword_A_01.mdx,,Sword_1H_Short_B_01_V01,,arcanite_champion_dark,0,0,0,0,0,9,0,0,,,,,,,,,130
+69002,Axe_2H_Horde_D_04.mdx,,Axe_2H_Horde_D_04Blue,,arcanite_reaper_dark,0,0,0,0,0,9,0,0,,,,,,,,,130
+69003,,,,,honey_comb_1,0,0,0,0,0,15,0,0,,,,,,,,,0
+69004,,,,,cooked_honey_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69005,,,,,ceremonial_belt_buckle_1,0,0,0,0,0,8,0,0,,,,,,,,,0
+69006,,,,,healing_salve_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69007,,,,,major_healing_salve_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69008,,,,,potent_healing_salve_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69009,,,,,stabilizing_healing_salve_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69010,,,,,superior_healing_salve_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69011,,,,,weak_healing_salve_1,0,0,0,0,0,17,0,0,,,,,,,,,0
+69012,sword_1h_crystal_c_03.mdx,,sword_1h_crystal_c_03blue,,INV_Sword_39,0,0,0,0,0,9,0,0,,,,,,,,,0
+69013,sword_1h_crystal_c_03.mdx,,sword_1h_crystal_c_03yellow,,INV_Sword_39,0,0,0,0,0,9,0,0,,,,,,,,,0
+69014,offhand_draenei_a_01.mdx,,offhand_draenei_a_01blue,,INV_Misc_Orb_03,0,0,0,0,0,21,0,0,,,,,,,,,0
+69015,offhand_draenei_a_01.mdx,,offhand_draenei_a_01pink,,INV_Misc_Orb_03,0,0,0,0,0,21,0,0,,,,,,,,,0
+69016,offhand_draenei_a_01.mdx,,offhand_draenei_a_01purple,,INV_Misc_Orb_03,0,0,0,0,0,21,0,0,,,,,,,,,0
+69017,offhand_draenei_a_01.mdx,,Offhand_Draenei_A_01Red,,INV_Misc_Orb_03,0,0,0,0,0,21,0,0,,,,,,,,,0
+69018,stave_2h_long_d_04.mdx,,Stave_2H_Long_D_04,,INV_Wand_06,0,0,0,0,0,21,0,0,,,,,,,,,0
+69019,wand_1h_draenei_a_01.mdx,,wand_1h_draenei_a_01amethyst,,INV_Wand_04,0,0,0,0,226,21,0,0,,,,,,,,,0
+69020,wand_1h_draenei_a_01.mdx,,wand_1h_draenei_a_01magenta,,INV_Wand_04,0,0,0,0,226,21,0,0,,,,,,,,,0
+69021,wand_1h_draenei_a_01.mdx,,Wand_1H_Draenei_A_01Purple,,INV_Wand_04,0,0,0,0,226,21,0,0,,,,,,,,,0
+69022,sword_1h_crystal_c_01.mdx,,Sword_1H_Crystal_C_01Blue,,INV_Sword_10,0,0,0,0,0,8,0,0,,,,,,,,,0
+69023,sword_1h_crystal_c_01.mdx,,sword_1h_crystal_c_01purple,,INV_Sword_10,0,0,0,0,0,8,0,0,,,,,,,,,0
+69024,hammer_2h_crystal_c_02.mdx,,hammer_2h_crystal_c_02blue,,INV_Hammer_02,0,0,0,0,0,9,0,0,,,,,,,,,0
+69025,hammer_2h_crystal_c_02.mdx,,hammer_2h_crystal_c_02orange,,INV_Hammer_02,0,0,0,0,0,9,0,0,,,,,,,,,0
+69026,bow_1h_blood_b_01.mdx,,Bow_1H_Blood_B_01Blue,,INV_Weapon_Bow_09,0,0,0,0,5,12,0,0,,,,,,,,,0
+69027,bow_1h_blood_b_01.mdx,,Bow_1H_Blood_B_01Red,,INV_Weapon_Bow_09,0,0,0,0,5,12,0,0,,,,,,,,,0
+69028,bg_tauren_wand_001.mdx,,bg_tauren_wand_001,,INV_Staff_02,0,0,0,0,0,21,0,0,,,,,,,,,0
+69029,bg_tauren_shield_002.mdx,,bg_tauren_shield_002,,INV_Shield_07,0,0,0,0,0,9,0,0,,,,,,,,,0
+69030,Helm_cloth_timber_01.mdx,,tm_cloth_helm_002,tm_cloth_helm_001,INV_Misc_Cape_04,0,0,0,0,0,0,246,307,,,,,,,,,0
+69031,LShoulder_cloth_timber_01.mdx,RShoulder_cloth_timber_01.mdx,tm_cloth_shoulder_001,tm_cloth_shoulder_001,INV_Shoulder_25,0,0,0,0,0,0,0,0,,,,,,,,,0
+69032,tmh cloth chest,,,,INV_Chest_Cloth_43,0,0,1,0,0,0,0,0,tm_cloth_01_Sleeve_AU,,,tm_cloth_01_Chest_TU,tm_cloth_01_Chest_TL,tm_cloth_01_Robe_LU,tm_cloth_01_Robe_LL,,0
+69033,tmh cloth legs,,,,INV_Pants_Cloth_05,0,0,1,0,0,0,0,0,,,,,,tm_cloth_01_Robe_LU,tm_cloth_01_Robe_LL,,0
+69034,tmh cloth hands,,,,INV_Gauntlets_17,1,0,0,0,0,0,0,0,,tm_cloth_01_Glove_AL,tm_cloth_01_Glove_HA,,,,,,0
+69035,tmh cloth boots,,,,INV_Boots_Cloth_09,0,0,0,0,0,0,0,0,,,,,,,tm_cloth_01_Boot_LL,tm_cloth_01_Boot_FO,0
+69036,Helm_leather_timber_01.mdx,,tm_leather_helm_main_001,tm_leather_helm_main_002,INV_Helmet_15,0,0,0,0,0,0,246,307,,,,,,,,,0
+69037,LShoulder_leather_timber_01.mdx,RShoulder_leather_timber_01.mdx,tm_leather_shoulder_main_001,tm_leather_shoulder_main_001,INV_Shoulder_14,0,0,0,0,0,0,0,0,,,,,,,,,0
+69038,tmh leather chest,,,,INV_Chest_Chain_15,0,0,0,0,0,0,0,0,tm_leather_01_Sleeve_AU,,,tm_leather_01_Chest_TU,tm_leather_01_Chest_TL,,,,0
+69039,tmh leather legs,,,,INV_Pants_Mail_15,0,0,0,0,0,0,0,0,,,,,,tm_leather_01_Pants_LU,tm_leather_01_Pants_LL,,0
+69040,tmh leather hands,,,,INV_Gauntlets_25,1,0,0,0,0,0,0,0,,tm_leather_01_Glove_AL,tm_leather_01_Glove_HA,,,,,,0
+69041,tmh leather boots,,,,INV_Boots_Chain_05,1,0,0,0,0,0,0,0,,,,,,,tm_leather_01_Pants_LL,tm_leather_01_Boot_FO,0
+69042,Helm_Cloth_B_05.mdx,,Helm_Cloth_A_01WhiteCool,,hat_of_the_junior_chef_1,0,0,0,0,0,7,249,305,,,,,,,,,0
+69043,,,,,claw_of_the_satyr_2,0,0,0,0,0,16,0,0,,,,,,,,,0
+69044,,,,,INV_Shirt_GuildTabard_01,1,0,0,0,0,7,0,0,,,,TABARD_A_62EARTHENRING_CHEST_TU,Tabard_A_62EarthenRing_Chest_TL,,,,0
+69045,Polearm_2H_Bladed_E_01.mdx,,axe_1h_horde_d_03simple,,INV_Spear_06,0,0,0,0,0,9,0,0,,,,,,,,,0
+69046,bg_tauren_cloth_helm_t3.mdx,,bg_tauren_cloth_t3_shoulder_001,bg_tauren_cloth_helm_t3,INV_Helmet_04,0,0,0,0,0,10,0,0,,,,,,,,,0
+69047,Sword_1H_Satyr_A_01.mdx,,Sword_1H_Satyr_A_01,,INV_Sword_100,0,0,0,0,0,8,0,0,,,,,,,,,0
+69048,Sword_1H_Satyr_A_01.mdx,,Sword_1H_Satyr_A_02,,INV_Sword_137,0,0,0,0,0,8,0,0,,,,,,,,,0
+69049,sword_1h_warlockclass.mdx,,sword_1h_warlockclass,,INV_Sword_143,0,0,0,0,0,8,0,0,,,,,,,,,0
+69050,Hammer_2H_Maw.mdx,,hammer_2h_maw,,INV_Mace_39,0,0,0,0,0,9,0,0,,,,,,,,,0
+69051,Knife_1H_Timbermaw_B_01.mdx,,Knife_1H_Timbermaw_B_01Red,,INV_Sword_90,0,0,0,0,0,8,0,0,,,,,,,,,0
+69052,Knife_1H_Timbermaw_B_01.mdx,,Knife_1H_Timbermaw_B_01Purple,,INV_knife_1h_stratholme_d_01,0,0,0,0,0,8,0,0,,,,,,,,,0
+69053,Firearm_2H_Rifle_A_01Timbermaw.mdx,,Firearm_2H_Rifle_A_01Timbermaw,,INV_Weapon_Rifle_30,0,0,0,0,224,8,0,0,,,,,,,,,0
+69054,shield_nightmare_b_03.mdx,,Shield_nightmare_B_03,,spell_shadow_haunting,0,0,0,0,0,9,0,0,,,,,,,,,0
+69055,bow_1h_hyjal_d_01.mdx,,bow_1h_hyjal_d_01green,,INV_Weapon_Bow_31,0,0,0,0,5,13,0,0,,,,,,,,,127
+69056,axe_1h_outlandraid_d_04.mdx,,axe_1h_outlandraid_d_04,,INV_Axe_34,0,0,0,0,0,9,0,0,,,,,,,,,0
+69057,shield_hyjal_d_02.mdx,,Shield_Hyjal_D_02Green,Shield_Hyjal_D_02Glow,INV_Shield_39,0,0,0,0,0,9,0,0,,,,,,,,,0
+69058,tm_2h_healstaff_001.mdx,,BearMountFurbolg_A_02,,INV_Misc_Lantern_01,0,0,0,0,0,13,0,0,,,,,,,,,0
+69059,tm_2H_demonstaff_001.mdx,,Satyr_woodpost06e,,INV_Weapon_ShortBlade_09,0,0,0,0,0,13,0,0,,,,,,,,,0
+69060,tm_2h_swort_001.mdx,,tm_swort_001,,INV_Sword_133,0,0,0,0,0,8,0,0,,,,,,,,,0
+69061,tm_2h_axe_001.mdx,,tm_2h_axe_001,,INV_Axe_57,0,0,0,0,0,9,0,0,,,,,,,,,0
+69062,Wand_1H_Jeweled_B_01.mdx,,Wand_1H_Jeweled_B_01Purple,,INV_Wand_05,0,0,0,0,226,21,0,0,,,,,,,,,0
+69063,Wand_1H_OutlandRaid_D_02.mdx,,Wand_1H_OutlandRaid_D_02Purple,,INV_Wand_17,0,0,0,0,226,12,0,0,,,,,,,,,0
+69064,Hand_1H_Raid_D_03Right.mdx,,Hand_1H_Raid_D_03BROWN,,INV_WEAPON_HAND_06,0,0,0,0,0,8,0,0,,,,,,,,,0
+69065,Hand_1H_Claw_B_01Left.mdx,,Hand_1H_Claw_B_01Brown,,INV_Misc_MonsterClaw_01,0,0,0,0,0,8,0,0,,,,,,,,,0
+69066,Misc_1H_Book_A_01.mdx,,Misc_1H_Book_A_01Brown,,INV_Misc_Book_07,0,0,0,0,0,19,0,0,,,,,,,,,103
+69067,,,,,inv_stone_08,0,0,0,0,0,22,0,0,,,,,,,,,0
+69068,,,,,inv_stone_08,0,0,0,0,0,22,0,0,,,,,,,,,0
+69069,,,,,inv_stone_08,0,0,0,0,0,22,0,0,,,,,,,,,0
+69070,,,,,inv_stone_08,0,0,0,0,0,16,0,0,,,,,,,,,0
+69071,,,,,inv_dense_gemstone_cluster_2,0,0,0,0,0,22,0,0,,,,,,,,,0
+69072,,,,,petrock_01,0,0,0,0,0,12,0,0,,,,,,,,,0
+69073,,,,,inv_stone_12,0,0,0,0,0,22,0,0,,,,,,,,,0
+69074,,,,,inv_rough_gemstone_cluster_2,0,0,0,0,0,22,0,0,,,,,,,,,0
+69075,,,,,inv_axe_19,0,0,0,0,0,22,0,0,,,,,,,,,0
+69076,,,,,inv_solid_gemstone_cluster_2,0,0,0,0,0,22,0,0,,,,,,,,,0
+69077,,,,,inv_misc_stonetablet_10,0,0,0,0,0,22,0,0,,,,,,,,,0
+69078,,,,,inv_coarse_gemstone_cluster_2,0,0,0,0,0,22,0,0,,,,,,,,,0
+69079,,,,,junk_stone_07,0,0,0,0,0,22,0,0,,,,,,,,,0
+69080,,,,,inv_jewelry_necklace_20,0,0,0,0,0,20,0,0,,,,,,,,,0
+69081,,,,,obsidian_stone_01,0,0,0,0,0,24,0,0,,,,,,,,,0
+69082,,,,,inv_heavy_gemstone_cluster_2,0,0,0,0,0,22,0,0,,,,,,,,,0
+69083,,,,,inv_misc_shell_01,0,0,0,0,0,22,0,0,,,,,,,,,0
+69084,,,,,inv_DiabloStone,0,0,0,0,0,22,0,0,,,,,,,,,0
+69085,,,,,inv_misc_stonetablet_10,0,0,0,0,0,22,0,0,,,,,,,,,0
+69086,,,,,spell_shadow_soulleech_1,0,0,0,0,0,22,0,0,,,,,,,,,0
+69087,,,,,antitoxin_01,0,0,0,0,0,17,0,0,,,,,,,,,0
+69088,,,,,antitoxin_02,0,0,0,0,0,17,0,0,,,,,,,,,0
+69089,,,,,antitoxin_03,0,0,0,0,0,17,0,0,,,,,,,,,0
+69090,,,,,inv_misc_monsterscales_33,0,0,0,0,0,7,0,0,,,,,,,,,0
+69091,,,,,inv_misc_monsterscales_34,0,0,0,0,0,7,0,0,,,,,,,,,0
+69092,,,,,inv_scroll_13,0,0,0,0,0,20,0,0,,,,,,,,,0
+69093,,,,,inv_scroll_08,0,0,0,0,0,20,0,0,,,,,,,,,0
+69094,,,,,inv_scroll_09,0,0,0,0,0,20,0,0,,,,,,,,,0
+69095,,,,,inv_scroll_12,0,0,0,0,0,20,0,0,,,,,,,,,0
+69096,,,,,inv_scroll_13,0,0,0,0,0,20,0,0,,,,,,,,,0
+69097,,,,,inv_scroll_02,0,0,0,0,0,20,0,0,,,,,,,,,0
+69098,,,,,inv_scroll_08,0,0,0,0,0,20,0,0,,,,,,,,,0
+69099,,,,,inv_scroll_12,0,0,0,0,0,20,0,0,,,,,,,,,0
+69100,,,,,inv_scroll_13,0,0,0,0,0,20,0,0,,,,,,,,,0
+69101,,,,,inv_scroll_02,0,0,0,0,0,20,0,0,,,,,,,,,0
+69102,,,,,inv_scroll_08,0,0,0,0,0,20,0,0,,,,,,,,,0
+69103,,,,,inv_scroll_12,0,0,0,0,0,20,0,0,,,,,,,,,0
+69104,,,,,inv_misc_stonetablet_12,0,0,0,0,0,7,0,0,,,,,,,,,0
+69105,,,,,inv_misc_stonetablet_13,0,0,0,0,0,7,0,0,,,,,,,,,0
+69106,,,,,inv_misc_stonetablet_11,0,0,0,0,0,7,0,0,,,,,,,,,0
+69107,,,,,inv_wand_11,0,0,0,0,0,9,0,0,,,,,,,,,0
+69108,,,,,inv_wand_08,0,0,0,0,0,9,0,0,,,,,,,,,0
+69109,,,,,inv_wand_04,0,0,0,0,0,9,0,0,,,,,,,,,0
+69110,,,,,inv_jewelry_ring_25,0,0,0,0,0,8,0,0,,,,,,,,,0
+69111,,,,,inv_jewelry_ring_33,0,0,0,0,0,8,0,0,,,,,,,,,0
+69112,,,,,inv_jewelry_ring_11,0,0,0,0,0,8,0,0,,,,,,,,,0
+69113,,,,,inv_jewelry_ring_10,0,0,0,0,0,8,0,0,,,,,,,,,0
+69114,,,,,inv_qiraji_lords_insignia_1,0,0,0,0,0,24,0,0,,,,,,,,,0
+69115,,,,,inv_abyssal_crest_1,0,0,0,0,0,15,0,0,,,,,,,,,0
+69116,,,,,inv_frostwolf_battle_standard_2,0,0,0,0,0,13,0,0,,,,,,,,,0
+69117,,,,,inv_stormpike_battle_standard_2,0,0,0,0,0,13,0,0,,,,,,,,,0
+69118,,,,,inv_misc_rune_08_yellow,0,0,0,0,0,22,0,0,,,,,,,,,0
+69119,,,,,inv_misc_token_01,0,0,0,0,0,24,0,0,,,,,,,,,0
+69120,,,,,inv_misc_token_02,0,0,0,0,0,8,0,0,,,,,,,,,0
+69121,,,,,inv_misc_food_101,0,0,0,0,0,15,0,0,,,,,,,,,0
+69122,,,,,inv_drink_26,0,0,0,0,0,15,0,0,,,,,,,,,0
+69123,,,,,inv_misc_eye_03,0,0,0,0,0,15,0,0,,,,,,,,,0
+69124,,,,,inv_misc_organ_02,0,0,0,0,0,15,0,0,,,,,,,,,0
+69125,,,,,inv_misc_monsterscales_12,0,0,0,0,0,16,0,0,,,,,,,,,0
+69126,,,,,inv_misc_rune_01_yellow,0,0,0,0,0,24,0,0,,,,,,,,,0
+69127,,,,,inv_misc_fish_36,0,0,0,0,0,15,0,0,,,,,,,,,0
+69128,,,,,inv_misc_fish_37,0,0,0,0,0,15,0,0,,,,,,,,,0
+69129,,,,,inv_misc_gem_pearl_10,0,0,0,0,0,24,0,0,,,,,,,,,0
+69130,helm_plate_bloodknight_d_02.mdx,,Helm_Plate_BloodKnight_D_02,,INV_Helmet_03,0,0,0,0,0,7,0,0,,,,,,,,,0
+69131,lshoulder_leather_dungeonrogue_b_01.mdx,rshoulder_leather_dungeonrogue_b_01.mdx,Shoulder_Leather_DungeonRogue_B_01Purple,Shoulder_Leather_DungeonRogue_B_01Purple,INV_Shoulder_10,0,0,0,0,0,7,0,0,,,,,,,,,0
+69132,Helm_stag_d_04.mdx,,Helm_plate_d_04stag,,INV_Helmet_05,0,0,0,0,0,7,248,306,,,,,,,,,0
+69133,LShoulder_Leather_DungeonDruid_A_01.mdx,RShoulder_Leather_DungeonDruid_A_01.mdx,Shoulder_Leather_DungeonDruid_A_01Green,Shoulder_Leather_DungeonDruid_A_01Green,INV_Shoulder_01,0,0,0,0,0,7,0,0,,,,,,,,,0
+69134,LShoulder_Plate_DungeonWarrior_A_01.mdx,RShoulder_Plate_DungeonWarrior_A_01.mdx,Shoulder_Plate_DungeonWarrior_A_01Blue,Shoulder_Plate_DungeonWarrior_A_01Blue,INV_Shoulder_30,0,0,0,0,0,11,0,0,,,,,,,,,0
+69135,LShoulder_Robe_DungeonWarlock_A_01.mdx,RShoulder_Robe_DungeonWarlock_A_01.mdx,Shoulder_Robe_DungeonWarlock_A_01Blue,Shoulder_Robe_DungeonWarlock_A_01Blue,INV_Misc_Bone_TaurenSkull_01,0,0,0,0,0,7,0,0,,,,,,,,,0
+69136,LShoulder_Mail_DungeonHunter_A_01.mdx,RShoulder_Mail_DungeonHunter_A_01.mdx,Shoulder_Mail_DungeonHunter_A_01Brown,Shoulder_Mail_DungeonHunter_A_01Brown,INV_Shoulder_10,0,0,0,0,0,10,0,0,,,,,,,,,0
+69137,Helm_Mail_DungeonShaman_A_01.mdx,,Helm_Mail_DungeonShaman_A_01Orange,,INV_Helmet_04,0,0,0,0,0,10,246,246,,,,,,,,,0
+69138,Helm_Magic_B_01.mdx,,Helm_Magic_B_01Green,,INV_Crown_02,0,0,0,0,0,21,0,0,,,,,,,,,0
+69139,LShoulder_Wooden_A_03.mdx,RShoulder_Wooden_A_03.mdx,Shoulder_Wooden_A_03RED,Shoulder_Wooden_A_03RED,INV_Shoulder_10,0,0,0,0,0,7,0,0,,,,,,,,,0
+69140,,,,,INV_Jewelry_Necklace_43,0,0,0,0,0,24,0,0,,,,,,,,,0
+69141,,,Cape_Cloth_A_02Black,,INV_Misc_Cape_20,1,0,0,0,0,0,0,0,,,,,,,,,0
+69142,,,,,INV_Bracer_12,0,0,0,0,0,11,0,0,,Plate_DungeonWarrior_A_01Blue_Bracer_AL,,,,,,,0
+69143,,,,,INV_Bracer_10,0,0,0,0,0,7,0,0,,Leather_B_05Green_Bracer_AL,,,,,,,0
+69144,,,Cape_Leather_Hored_B_01Violet,,INV_Gauntlets_21,3,0,0,0,0,7,0,0,,Plate_A_03Violet_Glove_AL,Plate_A_03Violet_Glove_HA,,,,,,0
+69145,,,,,INV_Pants_14,0,0,0,0,0,10,0,0,,,,,,Mail_C_03Black_Pant_LU,Mail_C_03Black_Pant_LL,,0
+69146,,,,,inv_belt_11,0,0,0,0,0,7,0,0,,,,,,Mail_Blood_01Blue_Belt_LU,,,0
+69147,,,,,INV_Boots_08,3,0,0,0,0,7,0,0,,,,,,,Leather_PVPHorde_C_01Black_Boot_LL,Leather_PVPHorde_C_01Black_Boot_FO,0
+69148,,,,,INV_Boots_06,1,0,0,0,0,7,0,0,,,,,,,Robe_Horde_B_03Tan_Boot_LL,Robe_Horde_B_03Tan_Boot_FO,0
+69149,,,,,inv_belt_34,0,0,0,0,0,0,0,0,,,,,,Plate_D_05_Silver_Belt_LU,,,0
+69150,,,,,INV_Belt_25,0,0,0,0,0,10,0,0,,,,,,Mail_C_03Green_Belt_LU,,,0
+69151,,,Cape_Mail_A_02White,,INV_Misc_Cape_06,1,0,0,0,0,7,0,0,,,,,,,,,0
+69152,,,Cape_Leather_Horde_C_01Green,,INV_Misc_Cape_17,1,0,0,0,0,7,0,0,,,,,,,,,0
+69153,,,,,INV_Chest_Plate07,0,0,0,0,0,7,0,0,Plate_C_04Green_Sleeve_AU,,,Plate_C_04Green_Chest_TU,Plate_C_04Green_Chest_TL,,,,0
+69154,Helm_Leather_D_02.mdx,,Helm_Leather_D_02BlackRed,,INV_Belt_29,0,0,0,0,0,7,246,307,,,,,,Mail_D_02Red_Belt_LU,,,0
+69155,,,,,INV_Belt_15,0,0,0,0,0,7,0,0,,,,,,Robe_C_03RedBlack_Belt_LU,,,0
+69156,,,,,INV_Boots_05,2,0,0,0,0,7,0,0,,,,,,,Leather_C_02White_Boot_LL,Leather_C_02White_Boot_FO,0
+69157,,,,,INV_Bracer_17,0,0,0,0,0,10,0,0,,Mail_DungeonHunter_A_01Brown_Bracer_AL,,,,,,,0
+69158,,,,,INV_Bracer_05,0,0,0,0,0,7,0,0,,Leather_Horde_A_03Red_Bracer_AL,,,,,,,0
+69159,,,,,INV_Boots_01,1,0,0,0,0,11,0,0,,,,,,,Plate_C_01Green_Boot_LL,Plate_C_01Green_Boot_FO,0
+69160,,,,,inv_chest_plate08,0,0,0,0,0,10,0,0,DK_white_Sleeve_AU,DK_white_Glove_AL,,DK_white_Chest_TU,DK_white_Chest_TL,,,,0
+69161,,,,,INV_Pants_06,0,0,1,0,0,7,0,0,,,,,,Robe_Horde_B_02Red_Pant_LU,Robe_Horde_B_02Red_Pant_LL,,0
+69162,,,,,INV_Bracer_06,0,0,0,0,0,7,0,0,,Cloth_B_07Blue_Bracer_AL,,,,,,,0
+69163,,,,,INV_Boots_Wolf,0,0,0,0,0,7,0,0,,,,,,,Cloth_Horde_A_03Red_Boot_LL,Cloth_Horde_A_03Red_Boot_FO,0
+69164,,,,,INV_Belt_26,0,0,0,0,0,7,0,0,,,,,,Cloth_C_02Black_Belt_LU,,,0
+69165,,,,,INV_Bracer_19,0,0,0,0,0,10,0,0,,Plate_AhnQiraj_A_01Yellow_Glove_AL,,,,,,,0
+69166,,,,,INV_Pants_11,0,0,0,0,0,7,0,0,,,,,,Leather_D_01Gray_Pant_LU,Leather_D_01Gray_Pant_LL,,0
+69167,,,Cape_Leather_Hored_B_01Green,,INV_Misc_Cape_01,1,0,0,0,0,7,0,0,,,,,,,,,0
+69168,,,,,INV_Boots_07,2,0,0,0,0,7,0,0,,,,,,,Leather_B_03Black_Boot_LL,Leather_B_03Black_Boot_FO,0
+69169,,,,,INV_Chest_Cloth_18,0,0,1,0,0,7,0,0,,,,Robe_B_06Magenta_Chest_TU,Robe_B_06Magenta_Chest_TL,Robe_B_06Magenta_Pant_LU,Robe_B_06Magenta_Pant_LL,,0
+69170,,,,,INV_Gauntlets_06,0,0,0,0,0,10,0,0,,Mail_DungeonShaman_A_01Orange_Glove_AL,Mail_DungeonShaman_A_01Orange_Glove_HA,,,,,,0
+69171,,,,,INV_Belt_29,0,0,0,0,0,7,0,0,,,,,,Robe_Horde_B_05DarkBlue_Belt_LU,,,0
+69172,,,,,INV_Gauntlets_30,1,0,0,0,0,7,0,0,,Leather_C_03Blue_Glove_AL,Leather_C_03Blue_Glove_HA,,,,,,0
+69173,,,,,INV_Gauntlets_05,0,0,0,0,0,7,0,0,,Cloth_Horde_A_02Tan_Glove_AL,Cloth_Horde_A_02Tan_Glove_HA,,,,,,0

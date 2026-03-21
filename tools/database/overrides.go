@@ -103,6 +103,9 @@ var ItemOverrides = []*proto.UIItem{
 	{Id: 22630, ClassAllowlist: []proto.Class{proto.Class_ClassWarlock}},
 	{Id: 22631, ClassAllowlist: []proto.Class{proto.Class_ClassPriest}},
 	{Id: 22632, ClassAllowlist: []proto.Class{proto.Class_ClassDruid}},
+
+	// Bugged icon
+	{Id: 47087, Icon: "inv_netshoulder_v3"},
 }
 
 // Keep these sorted by item ID.

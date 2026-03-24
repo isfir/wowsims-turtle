@@ -51,12 +51,12 @@ character_stats_results: {
 stat_weights_results: {
  key: "TestRetribution-Phase5-StatWeights-Default"
  value: {
-  weights: 0.342
+  weights: 0.34186
   weights: 0.20985
   weights: 0
   weights: 0
   weights: 0
-  weights: 0.09646
+  weights: 0.09569
   weights: 0
   weights: 0
   weights: 0
@@ -64,13 +64,13 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0
-  weights: 0.70951
+  weights: 0.71476
   weights: 0
   weights: 0
   weights: 0
-  weights: 0.12289
-  weights: 2.34551
-  weights: 3.015
+  weights: 0.12284
+  weights: 2.35055
+  weights: 3.01116
   weights: 0
   weights: 0
   weights: 0
@@ -101,113 +101,113 @@ stat_weights_results: {
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-Avenger'sBattlegear"
  value: {
-  dps: 352.90993
-  tps: 381.35335
+  dps: 352.17737
+  tps: 380.62079
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-FieldMarshal'sAegis"
  value: {
-  dps: 340.86422
-  tps: 369.28797
+  dps: 340.16243
+  tps: 368.58619
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-Freethinker'sArmor"
  value: {
-  dps: 304.53836
-  tps: 332.93262
+  dps: 303.92994
+  tps: 332.3242
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-JudgementArmor"
  value: {
-  dps: 297.05396
-  tps: 326.69705
+  dps: 296.4976
+  tps: 326.14069
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-LawbringerArmor"
  value: {
-  dps: 277.01711
-  tps: 305.40154
+  dps: 276.50815
+  tps: 304.89258
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-LieutenantCommander'sRedoubt"
  value: {
-  dps: 320.38156
-  tps: 348.7709
+  dps: 319.71126
+  tps: 348.1006
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-AllItems-RedemptionArmor"
  value: {
-  dps: 274.19802
-  tps: 302.69061
+  dps: 273.69099
+  tps: 302.18358
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Average-Default"
  value: {
-  dps: 274.26943
-  tps: 302.52985
+  dps: 273.74021
+  tps: 302.00063
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-FullBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 36.60446
-  tps: 239.86962
+  dps: 36.35992
+  tps: 239.62508
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-FullBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 36.60446
-  tps: 46.76772
+  dps: 36.35992
+  tps: 46.52318
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-FullBuffs-P5-Consumes-ShortSingleTarget"
  value: {
-  dps: 45.13018
-  tps: 61.49394
+  dps: 44.55733
+  tps: 60.92109
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-NoBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 14.67824
-  tps: 190.4701
+  dps: 14.51628
+  tps: 190.30815
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-NoBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 14.67824
-  tps: 23.46783
+  dps: 14.51628
+  tps: 23.30588
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-NoBuffs-P5-Consumes-ShortSingleTarget"
  value: {
-  dps: 18.74105
-  tps: 33.92481
+  dps: 18.44087
+  tps: 33.62463
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-FullBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 6.5089
-  tps: 189.02573
+  dps: 6.35792
+  tps: 188.87474
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-FullBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 6.5089
-  tps: 15.63474
+  dps: 6.35792
+  tps: 15.48376
  }
 }
 dps_results: {
@@ -219,15 +219,15 @@ dps_results: {
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-NoBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 2.43419
-  tps: 147.02991
+  dps: 2.40976
+  tps: 147.00549
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-NoBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 2.43419
-  tps: 9.66397
+  dps: 2.40976
+  tps: 9.63954
  }
 }
 dps_results: {
@@ -239,57 +239,57 @@ dps_results: {
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-FullBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 36.77142
-  tps: 240.13491
+  dps: 36.5217
+  tps: 239.88519
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-FullBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 36.77142
-  tps: 46.93959
+  dps: 36.5217
+  tps: 46.68988
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-FullBuffs-P5-Consumes-ShortSingleTarget"
  value: {
-  dps: 46.1421
-  tps: 62.48128
+  dps: 45.56925
+  tps: 61.90843
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-NoBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 13.69568
-  tps: 194.44251
+  dps: 13.53373
+  tps: 194.28055
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-NoBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 13.69568
-  tps: 22.73302
+  dps: 13.53373
+  tps: 22.57107
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.5-3.6-NoBuffs-P5-Consumes-ShortSingleTarget"
  value: {
-  dps: 19.33659
-  tps: 34.52035
+  dps: 19.03641
+  tps: 34.22017
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-FullBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 6.34188
-  tps: 188.76038
+  dps: 6.1909
+  tps: 188.60939
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-FullBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 6.34188
-  tps: 15.46281
+  dps: 6.1909
+  tps: 15.31183
  }
 }
 dps_results: {
@@ -301,15 +301,15 @@ dps_results: {
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-NoBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 4.89334
-  tps: 185.64017
+  dps: 4.81798
+  tps: 185.5648
  }
 }
 dps_results: {
  key: "TestRetribution-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-twist-4DR-3.7-4.0-NoBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 4.89334
-  tps: 13.93068
+  dps: 4.81798
+  tps: 13.85532
  }
 }
 dps_results: {
@@ -321,7 +321,7 @@ dps_results: {
 dps_results: {
  key: "TestRetribution-Phase5-SwitchInFrontOfTarget-Default"
  value: {
-  dps: 243.34531
-  tps: 271.41998
+  dps: 242.82788
+  tps: 270.90256
  }
 }

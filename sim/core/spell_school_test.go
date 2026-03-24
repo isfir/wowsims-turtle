@@ -194,17 +194,20 @@ func Test_MultiSchoolResistance(t *testing.T) {
 				resistanceCap := float64(attacker.Level * 5)
 				levelBased := float64(max(defender.Level-attacker.Level, 0)) * 0.02
 				expectedCoef := min(1, resistance/resistanceCap+levelBased*1/0.75)
-				expectedAvgMitigation := expectedCoef*0.75 - 3.0/16.0*max(0, expectedCoef-2.0/3.0)
 
 				// Check if coef is correct to begin with
-				resistCoef := defender.resistCoeff(spell, attacker, false, false)
+				resistCoef := defender.resistCoeff(spell, attacker, false)
 				if math.Abs(resistCoef-expectedCoef) > 0.001 {
 					t.Errorf("Resist coef is %.3f but expected %.3f at resistance %f", resistCoef, expectedCoef, resistance)
 					return
 				}
 
+				expectedResistanceChance := 0.75 * expectedCoef
+				expectedT00, expectedT25, expectedT50 := expectedPartialResistThresholds(expectedResistanceChance)
+				expectedAvgMitigation, _, _, _, _ := GetChancesAndMitFromThresholds(expectedT00, expectedT25, expectedT50)
+
 				// Check breakpoints
-				threshold00, threshold25, threshold50 := attackTable.GetPartialResistThresholds(spell, spell.Flags.Matches(SpellFlagPureDot))
+				threshold00, threshold25, threshold50 := attackTable.GetPartialResistThresholds(spell, false)
 				chance25 := threshold00 - threshold25
 				chance50 := threshold25 - threshold50
 				chance75 := threshold50
@@ -247,36 +250,51 @@ func Test_MultiSchoolResistanceArmor(t *testing.T) {
 		Raid:       &proto.Raid{},
 	}, simsignals.CreateSignals())
 
-	// Armor 100, resistances 0 => should use resistance
+	// Armor 100, resistances 0 => should use magical resistance path.
 	defender.AddStat(stats.Armor, 100)
 
-	mult, outcome := spell.ResistanceMultiplier(sim, false, attackTable)
-	if outcome == OutcomeEmpty && mult < 1 {
-		t.Errorf("Expected partial or full hit with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
+	if MultiSchoolShouldUseArmor(spell, defender) {
+		t.Errorf("Expected magical resistance path with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
+		return
+	}
+
+	threshold00, _, _ := attackTable.GetPartialResistThresholds(spell, false)
+	if threshold00 == 0 {
+		t.Errorf("Expected non-zero partial resist chance with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
 		return
 	}
 
 	// Armor 100, resistances 300 => should use armor
 	defender.AddStat(stats.FireResistance, 300)
 
-	mult, outcome = spell.ResistanceMultiplier(sim, false, attackTable)
+	if !MultiSchoolShouldUseArmor(spell, defender) {
+		t.Errorf("Expected armor path with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
+		return
+	}
+
+	mult, outcome := spell.ResistanceMultiplier(sim, false, attackTable)
 	if outcome != OutcomeEmpty || mult == 1 {
 		t.Errorf("Expected empty outcome and mult < 1 with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
 		return
 	}
 
-	// Armor 400, resistances 300 => should use resistance (no non-partial hits)
+	// Armor 400, resistances 300 => should use magical resistance path again.
 	defender.AddStat(stats.Armor, 300)
 
-	_, outcome = spell.ResistanceMultiplier(sim, false, attackTable)
-	if (outcome & OutcomePartial) == 0 {
-		t.Errorf("Expected partial hit with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
+	if MultiSchoolShouldUseArmor(spell, defender) {
+		t.Errorf("Expected magical resistance path with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
 		return
 	}
 
-	_, outcome = spell.ResistanceMultiplier(sim, true, attackTable)
-	if (outcome & OutcomePartial) == 0 {
-		t.Errorf("Expected partial hit for periodic with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
+	directThreshold00, _, _ := attackTable.GetPartialResistThresholds(spell, false)
+	if directThreshold00 == 0 {
+		t.Errorf("Expected non-zero direct partial resist chance with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
+		return
+	}
+
+	periodicThreshold00, _, _ := attackTable.GetPartialResistThresholds(spell, true)
+	if periodicThreshold00 == 0 {
+		t.Errorf("Expected non-zero periodic partial resist chance with armor %f and resistance %f", defender.GetStat(stats.Armor), defender.GetStat(stats.FireResistance))
 		return
 	}
 }

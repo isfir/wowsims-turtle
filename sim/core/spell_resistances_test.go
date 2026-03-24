@@ -9,6 +9,18 @@ import (
 	"github.com/isfir/wowsims-turtle/sim/core/stats"
 )
 
+func expectedPartialResistThresholds(resistanceChance float64) (float64, float64, float64) {
+	resistanceChance = max(0, min(0.75, resistanceChance))
+
+	resist25Pct, resist50Pct, resist75Pct := interpolatePartialResistBucketsPct(resistanceChance * 100.0)
+
+	threshold50 := discreteRollThresholdFromPct(resist75Pct)
+	threshold25 := discreteRollThresholdFromPct(resist75Pct + resist50Pct)
+	threshold00 := discreteRollThresholdFromPct(resist75Pct + resist50Pct + resist25Pct)
+
+	return threshold00, threshold25, threshold50
+}
+
 func Test_PartialResistsVsPlayer(t *testing.T) {
 	attacker := &Unit{
 		Type:  EnemyUnit,
@@ -29,34 +41,30 @@ func Test_PartialResistsVsPlayer(t *testing.T) {
 		Raid:       &proto.Raid{},
 	}, simsignals.CreateSignals())
 
+	schoolMask := SpellSchoolFire
 	spell := &Spell{
-		SpellSchool: SpellSchoolFire,
+		SpellSchool:       schoolMask,
+		SchoolIndex:       schoolMask.GetSchoolIndex(),
+		SchoolBaseIndices: schoolMask.GetBaseIndices(),
 	}
 
 	for resist := 0; resist < 5_000; resist += 1 {
 		defender.stats[stats.FireResistance] = float64(resist)
 
 		threshold00, threshold25, threshold50 := attackTable.Defender.partialResistRollThresholds(spell, attackTable.Attacker, false)
-		thresholds := [4]float64{threshold00, threshold25, threshold50, 0.0}
 
-		var cumulativeChance float64
-		var resultingAr float64
-		for bin, th := range thresholds {
-			chance := max(min(1.0-th-cumulativeChance, 1.0), 0.0)
-			resultingAr += chance * 0.25 * float64(bin)
-			cumulativeChance += chance
-			if cumulativeChance >= 1 {
-				break
-			}
-		}
+		resistanceChance := 0.75 * attackTable.Defender.resistCoeff(spell, attackTable.Attacker, false)
+		expectedT00, expectedT25, expectedT50 := expectedPartialResistThresholds(resistanceChance)
 
-		resistanceScore := attackTable.Defender.resistCoeff(spell, attackTable.Attacker, false, false)
-		expectedAr := 0.75*resistanceScore - 3.0/16.0*max(0.0, resistanceScore-2.0/3.0)
-
-		if math.Abs(resultingAr-expectedAr) > 1e-2 {
-			t.Errorf("resist = %d, thresholds = (%.2f, %.2f, %.2f), resultingAr = %.2f%%, expectedAr = %.2f%%", resist, threshold00, threshold25, threshold50, resultingAr*100, expectedAr*100)
+		if math.Abs(threshold00-expectedT00) > 1e-9 ||
+			math.Abs(threshold25-expectedT25) > 1e-9 ||
+			math.Abs(threshold50-expectedT50) > 1e-9 {
+			t.Errorf("resist = %d, thresholds = (%.2f, %.2f, %.2f), expected = (%.2f, %.2f, %.2f)",
+				resist, threshold00, threshold25, threshold50, expectedT00, expectedT25, expectedT50)
 			return
 		}
+
+		expectedAr, _, _, _, _ := GetChancesAndMitFromThresholds(expectedT00, expectedT25, expectedT50)
 
 		const n = 10_000
 
@@ -75,7 +83,8 @@ func Test_PartialResistsVsPlayer(t *testing.T) {
 		}
 
 		if math.Abs(expectedAr-(1-totalDamage/float64(1000*n))) > 0.01 {
-			t.Logf("after %d iterations, resist = %d, ar = %.2f%% vs. damage lost = %.2f%%, outcomes = %v\n", n, resist, expectedAr*100, 100-100*totalDamage/float64(1000*n), outcomes)
+			t.Logf("after %d iterations, resist = %d, ar = %.2f%% vs. damage lost = %.2f%%, outcomes = %v\n",
+				n, resist, expectedAr*100, 100-100*totalDamage/float64(1000*n), outcomes)
 		}
 	}
 }
@@ -114,30 +123,28 @@ func ResistanceCheck(t *testing.T, isDoT bool) {
 		SchoolBaseIndices: schoolMask.GetBaseIndices(),
 	}
 
-	if isDoT {
-		spell.Flags |= SpellFlagPureDot
-	}
-
 	maxResist := float64(attacker.Level) * 5.0
 
-	// Check if coef is 0.08 (from +3 level based resist) at 0 res
+	// Resist coeff itself is unchanged by DoT handling now.
 	defender.stats[stats.NatureResistance] = 0
-	coef := defender.resistCoeff(spell, attacker, false, isDoT)
+	coef := defender.resistCoeff(spell, attacker, false)
 	if coef != 0.08 {
 		t.Errorf("Resist coef is %.3f at 0 resistance, but should be 0.08!", coef)
 		return
 	}
 
-	// Check known value
+	// VMaNGOS-style known values at 200 resistance vs +3 target.
 	defender.stats[stats.NatureResistance] = 200
-	expectedMitigation := 0.545
-	expectedChances := []float64{0, 0.18, 0.46, 0.36}
+	expectedMitigation := 0.5425
+	expectedChances := []float64{0.02, 0.17, 0.44, 0.37}
 	if isDoT {
-		expectedMitigation = 0.11
-		expectedChances = []float64{0.67, 0.24, 0.08, 0.01}
+		expectedMitigation = 0.065
+		expectedChances = []float64{0.81, 0.13, 0.05, 0.01}
 	}
-	threshold00, threshold25, threshold50 := attackTable.GetPartialResistThresholds(spell, spell.Flags.Matches(SpellFlagPureDot))
+
+	threshold00, threshold25, threshold50 := attackTable.GetPartialResistThresholds(spell, isDoT)
 	avgResist, chance0, chance25, chance50, chance75 := GetChancesAndMitFromThresholds(threshold00, threshold25, threshold50)
+
 	if !CloseEnough(avgResist, expectedMitigation, 0.01) {
 		t.Errorf("Avg mitigation %.3f at 200 resistance, but should be %.3f!", avgResist, expectedMitigation)
 		return
@@ -146,7 +153,8 @@ func ResistanceCheck(t *testing.T, isDoT bool) {
 		!CloseEnough(chance25, expectedChances[1], 0.01) ||
 		!CloseEnough(chance50, expectedChances[2], 0.01) ||
 		!CloseEnough(chance75, expectedChances[3], 0.01) {
-		t.Errorf("Bucket chances do not match known values at 200 resistance. Known %v, returned %v!", expectedChances, []float64{chance0, chance25, chance50, chance75})
+		t.Errorf("Bucket chances do not match known values at 200 resistance. Known %v, returned %v!",
+			expectedChances, []float64{chance0, chance25, chance50, chance75})
 		return
 	}
 
@@ -154,29 +162,38 @@ func ResistanceCheck(t *testing.T, isDoT bool) {
 	for resist := 0.0; resist < maxResist; resist += 1.0 {
 		defender.stats[stats.NatureResistance] = resist
 
-		resistanceUsed := resist
-		if isDoT {
-			resistanceUsed /= 10
-		}
-
-		// Expected values
 		resistanceCap := float64(attacker.Level * 5)
 		levelBased := float64(max(defender.Level-attacker.Level, 0)) * 0.02
-		expectedCoef := min(1, resistanceUsed/resistanceCap+levelBased*1/0.75)
-		expectedAvgMitigation := expectedCoef*0.75 - 3.0/16.0*max(0, expectedCoef-2.0/3.0)
+		expectedCoef := min(1, resist/resistanceCap+levelBased*1/0.75)
 
-		// Check if coef is correct to begin with
-		resistCoef := defender.resistCoeff(spell, attacker, false, isDoT)
+		resistCoef := defender.resistCoeff(spell, attacker, false)
 		if math.Abs(resistCoef-expectedCoef) > 0.001 {
-			t.Errorf("Resist coef is %.3f but expected %.3f at resistance %f", resistCoef, expectedCoef, resistanceUsed)
+			t.Errorf("Resist coef is %.3f but expected %.3f at resistance %f", resistCoef, expectedCoef, resist)
 			return
 		}
 
-		// Check breakpoints
-		threshold00, threshold25, threshold50 := attackTable.GetPartialResistThresholds(spell, spell.Flags.Matches(SpellFlagPureDot))
+		expectedResistanceChance := 0.75 * expectedCoef
+		if isDoT {
+			expectedResistanceChance *= 0.1
+		}
+
+		expectedT00, expectedT25, expectedT50 := expectedPartialResistThresholds(expectedResistanceChance)
+		expectedAvgMitigation, _, _, _, _ := GetChancesAndMitFromThresholds(expectedT00, expectedT25, expectedT50)
+
+		threshold00, threshold25, threshold50 := attackTable.GetPartialResistThresholds(spell, isDoT)
+
+		if math.Abs(threshold00-expectedT00) > 1e-9 ||
+			math.Abs(threshold25-expectedT25) > 1e-9 ||
+			math.Abs(threshold50-expectedT50) > 1e-9 {
+			t.Errorf("resist = %.2f, thresholds = (%.2f, %.2f, %.2f), expected = (%.2f, %.2f, %.2f)",
+				resist, threshold00, threshold25, threshold50, expectedT00, expectedT25, expectedT50)
+			return
+		}
+
 		avgResist, _, _, _, _ := GetChancesAndMitFromThresholds(threshold00, threshold25, threshold50)
 		if math.Abs(avgResist-expectedAvgMitigation) > 0.005 {
-			t.Errorf("resist = %.2f, thresholds = %f, resultingAr = %.2f%%, expectedAr = %.2f%%", resistanceUsed, threshold00, avgResist, expectedAvgMitigation)
+			t.Errorf("resist = %.2f, thresholds = %f, resultingAr = %.2f%%, expectedAr = %.2f%%",
+				resist, threshold00, avgResist, expectedAvgMitigation)
 			return
 		}
 	}
@@ -211,7 +228,7 @@ func Test_ResistBinary(t *testing.T) {
 
 	// Check if coef is 0.0 at 0 resistance, binary spells do not get level based resistance!
 	defender.stats[stats.NatureResistance] = 0
-	coef := defender.resistCoeff(spell, attacker, true, false)
+	coef := defender.resistCoeff(spell, attacker, true)
 	if coef != 0.0 {
 		t.Errorf("Resist coef is %.3f at 0 resistance for binary spell, but should be 0.0!", coef)
 		return

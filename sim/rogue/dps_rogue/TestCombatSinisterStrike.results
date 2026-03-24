@@ -69,7 +69,7 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0.36351
-  weights: 10.62806
+  weights: 10.62761
   weights: 6.64662
   weights: 0
   weights: 0
@@ -101,78 +101,78 @@ stat_weights_results: {
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-BloodfangArmor"
  value: {
-  dps: 1123.13726
-  tps: 797.42745
+  dps: 1122.96637
+  tps: 797.30612
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-BonescytheArmor"
  value: {
-  dps: 1220.44179
-  tps: 848.72256
+  dps: 1220.28023
+  tps: 848.60785
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-Champion'sGuard"
  value: {
-  dps: 1018.06771
-  tps: 722.82807
+  dps: 1017.91393
+  tps: 722.71889
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-Deathdealer'sEmbrace"
  value: {
-  dps: 1117.62441
-  tps: 793.51333
+  dps: 1117.47063
+  tps: 793.40414
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-EmblemsofVeiledShadows"
  value: {
-  dps: 1051.04665
-  tps: 746.24312
+  dps: 1050.89293
+  tps: 746.13398
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-FieldMarshal'sVestments"
  value: {
-  dps: 1071.55684
-  tps: 760.80536
+  dps: 1071.40064
+  tps: 760.69446
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-LieutenantCommander'sGuard"
  value: {
-  dps: 1018.06771
-  tps: 722.82807
+  dps: 1017.91393
+  tps: 722.71889
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-Madcap'sOutfit"
  value: {
-  dps: 1049.02674
-  tps: 744.80898
+  dps: 1048.8742
+  tps: 744.70068
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-NightslayerArmor"
  value: {
-  dps: 1047.0787
-  tps: 743.42588
+  dps: 1046.93852
+  tps: 743.32635
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-AllItems-Warlord'sVestments"
  value: {
-  dps: 1071.55684
-  tps: 760.80536
+  dps: 1071.40064
+  tps: 760.69446
  }
 }
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-Average-Default"
  value: {
-  dps: 1042.95002
-  tps: 740.49451
+  dps: 1042.80915
+  tps: 740.39449
  }
 }
 dps_results: {
@@ -262,7 +262,7 @@ dps_results: {
 dps_results: {
  key: "TestCombatSinisterStrike-Phase5-SwitchInFrontOfTarget-Default"
  value: {
-  dps: 795.0746
-  tps: 564.50296
+  dps: 794.94271
+  tps: 564.40932
  }
 }

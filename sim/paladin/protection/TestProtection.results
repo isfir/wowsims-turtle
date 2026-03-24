@@ -52,15 +52,15 @@ stat_weights_results: {
  key: "TestProtection-Phase4-StatWeights-Default"
  value: {
   weights: 0.26263
-  weights: 0.15502
+  weights: 0.15448
   weights: 0
   weights: 0.00452
   weights: 0
-  weights: 0.39455
+  weights: 0.3923
   weights: 0
   weights: 0
   weights: 0
-  weights: 0.39455
+  weights: 0.3923
   weights: 0
   weights: 0
   weights: 0
@@ -69,9 +69,9 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0.10381
-  weights: 2.77532
-  weights: 2.48958
-  weights: 2.61788
+  weights: 2.76814
+  weights: 2.4839
+  weights: 2.6127
   weights: 0
   weights: 0
   weights: 0
@@ -101,57 +101,57 @@ stat_weights_results: {
 dps_results: {
  key: "TestProtection-Phase4-AllItems-Avenger'sBattlegear"
  value: {
-  dps: 495.87901
-  tps: 923.13618
+  dps: 494.81903
+  tps: 920.59222
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-AllItems-FieldMarshal'sAegis"
  value: {
-  dps: 474.6263
-  tps: 881.81992
+  dps: 473.64089
+  tps: 879.45492
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-AllItems-Freethinker'sArmor"
  value: {
-  dps: 408.38173
-  tps: 747.51685
+  dps: 407.69338
+  tps: 745.8648
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-AllItems-JudgementArmor"
  value: {
-  dps: 415.06702
-  tps: 777.23573
+  dps: 414.28998
+  tps: 775.37082
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-AllItems-LawbringerArmor"
  value: {
-  dps: 381.49703
-  tps: 708.5636
+  dps: 380.85827
+  tps: 707.03057
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-AllItems-LieutenantCommander'sRedoubt"
  value: {
-  dps: 458.21037
-  tps: 860.2717
+  dps: 457.24922
+  tps: 857.96494
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-AllItems-RedemptionArmor"
  value: {
-  dps: 379.63393
-  tps: 704.15665
+  dps: 379.00052
+  tps: 702.63648
  }
 }
 dps_results: {
  key: "TestProtection-Phase4-Average-Default"
  value: {
-  dps: 376.19051
-  tps: 698.45228
+  dps: 375.57404
+  tps: 696.97277
  }
 }
 dps_results: {
@@ -241,7 +241,7 @@ dps_results: {
 dps_results: {
  key: "TestProtection-Phase4-SwitchInFrontOfTarget-Default"
  value: {
-  dps: 339.43024
-  tps: 640.73283
+  dps: 338.90231
+  tps: 639.4658
  }
 }

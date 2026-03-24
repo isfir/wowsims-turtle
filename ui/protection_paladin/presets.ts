@@ -149,7 +149,7 @@ export const DefaultDebuffs = Debuffs.create({
 	exposeArmor: TristateEffect.TristateEffectImproved,
 	judgementOfWisdom: true,
 	judgementOfTheCrusader: TristateEffect.TristateEffectImproved,
-	improvedScorch: true,
+	fireVulnerability: true,
 });
 
 export const OtherDefaults = {

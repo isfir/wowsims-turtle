@@ -60,8 +60,8 @@ func applyDebuffEffects(target *Unit, targetIdx int, debuffs *proto.Debuffs, rai
 		MakePermanent(CurseOfShadowAura(target))
 	}
 
-	if debuffs.ImprovedScorch && targetIdx == 0 {
-		aura := ImprovedScorchAura(target)
+	if debuffs.FireVulnerability && targetIdx == 0 {
+		aura := FireVulnerabilityAura(target)
 		SchedulePeriodicDebuffApplication(aura, PeriodicActionOptions{
 			Period:          time.Millisecond * 1500,
 			NumTicks:        5,
@@ -621,9 +621,9 @@ func bleedDamageAura(target *Unit, config Aura, multiplier float64) *Aura {
 
 const SpellFirePowerEffectCategory = "spellFirePowerdebuff"
 
-func ImprovedScorchAura(target *Unit) *Aura {
+func FireVulnerabilityAura(target *Unit) *Aura {
 	aura := target.GetOrRegisterAura(Aura{
-		Label:     "Improved Scorch",
+		Label:     "Fire Vulnerability",
 		ActionID:  ActionID{SpellID: 12873},
 		Duration:  time.Second * 30,
 		MaxStacks: 5,

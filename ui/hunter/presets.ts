@@ -141,7 +141,7 @@ export const DefaultDebuffs = Debuffs.create({
 	exposeArmor: TristateEffect.TristateEffectImproved,
 	faerieFire: true,
 	huntersMark: TristateEffect.TristateEffectImproved,
-	improvedScorch: true,
+	fireVulnerability: true,
 	judgementOfWisdom: true,
 	stormstrike: false,
 	sunderArmor: true,

@@ -67,8 +67,10 @@ func (mage *Mage) applyArcaneTalents() {
 }
 
 func (mage *Mage) applyFireTalents() {
+	mage.applyHotStreak()
 	mage.applyIgnite()
-	mage.applyImprovedScorch()
+	mage.applyImprovedFireBlast()
+	mage.applyFireVulnerability()
 	mage.applyMasterOfElements()
 
 	mage.registerCombustionCD()
@@ -103,6 +105,53 @@ func (mage *Mage) applyFireTalents() {
 			}
 		})
 	}
+}
+
+func (mage *Mage) applyHotStreak() {
+	if mage.Talents.HotStreak == 0 {
+		return
+	}
+
+	procChance := 0.5 * float64(mage.Talents.HotStreak)
+	actionID := core.ActionID{SpellID: []int32{0, 51930, 51931}[mage.Talents.HotStreak]}
+
+	mage.HotStreakAura = mage.RegisterAura(core.Aura{
+		Label:     "Hot Streak",
+		ActionID:  actionID,
+		Duration:  time.Minute * 3,
+		MaxStacks: 5,
+		OnCastComplete: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell) {
+			if spell.SpellCode != SpellCode_MagePyroblast {
+				return
+			}
+
+			aura.Deactivate(sim)
+		},
+	})
+
+	mage.RegisterAura(core.Aura{
+		Label:    "Hot Streak Trigger",
+		Duration: core.NeverExpires,
+		OnReset: func(aura *core.Aura, sim *core.Simulation) {
+			aura.Activate(sim)
+		},
+		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+			if spell.SpellCode != SpellCode_MageFireball && spell.SpellCode != SpellCode_MageFireBlast {
+				return
+			}
+
+			if !result.DidCrit() {
+				return
+			}
+
+			if !sim.Proc(procChance, "Hot Streak") {
+				return
+			}
+
+			mage.HotStreakAura.Activate(sim)
+			mage.HotStreakAura.AddStack(sim)
+		},
+	})
 }
 
 func (mage *Mage) applyFrostTalents() {
@@ -675,14 +724,73 @@ func (mage *Mage) registerArcanePowerCD() {
 		Type:  core.CooldownTypeDPS,
 	})
 }
+func (mage *Mage) applyImprovedFireBlast() {
+	if mage.Talents.ImprovedFireBlast == 0 {
+		return
+	}
 
-func (mage *Mage) applyImprovedScorch() {
+	gcdReduction := []time.Duration{
+		300 * time.Millisecond,
+		600 * time.Millisecond,
+		time.Second,
+	}[mage.Talents.ImprovedFireBlast-1]
+
+	cdReduction := 500 * time.Millisecond * time.Duration(mage.Talents.ImprovedFireBlast)
+
+	mage.OnSpellRegistered(func(spell *core.Spell) {
+		if spell.SpellCode == SpellCode_MageFireBlast {
+			spell.DefaultCast.GCD -= gcdReduction
+			spell.CD.Duration -= cdReduction
+		}
+	})
+}
+
+func (mage *Mage) applyFireVulnerability() {
 	if mage.Talents.FireVulnerability == 0 {
 		return
 	}
 
-	mage.ImprovedScorchAuras = mage.NewEnemyAuraArray(func(unit *core.Unit) *core.Aura {
-		return core.ImprovedScorchAura(unit)
+	procChance := []float64{.33, .66, 1}[mage.Talents.FireVulnerability-1]
+
+	mage.FireVulnerabilityAuras = mage.NewEnemyAuraArray(func(unit *core.Unit) *core.Aura {
+		return core.FireVulnerabilityAura(unit)
+	})
+
+	mage.Env.RegisterPreFinalizeEffect(func() {
+		for _, spell := range mage.Spellbook {
+			if spell == nil {
+				continue
+			}
+			if spell.SpellCode != SpellCode_MageFireBlast && spell.SpellCode != SpellCode_MageScorch {
+				continue
+			}
+
+			spell.RelatedAuras = append(spell.RelatedAuras, mage.FireVulnerabilityAuras)
+		}
+	})
+
+	mage.RegisterAura(core.Aura{
+		Label:    "Fire Vulnerability Talent",
+		Duration: core.NeverExpires,
+		OnReset: func(aura *core.Aura, sim *core.Simulation) {
+			aura.Activate(sim)
+		},
+		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+			if spell.SpellCode != SpellCode_MageFireBlast && spell.SpellCode != SpellCode_MageScorch {
+				return
+			}
+			if !result.Landed() {
+				return
+			}
+
+			if sim.Proc(procChance, "Fire Vulnerability") {
+				debuffAura := mage.FireVulnerabilityAuras.Get(result.Target)
+				debuffAura.Activate(sim)
+				if debuffAura.IsActive() {
+					debuffAura.AddStack(sim)
+				}
+			}
+		},
 	})
 }
 
@@ -691,7 +799,7 @@ func (mage *Mage) applyMasterOfElements() {
 		return
 	}
 
-	refundCoeff := 0.1 * float64(mage.Talents.MasterOfElements)
+	refundCoeff := 0.15 * float64(mage.Talents.MasterOfElements)
 	manaMetrics := mage.NewManaMetrics(core.ActionID{SpellID: 29076})
 
 	mage.RegisterAura(core.Aura{
@@ -701,7 +809,7 @@ func (mage *Mage) applyMasterOfElements() {
 			aura.Activate(sim)
 		},
 		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-			if spell.ProcMask.Matches(core.ProcMaskMeleeOrRanged) {
+			if !spell.Flags.Matches(SpellFlagMage) || (!spell.SpellSchool.Matches(core.SpellSchoolFire) && !spell.SpellSchool.Matches(core.SpellSchoolFrost)) {
 				return
 			}
 			if spell.CurCast.Cost == 0 {

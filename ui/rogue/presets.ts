@@ -208,7 +208,7 @@ export const DefaultIndividualBuffs = {
 export const P1DefaultDebuffs = Debuffs.create({
 	curseOfRecklessness: true,
 	faerieFire: true,
-	improvedScorch: true,
+	fireVulnerability: true,
 	sunderArmor: true,
 });
 

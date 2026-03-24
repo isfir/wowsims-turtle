@@ -19,11 +19,12 @@ const (
 	SpellCode_MageArcaneMissilesTick
 	SpellCode_MageArcaneRupture
 	SpellCode_MageBlastWave
-	SpellCode_MageFireball
 	SpellCode_MageFireBlast
+	SpellCode_MageFireball
 	SpellCode_MageFlamestrike
 	SpellCode_MageFrostbolt
 	SpellCode_MageIgnite
+	SpellCode_MagePyroblast
 	SpellCode_MageScorch
 )
 
@@ -82,7 +83,8 @@ type Mage struct {
 	CombustionAura          *core.Aura
 	IceArmorAura            *core.Aura
 	IceBarrierAuras         []*core.Aura
-	ImprovedScorchAuras     core.AuraArray
+	FireVulnerabilityAuras  core.AuraArray
+	HotStreakAura           *core.Aura
 	MageArmorAura           *core.Aura
 	TemporalConvergenceAura *core.Aura
 }

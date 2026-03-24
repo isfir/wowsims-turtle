@@ -125,7 +125,7 @@ export const DefaultIndividualBuffs = IndividualBuffs.create({
 export const DefaultDebuffs = Debuffs.create({
 	exposeArmor: TristateEffect.TristateEffectImproved,
 	faerieFire: true,
-	improvedScorch: true,
+	fireVulnerability: true,
 	judgementOfWisdom: true,
 	shadowWeaving: true,
 	sunderArmor: true,

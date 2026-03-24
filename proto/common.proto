@@ -719,7 +719,7 @@ message Debuffs {
 
 	bool improved_shadow_bolt = 7;
 
-	bool improved_scorch = 8;
+	bool fire_vulnerability = 8;
 	bool shadow_weaving = 22;
 	bool stormstrike = 23;
 

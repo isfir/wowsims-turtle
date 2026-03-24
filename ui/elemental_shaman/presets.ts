@@ -131,7 +131,7 @@ export const DefaultIndividualBuffs = IndividualBuffs.create({
 
 export const DefaultDebuffs = Debuffs.create({
 	curseOfElements: true,
-	improvedScorch: true,
+	fireVulnerability: true,
 	stormstrike: true,
 	wintersChill: true,
 });

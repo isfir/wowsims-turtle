@@ -485,12 +485,12 @@ export const SpellISBDebuff = withLabel(
 	'Improved Shadow Bolt',
 );
 
-export const SpellScorchDebuff = withLabel(
+export const SpellFireVulnerabilityDebuff = withLabel(
 	makeBooleanDebuffInput({
 		actionId: () => ActionId.fromSpellId(12873),
-		fieldName: 'improvedScorch',
+		fieldName: 'fireVulnerability',
 	}),
-	'Scorch',
+	'Fire Vulnerability',
 );
 
 export const SpellWintersChillDebuff = withLabel(
@@ -835,7 +835,7 @@ export const DEBUFFS_CONFIG = [
 		stats: [Stat.StatShadowPower],
 	},
 	{
-		config: SpellScorchDebuff,
+		config: SpellFireVulnerabilityDebuff,
 		picker: IconPicker,
 		stats: [Stat.StatFirePower],
 	},

@@ -13,7 +13,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 	cssScheme: 'mage',
 	// List any known bugs / issues here and they'll be shown on the site.
 	knownIssues: [
-		'Most frost and fire talents and spells are not correctly implemented.',
+		'Most frost talents and spells are not correctly implemented.',
 	],
 
 	// All stats for which EP should be calculated.

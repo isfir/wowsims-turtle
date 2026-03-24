@@ -113,7 +113,7 @@ var FullDebuffs = &proto.Debuffs{
 	DemoralizingShout:      proto.TristateEffect_TristateEffectImproved,
 	ExposeArmor:            proto.TristateEffect_TristateEffectImproved,
 	FaerieFire:             true,
-	ImprovedScorch:         true,
+	FireVulnerability:      true,
 	ImprovedShadowBolt:     true,
 	InsectSwarm:            true,
 	JudgementOfLight:       true,

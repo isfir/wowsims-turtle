@@ -51,6 +51,7 @@ func (mage *Mage) newPyroblastSpellConfig(rank int) core.SpellConfig {
 
 	spellConfig := core.SpellConfig{
 		ActionID:     actionID,
+		SpellCode:    SpellCode_MagePyroblast,
 		SpellSchool:  core.SpellSchoolFire,
 		DefenseType:  core.DefenseTypeMagic,
 		ProcMask:     core.ProcMaskSpellDamage,
@@ -67,6 +68,14 @@ func (mage *Mage) newPyroblastSpellConfig(rank int) core.SpellConfig {
 			DefaultCast: core.Cast{
 				GCD:      core.GCDDefault,
 				CastTime: castTime,
+			},
+			CastTime: func(spell *core.Spell) time.Duration {
+				adjustedCastTime := castTime
+				if mage.HotStreakAura != nil && mage.HotStreakAura.IsActive() {
+					adjustedCastTime = max(0, adjustedCastTime-time.Second*time.Duration(mage.HotStreakAura.GetStacks()))
+				}
+
+				return spell.Unit.ApplyCastSpeedForSpell(adjustedCastTime, spell)
 			},
 		},
 

@@ -621,7 +621,7 @@ export class CharacterStats extends Component {
 
 		// TODO: Classic ui debuffs
 		// const debuffs = this.player.sim.raid.getDebuffs();
-		// if (debuffs.improvedScorch || debuffs.wintersChill || debuffs.shadowMastery) {
+		// if (debuffs.fireVulnerability || debuffs.wintersChill || debuffs.shadowMastery) {
 		// 	debuffStats = debuffStats.addStat(Stat.StatSpellCrit, 5 * Mechanics.SPELL_CRIT_RATING_PER_CRIT_CHANCE);
 		// }
 

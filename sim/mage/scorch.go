@@ -33,7 +33,6 @@ func (mage *Mage) getScorchConfig(rank int) core.SpellConfig {
 	level := ScorchLevel[rank]
 
 	spellCoeff := .429
-	debuffProcChance := []float64{0, .33, .66, 1}[mage.Talents.FireVulnerability]
 
 	return core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: spellId},
@@ -65,14 +64,6 @@ func (mage *Mage) getScorchConfig(rank int) core.SpellConfig {
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 			baseDamage := sim.Roll(baseDamageLow, baseDamageHigh)
 			spell.CalcAndDealDamage(sim, target, baseDamage, spell.OutcomeMagicHitAndCrit)
-
-			if sim.RandomFloat("Improved Scorch") < debuffProcChance {
-				aura := mage.ImprovedScorchAuras.Get(target)
-				aura.Activate(sim)
-				aura.AddStack(sim)
-			}
 		},
-
-		RelatedAuras: []core.AuraArray{mage.ImprovedScorchAuras},
 	}
 }

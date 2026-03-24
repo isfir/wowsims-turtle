@@ -14,7 +14,7 @@ var FireballBaseDamage = [FireballRanks + 1][]float64{{0}, {16, 25}, {34, 49}, {
 var FireballDotDamage = [FireballRanks + 1]float64{0, 2, 3, 6, 12, 20, 28, 32, 40, 52, 60, 72, 76}
 var FireballSpellCoeff = [FireballRanks + 1]float64{0, .123, .271, .5, .793, 1, 1, 1, 1, 1, 1, 1, 1}
 var FireballCastTime = [FireballRanks + 1]int32{0, 1500, 2000, 2500, 3000, 3500, 3500, 3500, 3500, 3500, 3500, 3500, 3500}
-var FireballManaCost = [FireballRanks + 1]float64{0, 30, 45, 65, 95, 140, 185, 220, 260, 305, 350, 395, 410}
+var FireballManaCost = [FireballRanks + 1]float64{0, 30, 45, 60, 85, 120, 160, 190, 220, 245, 265, 275, 295}
 var FireballLevel = [FireballRanks + 1]int{0, 1, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 60}
 
 func (mage *Mage) registerFireballSpell() {
@@ -62,7 +62,7 @@ func (mage *Mage) newFireballSpellConfig(rank int) core.SpellConfig {
 		},
 		Cast: core.CastConfig{
 			DefaultCast: core.Cast{
-				GCD:      core.GCDDefault,
+				GCD:      time.Second,
 				CastTime: time.Millisecond*time.Duration(castTime) - time.Millisecond*100*time.Duration(mage.Talents.ImprovedFireball),
 			},
 		},

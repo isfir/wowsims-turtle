@@ -6,7 +6,7 @@ import (
 
 const CharacterMaxLevel = 60
 
-const GCDMin = time.Second * 1
+const GCDMin = time.Millisecond * 500
 const GCDDefault = time.Millisecond * 1500
 const SpellBatchWindow = time.Millisecond * 10
 

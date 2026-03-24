@@ -120,7 +120,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecRogue, {
 	includeBuffDebuffInputs: [
 		BuffDebuffInputs.SpellCritBuff,
 		BuffDebuffInputs.SpellShadowWeavingDebuff,
-		BuffDebuffInputs.SpellScorchDebuff,
+		BuffDebuffInputs.SpellFireVulnerabilityDebuff,
 	],
 	excludeBuffDebuffInputs: [],
 	// Inputs to include in the 'Other' section on the settings tab.

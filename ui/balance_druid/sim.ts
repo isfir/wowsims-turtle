@@ -88,7 +88,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecBalanceDruid, {
 	includeBuffDebuffInputs: [],
 	excludeBuffDebuffInputs: [
 		BuffDebuffInputs.SpellISBDebuff,
-		BuffDebuffInputs.SpellScorchDebuff,
+		BuffDebuffInputs.SpellFireVulnerabilityDebuff,
 		BuffDebuffInputs.SpellWintersChillDebuff,
 		...ConsumablesInputs.AGILITY_CONSUMES_CONFIG,
 		...ConsumablesInputs.STRENGTH_CONSUMES_CONFIG,

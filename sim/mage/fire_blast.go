@@ -36,16 +36,13 @@ func (mage *Mage) newFireBlastSpellConfig(rank int, cdTimer *core.Timer) core.Sp
 	manaCost := FireBlastManaCost[rank]
 	level := FireBlastLevel[rank]
 
-	cooldown := time.Second * 8
-	flags := SpellFlagMage | core.SpellFlagAPL
-
 	return core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: spellId},
 		SpellCode:   SpellCode_MageFireBlast,
 		SpellSchool: core.SpellSchoolFire,
 		DefenseType: core.DefenseTypeMagic,
 		ProcMask:    core.ProcMaskSpellDamage,
-		Flags:       flags,
+		Flags:       SpellFlagMage | core.SpellFlagAPL,
 
 		Rank:          rank,
 		RequiredLevel: level,
@@ -59,7 +56,7 @@ func (mage *Mage) newFireBlastSpellConfig(rank int, cdTimer *core.Timer) core.Sp
 			},
 			CD: core.Cooldown{
 				Timer:    cdTimer,
-				Duration: cooldown - time.Millisecond*500*time.Duration(mage.Talents.ImprovedFireBlast),
+				Duration: time.Second * 8,
 			},
 		},
 

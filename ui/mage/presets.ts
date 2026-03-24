@@ -122,7 +122,7 @@ export const DefaultIndividualBuffs = IndividualBuffs.create({
 });
 
 export const DefaultDebuffs = Debuffs.create({
-	improvedScorch: false,
+	fireVulnerability: false,
 	judgementOfWisdom: true,
 	wintersChill: false,
 	curseOfShadow: true,

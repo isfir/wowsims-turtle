@@ -13,18 +13,18 @@ id,rangeMin,rangeMax,flags,name_enUS,name_koKR,name_frFR,name_deDE,name_zhCN,nam
 12,0,5,0,Interact Range,,,Interaktions Reichweite,交互范围,Дистанция взаимодействия,Rango de Interacción,Alcance de Interação,8323134,Interact,,,Interaktion,交互范围,,Interactuar,Interagir,8323132
 13,0,50000,0,Anywhere,,,Überall,任意地点,Везде,Cualquier Lugar,Qualquer Lugar,8323134,Anywhere,,,Überall,任意地点,,Cualquier Lugar,Em Qualquer Lugar,8323132
 14,0,60,0,Extra Long Range,,,Extra Lange Reichweite,超远程,Очень дальняя дистанция,Rango Extra Largo,Alcance Extra Longo,8323134,Extra Long,,,Extra Lang,超远程,,Extra Largo,Extra Longo,8323132
-34,0,25,0,Medium-Short Range,,,Mittel-kurze Reichweite,中近程,Особая 36,Custom 36,Custom 36,8323134,Medium-Short,,,Benutzerdefiniert 36,定制 36,,Custom 36,Custom 36,8323132
-35,0,35,0,Medium-Long Range,,,Mittel-lange Reichweite,中远程,Средне-ближняя дистанция,Rango Medio-Corto,Alcance Médio-Curto,8323134,Medium-Long,,,Mittel-kurz,中近程,,Medio-Corto,Médio-Curto,8323132
-36,0,45,0,Longer Range,,,Lange Reichweite,远程,Средне-дальняя дистанция,Rango Medio-Largo,Alcance Médio-Longo,8323132,Longer,,,Mittel-lang,中远程,,Medio-Largo,Médio-Longo,8323132
-37,0,50,0,Extended Range,,,Erweiterte Reichweite,延长范围,Большая дистанция,Rango Más Largo,Alcance Mais Longo,8323132,Extended,,,Länger,远程,,Más Largo,Mais Longo,8323132
-38,10,25,0,Extra Medium Range,,,Extra Mittlere Reichweite,额外中程,Расширенная дистанция,Rango Extendido,Alcance Estendido,8323132,Extra Medium,,,Erweitert,延长范围,,Extendido,Estendido,8323132
-54,5,30,0,Geoff Monster Shoot,,,Geoff Monster Schuss,Geoff Monster Shoot,Средняя+ дистанция,Rango Extra Medio,Alcance Extra Médio,4128828,Geoff,,,Extra Mittel,额外中程,,Extra Medio,Extra Médio,4128828
-74,8,30,0,Ranged Weapon,,,Distanzwaffe,Ranged Weapon,Выстрел монстра (тест),Disparo Monstruo de Geoff,Tiro de Monstro Geoff,4128828,Ranged,,,Geoff,杰奥夫,,Geoff,Geoff,4128828
-94,8,40,0,Sting,,,Stich,Sting,Оружие дальнего боя,Arma a Distancia,Arma de Distância,4128828,Sting,,,Distanz,远程,,A Distancia,À Distância,4128828
-95,8,25,0,Charge,,,Ansturm,Charge,Жало,Picadura,Picada,4128828,Charge,,,Stich,钉刺,,Picadura,Ferrão,4128828
-96,0,2,0,Trap,,,Falle,Trap,Рывок,Carga,Carga,4128828,Trap,,,Ansturm,冲锋,,Carga,Carga,4128828
-114,8,35,0,Hunter Range,,,Jäger Reichweite,Hunter Range,Ловушка,Trampa,Armadilha,4128828,Hunter,,,Falle,陷阱,,Trampa,Armadilha,4128820
-134,0,80,0,Tower 80,,,Turm 80,Tower 80,Дистанция охотника,Rango de Cazador,Alcance de Caçador,4128816,Tower,,,Jäger,猎人,,Cazador,Caçador,4128816
-135,0,100,0,Tower 100,,,Turm 100,Tower 100,Башня 80,Torre 80,Torre 80,4128816,Tower,,,Turm,塔,,Torre,Torre,4128816
-136,30,80,0,Artillery Range,,,Artillerie Reichweite,Artillery Range,Башня 100,Torre 100,Torre 100,4128800,Artillery,,,Turm,塔,,Torre,Torre,4128800
-15,0,36,0,Custom 36,,,Benutzerdefiniert 36,,Артиллерийская дистанция,Rango de Artillería,Alcance de Artilharia,4128800,,,,Artillerie,大炮,,Artillería,Artilharia,0
+34,0,25,0,Medium-Short Range,,,Mittel-kurze Reichweite,中近程,Средне-ближняя дистанция,Rango Medio-Corto,Alcance Médio-Curto,8323134,Medium-Short,,,Benutzerdefiniert 36,定制 36,,Custom 36,Custom 36,8323132
+35,0,35,0,Medium-Long Range,,,Mittel-lange Reichweite,中远程,Средне-дальняя дистанция,Rango Medio-Largo,Alcance Médio-Longo,8323134,Medium-Long,,,Mittel-kurz,中近程,,Medio-Corto,Médio-Curto,8323132
+36,0,45,0,Longer Range,,,Lange Reichweite,远程,Большая дистанция,Rango Más Largo,Alcance Mais Longo,8323132,Longer,,,Mittel-lang,中远程,,Medio-Largo,Médio-Longo,8323132
+37,0,50,0,Extended Range,,,Erweiterte Reichweite,延长范围,Расширенная дистанция,Rango Extendido,Alcance Estendido,8323132,Extended,,,Länger,远程,,Más Largo,Mais Longo,8323132
+38,10,25,0,Extra Medium Range,,,Extra Mittlere Reichweite,额外中程,Средняя+ дистанция,Rango Extra Medio,Alcance Extra Médio,8323132,Extra Medium,,,Erweitert,延长范围,,Extendido,Estendido,8323132
+54,5,30,0,Geoff Monster Shoot,,,Geoff Monster Schuss,杰奥夫怪物射击,Выстрел монстра (тест),Disparo Monstruo de Geoff,Tiro de Monstro Geoff,4128828,Geoff,,,Extra Mittel,额外中程,,Extra Medio,Extra Médio,4128828
+74,8,30,0,Ranged Weapon,,,Distanzwaffe,远程武器,Оружие дальнего боя,Arma a Distancia,Arma de Distância,4128828,Ranged,,,Geoff,杰奥夫,,Geoff,Geoff,4128828
+94,8,40,0,Sting,,,Stich,钉刺,Жало,Picadura,Picada,4128828,Sting,,,Distanz,远程,,A Distancia,À Distância,4128828
+95,8,25,0,Charge,,,Ansturm,冲锋,Рывок,Carga,Carga,4128828,Charge,,,Stich,钉刺,,Picadura,Ferrão,4128828
+96,0,2,0,Trap,,,Falle,陷阱,Ловушка,Trampa,Armadilha,4128828,Trap,,,Ansturm,冲锋,,Carga,Carga,4128828
+114,8,35,0,Hunter Range,,,Jäger Reichweite,猎人射程,Дистанция охотника,Rango de Cazador,Alcance de Caçador,4128828,Hunter,,,Falle,陷阱,,Trampa,Armadilha,4128820
+134,0,80,0,Tower 80,,,Turm 80,塔 80,Башня 80,Torre 80,Torre 80,4128816,Tower,,,Jäger,猎人,,Cazador,Caçador,4128816
+135,0,100,0,Tower 100,,,Turm 100,塔 100,Башня 100,Torre 100,Torre 100,4128816,Tower,,,Turm,塔,,Torre,Torre,4128816
+136,30,80,0,Artillery Range,,,Artillerie Reichweite,大炮射程,Артиллерийская дистанция,Rango de Artillería,Alcance de Artilharia,4128800,Artillery,,,Turm,塔,,Torre,Torre,4128800
+15,0,36,0,Custom 36,,,Benutzerdefiniert 36,定制 36,Особая 36,Custom 36,Custom 36,4128800,,,,Artillerie,大炮,,Artillería,Artilharia,0

@@ -2380,6 +2380,10 @@ func init() {
 	core.NewItemEffect(TheScytheOfElune, func(agent core.Agent) {
 		character := agent.GetCharacter()
 
+		eluneInfusionICD := core.Cooldown{
+			Timer:    character.NewTimer(),
+			Duration: time.Second * 15,
+		}
 		eluneInfusion := character.RegisterSpell(core.SpellConfig{
 			ActionID:    core.ActionID{SpellID: 57658},
 			SpellSchool: core.SpellSchoolArcane,
@@ -2397,10 +2401,6 @@ func init() {
 			},
 		})
 
-		elunesMoonlightTriggerICD := core.Cooldown{
-			Timer:    character.NewTimer(),
-			Duration: time.Second * 15,
-		}
 		elunesMoonlightAura := character.GetOrRegisterAura(core.Aura{
 			ActionID: core.ActionID{SpellID: 57663},
 			Label:    "Elune's Wrath (Moonlight)",
@@ -2416,11 +2416,8 @@ func init() {
 				if spell.Flags.Matches(core.SpellFlagHelpful | core.SpellFlagPassiveSpell) {
 					return
 				}
-				if !elunesMoonlightTriggerICD.IsReady(sim) {
-					return
-				}
 
-				elunesMoonlightTriggerICD.Use(sim)
+				eluneInfusionICD.Use(sim)
 				aura.Deactivate(sim)
 				eluneInfusion.Cast(sim, result.Target)
 			},
@@ -2813,12 +2810,13 @@ func init() {
 				if !result.Landed() || !spell.ProcMask.Matches(core.ProcMaskSpellDamage) {
 					return
 				}
-
 				if result.LandedExecutionIndex != 1 {
 					return
 				}
-
 				if !sim.Proc(character.Unit.ApplyFortuneToProcChance(0.05), "Elune Infusion Passive") {
+					return
+				}
+				if !eluneInfusionICD.IsReady(sim) {
 					return
 				}
 

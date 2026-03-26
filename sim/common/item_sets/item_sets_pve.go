@@ -450,3 +450,15 @@ var ItemSetBattlegearOfUndeadSlaying = core.NewItemSet(core.ItemSet{
 		},
 	},
 })
+
+var ItemSetMedivhsClarity = core.NewItemSet(core.ItemSet{
+	Name: "Medivh's Clarity",
+	ID:   639,
+	Bonuses: map[int32]core.ApplyEffect{
+		// Increases damage and healing done by magical spells and effects by up to 40.
+		2: func(agent core.Agent) {
+			character := agent.GetCharacter()
+			character.AddStat(stats.SpellPower, 40)
+		},
+	},
+})

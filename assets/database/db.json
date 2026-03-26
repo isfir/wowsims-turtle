@@ -39066,7 +39066,7 @@
 {"id":636,"name":"Aquamarine Jewelry","itemIds":[56048,55196],"bonuses":[{"piecesRequired":2,"spellId":7507}]},
 {"id":637,"name":"Mastercrafted Diamond Jewelry","itemIds":[56096,56064],"bonuses":[{"piecesRequired":2,"spellId":23727}]},
 {"id":638,"name":"Possessions of the Lost","itemIds":[60790,60809,60798,22253],"bonuses":[{"piecesRequired":3,"spellId":51130}]},
-{"id":639,"name":"Medivh's Clarity","itemIds":[55094,61251],"bonuses":[{"piecesRequired":2,"spellId":18056}]},
+{"id":639,"name":"Medivh's Clarity","itemIds":[55094,61251],"bonuses":[{"piecesRequired":2,"spellId":18056,"isImplemented":true}]},
 {"id":640,"name":"Dreadslayer's Rampage","itemIds":[55108,55113],"bonuses":[{"piecesRequired":2,"spellId":48037}]},
 {"id":641,"name":"Lawbringer Battleplate","itemIds":[47000,47001,47002,47003,47004,47005,47006,47007],"bonuses":[{"piecesRequired":3,"spellId":51806},{"piecesRequired":5,"spellId":13675},{"piecesRequired":8,"spellId":51805}]},
 {"id":642,"name":"Lawbringer Battlegear","itemIds":[47008,47009,47010,47011,47012,47013,47014,47015],"bonuses":[{"piecesRequired":3,"spellId":51801},{"piecesRequired":5,"spellId":7598},{"piecesRequired":8,"spellId":51803}]},

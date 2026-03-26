@@ -155,6 +155,14 @@ dps_results: {
  }
 }
 dps_results: {
+ key: "TestMage-Phase1-AllItems-RegaliaoftheGuardian"
+ value: {
+  dps: 1611.03131
+  tps: 911.4141
+  hps: 223.18333
+ }
+}
+dps_results: {
  key: "TestMage-Phase1-AllItems-TheDefiler'sIntent"
  value: {
   dps: 1557.735

@@ -606,6 +606,21 @@ func (mage *Mage) registerPresenceOfMindCD() {
 		return
 	}
 
+	var improvedPomAura *core.Aura
+	if mage.HasSetBonus(ItemSetVestmentsOfTheGuardian, 5) {
+		improvedPomAura = mage.RegisterAura(core.Aura{
+			Label:    "Improved Presence of Mind",
+			ActionID: core.ActionID{SpellID: 52649},
+			Duration: time.Second * 6,
+			OnGain: func(aura *core.Aura, sim *core.Simulation) {
+				aura.Unit.PseudoStats.SchoolCostMultiplier.AddToMagicSchools(-100)
+			},
+			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+				aura.Unit.PseudoStats.SchoolCostMultiplier.AddToMagicSchools(100)
+			},
+		})
+	}
+
 	actionID := core.ActionID{SpellID: 12043}
 	cooldown := time.Second * 180
 
@@ -613,7 +628,7 @@ func (mage *Mage) registerPresenceOfMindCD() {
 	pomAura := mage.RegisterAura(core.Aura{
 		Label:    "Presence of Mind",
 		ActionID: actionID,
-		Duration: time.Second * 15,
+		Duration: core.NeverExpires,
 		OnInit: func(aura *core.Aura, sim *core.Simulation) {
 			for spellIdx := range mage.Spellbook {
 				if spell := mage.Spellbook[spellIdx]; spell.DefaultCast.CastTime > 0 {
@@ -631,6 +646,9 @@ func (mage *Mage) registerPresenceOfMindCD() {
 				spell.CastTimeMultiplier += 1
 			})
 			mage.PresenceOfMind.CD.Use(sim)
+			if improvedPomAura != nil {
+				improvedPomAura.Activate(sim)
+			}
 		},
 		OnCastComplete: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell) {
 			if !slices.Contains(affectedSpells, spell) {

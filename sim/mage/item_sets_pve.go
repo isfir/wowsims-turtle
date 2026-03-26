@@ -445,12 +445,170 @@ var ItemSetFrostfireRegalia = core.NewItemSet(core.ItemSet{
 	},
 })
 
+var ItemSetRegaliaOfTheGuardian = core.NewItemSet(core.ItemSet{
+	Name: "Regalia of the Guardian",
+	ID:   684,
+	Bonuses: map[int32]core.ApplyEffect{
+		// Initial hits from Flamestrike, Cone of Cold, Frost Nova, Blast Wave, and Arcane Explosion have a chance to trigger a rewind effect. On rewind, Arcane
+		// spells deal 10% additional damage, and Frost and Fire spells deal 20% additional damage.
+		3: func(agent core.Agent) {
+			mage := agent.(MageAgent).GetMage()
+
+			arcaneDamage := 0.0
+			fireDamage := 0.0
+			frostDamage := 0.0
+
+			arcaneProc := mage.RegisterSpell(core.SpellConfig{
+				ActionID:    core.ActionID{SpellID: 52597},
+				SpellSchool: core.SpellSchoolArcane,
+				DefenseType: core.DefenseTypeMagic,
+				ProcMask:    core.ProcMaskEmpty,
+				Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagIgnoreModifiers,
+
+				DamageMultiplier: 1,
+				ThreatMultiplier: 1,
+
+				ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+					spell.CalcAndDealDamage(sim, target, arcaneDamage, spell.OutcomeAlwaysHit)
+				},
+			})
+
+			fireProc := mage.RegisterSpell(core.SpellConfig{
+				ActionID:    core.ActionID{SpellID: 52733},
+				SpellSchool: core.SpellSchoolFire,
+				DefenseType: core.DefenseTypeMagic,
+				ProcMask:    core.ProcMaskEmpty,
+				Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagIgnoreModifiers,
+
+				DamageMultiplier: 1,
+				ThreatMultiplier: 1,
+
+				ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+					spell.CalcAndDealDamage(sim, target, fireDamage, spell.OutcomeAlwaysHit)
+				},
+			})
+
+			frostProc := mage.RegisterSpell(core.SpellConfig{
+				ActionID:    core.ActionID{SpellID: 52734},
+				SpellSchool: core.SpellSchoolFrost,
+				DefenseType: core.DefenseTypeMagic,
+				ProcMask:    core.ProcMaskEmpty,
+				Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagIgnoreModifiers,
+
+				DamageMultiplier: 1,
+				ThreatMultiplier: 1,
+
+				ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+					spell.CalcAndDealDamage(sim, target, frostDamage, spell.OutcomeAlwaysHit)
+				},
+			})
+
+			// TODO: Add Cone of Cold and Frost Nova
+			eligibleSpellCodes := []int32{
+				SpellCode_MageFlamestrike,
+				SpellCode_MageBlastWave,
+				SpellCode_MageArcaneExplosion,
+			}
+
+			mage.RegisterAura(core.Aura{
+				Label:    "Magic Mirror Passive",
+				Duration: core.NeverExpires,
+				OnReset: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Activate(sim)
+				},
+				OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+					if !result.Landed() {
+						return
+					}
+
+					if !slices.Contains(eligibleSpellCodes, spell.SpellCode) {
+						return
+					}
+
+					if !sim.Proc(0.35, "Mirror Magic") {
+						return
+					}
+
+					multiplier := 0.1
+					if spell.SpellSchool.Matches(core.SpellSchoolFire) || spell.SpellSchool.Matches(core.SpellSchoolFrost) {
+						multiplier = 0.2
+					}
+
+					mirrorDamage := result.Damage * multiplier
+
+					if spell.SpellSchool.Matches(core.SpellSchoolArcane) {
+						arcaneDamage = mirrorDamage
+						arcaneProc.Cast(sim, result.Target)
+					} else if spell.SpellSchool.Matches(core.SpellSchoolFire) {
+						fireDamage = mirrorDamage
+						fireProc.Cast(sim, result.Target)
+					} else if spell.SpellSchool.Matches(core.SpellSchoolFrost) {
+						frostDamage = mirrorDamage
+						frostProc.Cast(sim, result.Target)
+					}
+				},
+			})
+		},
+		// Your spell critical strikes conjure a magical barrier that absorbs 350 damage. While the barrier holds, the damage you deal with magical spells and
+		// effects is increased by up to 42 and the threat you generate is reduced by 15%.
+		5: func(agent core.Agent) {
+			mage := agent.(MageAgent).GetMage()
+
+			barrierSpell := mage.GetOrRegisterSpell(core.SpellConfig{
+				ActionID:    core.ActionID{SpellID: 52585},
+				SpellSchool: core.SpellSchoolArcane,
+				ProcMask:    core.ProcMaskEmpty,
+				Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell | core.SpellFlagHelpful,
+
+				DamageMultiplier: 1,
+				ThreatMultiplier: 1,
+
+				Shield: core.ShieldConfig{
+					Aura: core.Aura{
+						Label:    "Guardian's Barrier",
+						Duration: time.Second * 10,
+						OnGain: func(aura *core.Aura, sim *core.Simulation) {
+							mage.AddStatDynamic(sim, stats.SpellDamage, 42)
+							mage.PseudoStats.ThreatMultiplier /= 1.15
+						},
+						OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+							mage.AddStatDynamic(sim, stats.SpellDamage, -42)
+							mage.PseudoStats.ThreatMultiplier *= 1.15
+						},
+					},
+				},
+			})
+
+			mage.RegisterAura(core.Aura{
+				Label:    "Guardian's Barrier",
+				Duration: core.NeverExpires,
+				OnReset: func(aura *core.Aura, sim *core.Simulation) {
+					aura.Activate(sim)
+				},
+				OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+					if !result.Landed() || !spell.Flags.Matches(SpellFlagMage) {
+						return
+					}
+					if !result.DidCrit() {
+						return
+					}
+					barrierSpell.Shield(&mage.Unit).Apply(sim, 350)
+				},
+			})
+		},
+	},
+})
+
 var ItemSetVestmentsOfTheGuardian = core.NewItemSet(core.ItemSet{
 	Name: "Vestments of the Guardian",
 	ID:   685,
 	Bonuses: map[int32]core.ApplyEffect{
 		// Increases the chance for Resonance Cascade to trigger by 5%.
 		3: func(agent core.Agent) {
+			// Implemented in talents.go
+		},
+		// Reduce the mana cost of your spells by 100% for 6s after Presence of Mind is consumed.
+		5: func(agent core.Agent) {
 			// Implemented in talents.go
 		},
 	},

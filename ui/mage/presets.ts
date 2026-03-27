@@ -1,3 +1,4 @@
+import { Encounter } from '../core/encounter';
 import * as PresetUtils from '../core/preset_utils';
 import {
 	Alcohol,
@@ -20,36 +21,44 @@ import {
 	SapperExplosive,
 	SaygesFortune,
 	SpellPowerBuff,
+	Stat,
 	TristateEffect,
 	WeaponImbue,
 	ZanzaBuff,
 } from '../core/proto/common';
 import { Mage_Options as MageOptions, Mage_Options_ArmorType as ArmorType } from '../core/proto/mage';
 import { SavedTalents } from '../core/proto/ui';
-import MultiAPL from './apls/Multi.apl.json';
-import STAPL from './apls/ST.apl.json';
-import BISGear from './gear_sets/bis.gear.json';
+import { Stats } from '../core/proto_utils/stats.js';
+import ArcaneSTAPL from './apls/arcane_st.apl.json';
+import ArcaneAoEAPL from './apls/arcane_aoe.apl.json';
+import FireST from './apls/fire_st.apl.json';
+import ArcaneSTGearBiS from './gear_sets/arcane_st_bis.gear.json';
+import ArcaneAoEGearBiS from './gear_sets/arcane_aoe_bis.gear.json';
+import FireSTBiS from './gear_sets/fire_st_bis.gear.json';
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Gear Presets
 ///////////////////////////////////////////////////////////////////////////
 
-export const GearBIS = PresetUtils.makePresetGear('BiS', BISGear);
+export const GearArcaneSTBiS = PresetUtils.makePresetGear('Arcane ST BiS', ArcaneSTGearBiS);
+export const GearArcaneAoEBiS = PresetUtils.makePresetGear('Arcane AoE BiS', ArcaneAoEGearBiS);
+export const GearFireSTBiS = PresetUtils.makePresetGear('Fire ST BiS', FireSTBiS);
 
-export const GearPresets = [GearBIS];
+export const GearPresets = [GearArcaneSTBiS, GearArcaneAoEBiS, GearFireSTBiS];
 
-export const DefaultGear = GearBIS;
+export const DefaultGear = GearArcaneSTBiS;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 APL Presets
 ///////////////////////////////////////////////////////////////////////////
 
-export const APLST = PresetUtils.makePresetAPLRotation('Arcane ST', STAPL);
-export const APLMulti = PresetUtils.makePresetAPLRotation('Arcane Multi', MultiAPL);
+export const ROTATION_PRESET_ARCANE_ST = PresetUtils.makePresetAPLRotation('Arcane ST', ArcaneSTAPL, {});
+export const ROTATION_PRESET_ARCANE_AOE = PresetUtils.makePresetAPLRotation('Arcane AoE', ArcaneAoEAPL, {});
+export const ROTATION_PRESET_FIRE_ST = PresetUtils.makePresetAPLRotation('Fire ST', FireST, {});
 
-export const APLPresets = [APLST, APLMulti];
+export const APLPresets = [ROTATION_PRESET_ARCANE_ST, ROTATION_PRESET_ARCANE_AOE, ROTATION_PRESET_FIRE_ST];
 
-export const DefaultAPL = APLST;
+export const DefaultAPL = ROTATION_PRESET_ARCANE_ST;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Talent Presets
@@ -59,10 +68,94 @@ export const DefaultAPL = APLST;
 // a talent calculator and copy the numbers in the url.
 
 export const TalentsArcane = PresetUtils.makePresetTalents('Arcane', SavedTalents.create({ talentsString: '2350550310033311251-50003' }));
+export const TalentsFire = PresetUtils.makePresetTalents('Fire', SavedTalents.create({ talentsString: '2300020000000000000-50523231230313251-003' }));
 
-export const TalentPresets = [TalentsArcane];
+export const TalentPresets = [TalentsArcane, TalentsFire];
 
 export const DefaultTalents = TalentsArcane;
+
+///////////////////////////////////////////////////////////////////////////
+//                                 EP Presets
+///////////////////////////////////////////////////////////////////////////
+
+export const EPArcaneST = PresetUtils.makePresetEpWeights('Arcane ST', Stats.fromMap(
+	{
+		[Stat.StatIntellect]: 0.32,
+		[Stat.StatSpellPower]: 1,
+		[Stat.StatSpellDamage]: 1,
+		[Stat.StatArcanePower]: 1,
+		[Stat.StatFirePower]: 0,
+		[Stat.StatFrostPower]: 0,
+		[Stat.StatSpellHit]: 0,
+		[Stat.StatSpellCrit]: 14.97,
+		[Stat.StatSpellHaste]: 21.81,
+		[Stat.StatFortune]: 0.92,
+	},
+	{},
+))
+
+export const EPArcaneAoE = PresetUtils.makePresetEpWeights('Arcane AoE', Stats.fromMap(
+	{
+		[Stat.StatIntellect]: 0.48,
+		[Stat.StatSpellPower]: 1,
+		[Stat.StatSpellDamage]: 1,
+		[Stat.StatArcanePower]: 1,
+		[Stat.StatFirePower]: 0,
+		[Stat.StatFrostPower]: 0,
+		[Stat.StatSpellHit]: 0,
+		[Stat.StatSpellCrit]: 22.62,
+		[Stat.StatSpellHaste]: 0,
+		[Stat.StatFortune]: 3.11,
+	},
+	{},
+))
+
+export const EPFireST = PresetUtils.makePresetEpWeights('Fire ST', Stats.fromMap(
+	{
+		[Stat.StatIntellect]: 0.59,
+		[Stat.StatSpellPower]: 1,
+		[Stat.StatSpellDamage]: 1,
+		[Stat.StatArcanePower]: 0,
+		[Stat.StatFirePower]: 1,
+		[Stat.StatFrostPower]: 0,
+		[Stat.StatSpellHit]: 25.39,
+		[Stat.StatSpellCrit]: 27.05,
+		[Stat.StatSpellHaste]: 13.26,
+		[Stat.StatFortune]: 0.51,
+	},
+	{},
+))
+
+export const DefaultEP = EPArcaneST
+
+///////////////////////////////////////////////////////////////////////////
+//                                Build Presets
+///////////////////////////////////////////////////////////////////////////
+
+export const PresetBuildArcaneST = PresetUtils.makePresetBuild('Arcane ST', {
+	gear: GearArcaneSTBiS,
+	talents: TalentsArcane,
+	rotation: ROTATION_PRESET_ARCANE_ST,
+	epWeights: EPArcaneST,
+	// encounter: "Default",
+});
+export const PresetBuildArcaneAoE = PresetUtils.makePresetBuild('Arcane AoE', {
+	gear: GearArcaneAoEBiS,
+	talents: TalentsArcane,
+	rotation: ROTATION_PRESET_ARCANE_AOE,
+	epWeights: EPArcaneAoE,
+	// encounter: "Trash",
+});
+export const PresetBuildFireST = PresetUtils.makePresetBuild('Fire ST', {
+	gear: GearFireSTBiS,
+	talents: TalentsFire,
+	rotation: ROTATION_PRESET_FIRE_ST,
+	epWeights: EPFireST,
+	// encounter: "Default",
+});
+
+export const BuildPresets = [PresetBuildArcaneST, PresetBuildArcaneAoE, PresetBuildFireST]
+
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Options
@@ -122,7 +215,7 @@ export const DefaultIndividualBuffs = IndividualBuffs.create({
 });
 
 export const DefaultDebuffs = Debuffs.create({
-	fireVulnerability: false,
+	fireVulnerability: true,
 	judgementOfWisdom: true,
 	wintersChill: false,
 	curseOfShadow: true,

@@ -198,84 +198,84 @@ dps_results: {
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Gnome-bis-Arcane-ST-FullBuffs-Default-Consumes-LongMultiTarget"
+ key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongMultiTarget"
  value: {
   dps: 1846.19715
   tps: 2246.95469
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Gnome-bis-Arcane-ST-FullBuffs-Default-Consumes-LongSingleTarget"
+ key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongSingleTarget"
  value: {
   dps: 1846.19715
   tps: 1197.34321
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Gnome-bis-Arcane-ST-FullBuffs-Default-Consumes-ShortSingleTarget"
+ key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-ShortSingleTarget"
  value: {
   dps: 2008.72461
   tps: 1261.42191
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Gnome-bis-Arcane-ST-NoBuffs-Default-Consumes-LongMultiTarget"
+ key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongMultiTarget"
  value: {
   dps: 771.53707
   tps: 848.0277
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Gnome-bis-Arcane-ST-NoBuffs-Default-Consumes-LongSingleTarget"
+ key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongSingleTarget"
  value: {
   dps: 771.53707
   tps: 493.77674
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Gnome-bis-Arcane-ST-NoBuffs-Default-Consumes-ShortSingleTarget"
+ key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-ShortSingleTarget"
  value: {
   dps: 1297.14485
   tps: 800.79015
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Troll-bis-Arcane-ST-FullBuffs-Default-Consumes-LongMultiTarget"
+ key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongMultiTarget"
  value: {
   dps: 1769.9462
   tps: 2114.54759
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Troll-bis-Arcane-ST-FullBuffs-Default-Consumes-LongSingleTarget"
+ key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongSingleTarget"
  value: {
   dps: 1769.9462
   tps: 1145.90674
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Troll-bis-Arcane-ST-FullBuffs-Default-Consumes-ShortSingleTarget"
+ key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-ShortSingleTarget"
  value: {
   dps: 1992.69285
   tps: 1248.53791
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Troll-bis-Arcane-ST-NoBuffs-Default-Consumes-LongMultiTarget"
+ key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongMultiTarget"
  value: {
   dps: 739.86328
   tps: 802.78704
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Troll-bis-Arcane-ST-NoBuffs-Default-Consumes-LongSingleTarget"
+ key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongSingleTarget"
  value: {
   dps: 739.86328
   tps: 473.56587
  }
 }
 dps_results: {
- key: "TestMage-Phase1-Settings-Troll-bis-Arcane-ST-NoBuffs-Default-Consumes-ShortSingleTarget"
+ key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-ShortSingleTarget"
  value: {
   dps: 1246.09595
   tps: 766.35075

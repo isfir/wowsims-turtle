@@ -21,8 +21,8 @@ func TestMage(t *testing.T) {
 			OtherRaces: []proto.Race{proto.Race_RaceTroll},
 
 			Talents:     DefaultTalents,
-			GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "bis"),
-			Rotation:    core.GetAplRotation("../../ui/mage/apls", "ST"),
+			GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "arcane_st_bis"),
+			Rotation:    core.GetAplRotation("../../ui/mage/apls", "arcane_st"),
 			Buffs:       core.FullBuffs,
 			Consumes:    DefaultConsumes,
 			SpecOptions: core.SpecOptionsCombo{Label: "Arcane", SpecOptions: PlayerOptions},

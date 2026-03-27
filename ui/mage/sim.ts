@@ -61,21 +61,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 		// Default equipped gear.
 		gear: Presets.DefaultGear.gear,
 		// Default EP weights for sorting gear in the gear picker.
-		epWeights: Stats.fromMap(
-			{
-				[Stat.StatIntellect]: 0.31,
-				[Stat.StatSpellPower]: 1,
-				[Stat.StatSpellDamage]: 1,
-				[Stat.StatArcanePower]: 1,
-				[Stat.StatFirePower]: 0,
-				[Stat.StatFrostPower]: 0,
-				[Stat.StatSpellHit]: 0,
-				[Stat.StatSpellCrit]: 14.24,
-				[Stat.StatSpellHaste]: 17.74,
-				[Stat.StatFortune]: 1,
-			},
-			{},
-		),
+		epWeights: Presets.DefaultEP.epWeights,
 		// Default consumes settings.
 		consumes: Presets.DefaultConsumes,
 		// Default talents.
@@ -121,6 +107,7 @@ const SPEC_CONFIG = registerSpecConfig(Spec.SpecMage, {
 		rotations: [...Presets.APLPresets],
 		talents: [...Presets.TalentPresets],
 		gear: [...Presets.GearPresets],
+		builds: [...Presets.BuildPresets],
 	},
 
 	autoRotation: _player => {

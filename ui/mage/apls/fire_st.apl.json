@@ -1,0 +1,213 @@
+{
+	"type": "TypeAPL",
+	"priorityList": [
+		{
+			"action": {
+				"condition": {
+					"cmp": {
+						"op": "OpLe",
+						"lhs": {
+							"currentManaPercent": {
+
+							}
+						},
+						"rhs": {
+							"const": {
+								"val": "15%"
+							}
+						}
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"itemId": 8008
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"cmp": {
+						"op": "OpLe",
+						"lhs": {
+							"currentManaPercent": {
+
+							}
+						},
+						"rhs": {
+							"const": {
+								"val": "15%"
+							}
+						}
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"itemId": 61675
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"cmp": {
+						"op": "OpGe",
+						"lhs": {
+							"auraNumStacks": {
+								"auraId": {
+									"spellId": 51931,
+									"rank": 2
+								}
+							}
+						},
+						"rhs": {
+							"const": {
+								"val": "5"
+							}
+						}
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"spellId": 18809,
+						"rank": 8
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"castSpell": {
+					"spellId": {
+						"spellId": 10199,
+						"rank": 7
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"or": {
+						"vals": [
+							{
+								"cmp": {
+									"op": "OpLt",
+									"lhs": {
+										"auraNumStacks": {
+											"sourceUnit": {
+												"type": "CurrentTarget"
+											},
+											"auraId": {
+												"spellId": 12873
+											}
+										}
+									},
+									"rhs": {
+										"const": {
+											"val": "5"
+										}
+									}
+								}
+							},
+							{
+								"cmp": {
+									"op": "OpLe",
+									"lhs": {
+										"auraRemainingTime": {
+											"sourceUnit": {
+												"type": "CurrentTarget"
+											},
+											"auraId": {
+												"spellId": 12873
+											}
+										}
+									},
+									"rhs": {
+										"const": {
+											"val": "4"
+										}
+									}
+								}
+							}
+						]
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"spellId": 10207,
+						"rank": 7
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"gcdIsReady": {
+
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"itemId": 61181
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"gcdIsReady": {
+
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"spellId": 16322
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"gcdIsReady": {
+
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"otherId": "OtherActionOffensiveEquip"
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"condition": {
+					"gcdIsReady": {
+
+					}
+				},
+				"castSpell": {
+					"spellId": {
+						"spellId": 11129
+					}
+				}
+			}
+		},
+		{
+			"action": {
+				"castSpell": {
+					"spellId": {
+						"spellId": 25306,
+						"rank": 12
+					}
+				}
+			}
+		}
+	]
+}

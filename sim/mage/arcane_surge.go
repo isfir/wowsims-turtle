@@ -22,6 +22,10 @@ func (mage *Mage) registerArcaneSurgeSpell() {
 			aura.Activate(sim)
 		},
 		OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+			if !spell.Flags.Matches(SpellFlagMage) {
+				return
+			}
+
 			if result.DidResist() {
 				mage.ArcaneSurgeAura.Activate(sim)
 			}

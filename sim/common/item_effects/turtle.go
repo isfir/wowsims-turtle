@@ -10,6 +10,7 @@ import (
 
 const (
 	SpellpowerGogglesXtremePlusPlus = 33095
+	DropletOfNordrassil             = 33294
 	SpellwovenNobilityDrape         = 55056
 	JewelOfWildMagics               = 55087
 	RemainsOfOverwhelmingPower      = 55093
@@ -26,6 +27,37 @@ func init() {
 	///////////////////////////////////////////////////////////////////////////
 	//                                 Trinkets
 	///////////////////////////////////////////////////////////////////////////
+
+	// https://database.turtlecraft.gg/?item=33294
+	// Increases damage done by magical spells and effects by up to 80 and increases spell hit chance by 3% for 10 sec whenever your spells are fully or partially resisted.
+	core.NewItemEffect(DropletOfNordrassil, func(agent core.Agent) {
+		character := agent.GetCharacter()
+
+		buffAura := character.RegisterAura(core.Aura{
+			ActionID: core.ActionID{SpellID: 58227},
+			Label:    "Nordrassil's Reprieve",
+			Duration: time.Second * 10,
+			OnGain: func(aura *core.Aura, sim *core.Simulation) {
+				character.AddStatDynamic(sim, stats.SpellDamage, 80)
+				character.AddStatDynamic(sim, stats.SpellHit, 3)
+			},
+			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+				character.AddStatDynamic(sim, stats.SpellDamage, -80)
+				character.AddStatDynamic(sim, stats.SpellHit, -3)
+			},
+		})
+
+		//TODO: Verify that it has no ICD
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
+			Name:     "Nordrassil's Reprieve Passive",
+			Callback: core.CallbackOnSpellHitDealt,
+			Outcome:  core.OutcomeResisted,
+			ProcMask: core.ProcMaskSpellDamage,
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				buffAura.Activate(sim)
+			},
+		})
+	})
 
 	// https://database.turtlecraft.gg/?item=55087
 	// Unleash a blast of a random element, dealing 490 - 540 damage of that element within 10 yards, additionally causing an effect depending on the element.

@@ -114,8 +114,9 @@ const (
 )
 
 const (
-	OutcomePartial = OutcomePartial1_4 | OutcomePartial2_4 | OutcomePartial3_4
-	OutcomeLanded  = OutcomeHit | OutcomeCrit | OutcomeCrush | OutcomeGlance | OutcomeBlock
+	OutcomePartial  = OutcomePartial1_4 | OutcomePartial2_4 | OutcomePartial3_4
+	OutcomeResisted = OutcomePartial | OutcomeMiss
+	OutcomeLanded   = OutcomeHit | OutcomeCrit | OutcomeCrush | OutcomeGlance | OutcomeBlock
 )
 
 func (ho HitOutcome) String() string {

@@ -47,12 +47,12 @@ func init() {
 			},
 		})
 
-		//TODO: Verify that it has no ICD
 		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Nordrassil's Reprieve Passive",
 			Callback: core.CallbackOnSpellHitDealt,
 			Outcome:  core.OutcomeResisted,
 			ProcMask: core.ProcMaskSpellDamage,
+			ICD:      time.Second * 4,
 			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 				buffAura.Activate(sim)
 			},

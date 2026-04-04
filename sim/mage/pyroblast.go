@@ -66,7 +66,7 @@ func (mage *Mage) newPyroblastSpellConfig(rank int) core.SpellConfig {
 		},
 		Cast: core.CastConfig{
 			DefaultCast: core.Cast{
-				GCD:      core.GCDDefault,
+				GCD:      time.Second,
 				CastTime: castTime,
 			},
 			CastTime: func(spell *core.Spell) time.Duration {

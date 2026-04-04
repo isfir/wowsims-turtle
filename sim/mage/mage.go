@@ -18,6 +18,7 @@ const (
 	SpellCode_MageArcaneMissiles
 	SpellCode_MageArcaneMissilesTick
 	SpellCode_MageArcaneRupture
+	SpellCode_MageArcaneSurge
 	SpellCode_MageBlastWave
 	SpellCode_MageFireBlast
 	SpellCode_MageFireball

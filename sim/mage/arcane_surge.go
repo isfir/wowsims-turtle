@@ -59,6 +59,7 @@ func (mage *Mage) newArcaneSurgeSpellConfig(rank int) core.SpellConfig {
 
 	spellConfig := core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: spellId},
+		SpellCode:   SpellCode_MageArcaneSurge,
 		SpellSchool: core.SpellSchoolArcane,
 		DefenseType: core.DefenseTypeMagic,
 		ProcMask:    core.ProcMaskSpellDamage,

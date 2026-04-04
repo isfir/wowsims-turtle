@@ -14,6 +14,22 @@ func (mage *Mage) registerEvocationCD() {
 	tickLength := time.Millisecond * 250
 	maxTicks := int32(channelTime / tickLength)
 
+	var netherOverchargeAura *core.Aura
+	if mage.HasSetBonus(ItemSetEnigmaVestments, 5) {
+		netherOverchargeAura = mage.RegisterAura(core.Aura{
+			Label:    "Nether Overcharge",
+			ActionID: core.ActionID{SpellID: 52595},
+			Duration: time.Second * 8,
+			OnGain: func(aura *core.Aura, sim *core.Simulation) {
+				mage.PseudoStats.SchoolCostMultiplier.AddToMagicSchools(10)
+			},
+			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+				mage.PseudoStats.SchoolCostMultiplier.AddToMagicSchools(-10)
+			},
+		})
+		core.RegisterPercentDamageModifierEffect(netherOverchargeAura, 1.10)
+	}
+
 	manaRegenAura := mage.RegisterAura(core.Aura{
 		Label:    "Evocation Regen",
 		ActionID: actionID,
@@ -54,6 +70,10 @@ func (mage *Mage) registerEvocationCD() {
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
 					manaRegenAura.Deactivate(sim)
+
+					if netherOverchargeAura != nil && sim.CurrentTime-aura.StartedAt() >= channelTime {
+						netherOverchargeAura.Activate(sim)
+					}
 				},
 			},
 			NumberOfTicks: maxTicks,

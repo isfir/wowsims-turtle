@@ -19,32 +19,53 @@ func (mage *Mage) registerArcaneRuptureSpell() {
 		return
 	}
 
+	improvedArcaneRupture := mage.HasSetBonus(ItemSetArcanistsVestments, 8)
+	affectedDamageSpells := []*core.Spell{}
+	affectedCostSpells := []*core.Spell{}
+
 	mage.ArcaneRuptureAura = mage.RegisterAura(core.Aura{
 		Label:    "Arcane Rupture",
 		ActionID: core.ActionID{SpellID: 52502},
 		Duration: time.Second * 8,
-		OnGain: func(aura *core.Aura, sim *core.Simulation) {
-			for _, spell := range mage.ArcaneMissilesTickSpell {
-				if spell != nil {
-					spell.DamageMultiplierAdditive += 0.20
+		OnInit: func(aura *core.Aura, sim *core.Simulation) {
+			for _, spell := range mage.Spellbook {
+				if spell == nil ||
+					!spell.Flags.Matches(SpellFlagMage) ||
+					!spell.SpellSchool.Matches(core.SpellSchoolArcane) ||
+					!spell.ProcMask.Matches(core.ProcMaskSpellDamage) {
+					continue
 				}
-			}
-			for _, spell := range mage.ArcaneMissiles {
-				if spell != nil {
-					spell.Cost.Multiplier += 20
+
+				if improvedArcaneRupture {
+					affectedDamageSpells = append(affectedDamageSpells, spell)
+					if spell.Cost != nil {
+						affectedCostSpells = append(affectedCostSpells, spell)
+					}
+					continue
+				}
+
+				if spell.SpellCode == SpellCode_MageArcaneMissilesTick {
+					affectedDamageSpells = append(affectedDamageSpells, spell)
+				}
+				if spell.SpellCode == SpellCode_MageArcaneMissiles && spell.Cost != nil {
+					affectedCostSpells = append(affectedCostSpells, spell)
 				}
 			}
 		},
-		OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-			for _, spell := range mage.ArcaneMissilesTickSpell {
-				if spell != nil {
-					spell.DamageMultiplierAdditive -= 0.20
-				}
+		OnGain: func(aura *core.Aura, sim *core.Simulation) {
+			for _, spell := range affectedDamageSpells {
+				spell.DamageMultiplierAdditive += 0.20
 			}
-			for _, spell := range mage.ArcaneMissiles {
-				if spell != nil {
-					spell.Cost.Multiplier -= 20
-				}
+			for _, spell := range affectedCostSpells {
+				spell.Cost.Multiplier += 20
+			}
+		},
+		OnExpire: func(aura *core.Aura, sim *core.Simulation) {
+			for _, spell := range affectedDamageSpells {
+				spell.DamageMultiplierAdditive -= 0.20
+			}
+			for _, spell := range affectedCostSpells {
+				spell.Cost.Multiplier -= 20
 			}
 		},
 	})

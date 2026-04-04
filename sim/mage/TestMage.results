@@ -99,6 +99,20 @@ stat_weights_results: {
  }
 }
 dps_results: {
+ key: "TestMage-Phase1-AllItems-Arcanist'sRegalia"
+ value: {
+  dps: 1229.15565
+  tps: 704.45205
+ }
+}
+dps_results: {
+ key: "TestMage-Phase1-AllItems-Arcanist'sVestments"
+ value: {
+  dps: 1302.21789
+  tps: 851.28064
+ }
+}
+dps_results: {
  key: "TestMage-Phase1-AllItems-Champion'sArcanum"
  value: {
   dps: 1315.23703
@@ -106,10 +120,17 @@ dps_results: {
  }
 }
 dps_results: {
+ key: "TestMage-Phase1-AllItems-EnigmaRegalia"
+ value: {
+  dps: 1496.0457
+  tps: 972.51173
+ }
+}
+dps_results: {
  key: "TestMage-Phase1-AllItems-EnigmaVestments"
  value: {
-  dps: 1540.63287
-  tps: 1000.39514
+  dps: 1538.32509
+  tps: 998.3935
  }
 }
 dps_results: {
@@ -124,6 +145,13 @@ dps_results: {
  value: {
   dps: 1343.74614
   tps: 719.02813
+ }
+}
+dps_results: {
+ key: "TestMage-Phase1-AllItems-FrostfireVestments"
+ value: {
+  dps: 1505.17589
+  tps: 983.87429
  }
 }
 dps_results: {
@@ -155,6 +183,13 @@ dps_results: {
  }
 }
 dps_results: {
+ key: "TestMage-Phase1-AllItems-NetherwindVestments"
+ value: {
+  dps: 1426.33127
+  tps: 928.78129
+ }
+}
+dps_results: {
  key: "TestMage-Phase1-AllItems-RegaliaoftheGuardian"
  value: {
   dps: 1606.02439
@@ -174,6 +209,13 @@ dps_results: {
  value: {
   dps: 1548.36907
   tps: 1002.75826
+ }
+}
+dps_results: {
+ key: "TestMage-Phase1-AllItems-TrappingsofVaultedSecrets"
+ value: {
+  dps: 1569.85846
+  tps: 1042.75304
  }
 }
 dps_results: {

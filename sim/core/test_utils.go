@@ -53,6 +53,7 @@ var DefaultTargetProtoLvl60 = &proto.Target{
 
 var FullRaidBuffs = &proto.RaidBuffs{
 	ArcaneBrilliance:      true,
+	EmeraldBlessing:       true,
 	BattleShout:           proto.TristateEffect_TristateEffectImproved,
 	BloodPact:             proto.TristateEffect_TristateEffectImproved,
 	DevotionAura:          proto.TristateEffect_TristateEffectImproved,
@@ -79,7 +80,12 @@ var FullRaidBuffs = &proto.RaidBuffs{
 //                                 Party Buffs
 ///////////////////////////////////////////////////////////////////////////
 
-var FullPartyBuffs = &proto.PartyBuffs{}
+var FullPartyBuffs = &proto.PartyBuffs{
+	AtieshMage:    true,
+	AtieshWarlock: true,
+	AtieshDruid:   true,
+	MoonkinAura:   true,
+}
 
 ///////////////////////////////////////////////////////////////////////////
 //                                 Individual Buffs
@@ -90,14 +96,14 @@ var FullIndividualBuffs = &proto.IndividualBuffs{
 	BlessingOfMight:              proto.TristateEffect_TristateEffectImproved,
 	BlessingOfSanctuary:          true,
 	BlessingOfWisdom:             proto.TristateEffect_TristateEffectImproved,
-	FengusFerocity:               true,
-	MoldarsMoxie:                 true,
-	RallyingCryOfTheDragonslayer: true,
-	SaygesFortune:                proto.SaygesFortune_SaygesDamage,
-	SlipkiksSavvy:                true,
-	SongflowerSerenade:           true,
-	SpiritOfZandalar:             true,
-	WarchiefsBlessing:            true,
+	FengusFerocity:               false,
+	MoldarsMoxie:                 false,
+	RallyingCryOfTheDragonslayer: false,
+	SaygesFortune:                proto.SaygesFortune_SaygesUnknown,
+	SlipkiksSavvy:                false,
+	SongflowerSerenade:           false,
+	SpiritOfZandalar:             false,
+	WarchiefsBlessing:            false,
 }
 
 ///////////////////////////////////////////////////////////////////////////

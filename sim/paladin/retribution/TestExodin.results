@@ -1,41 +1,41 @@
 character_stats_results: {
  key: "TestExodin-Phase5-CharacterStats-Default"
  value: {
-  final_stats: 258.819
-  final_stats: 153.065
-  final_stats: 370.96125
-  final_stats: 166.98
-  final_stats: 193.9245
-  final_stats: 0
+  final_stats: 206.91
+  final_stats: 116.6
+  final_stats: 264
+  final_stats: 128.7
+  final_stats: 151.305
+  final_stats: 33
   final_stats: 0
   final_stats: 10
   final_stats: 0
   final_stats: 0
   final_stats: 0
   final_stats: 0
-  final_stats: 49.6
+  final_stats: 39.6
+  final_stats: 1
+  final_stats: 10.64929
+  final_stats: 2
   final_stats: 0
-  final_stats: 24.28857
-  final_stats: 0
-  final_stats: 0
-  final_stats: 1669.638
+  final_stats: 1225.82
   final_stats: 3
-  final_stats: 28.44509
+  final_stats: 16.59996
+  final_stats: 2
   final_stats: 0
   final_stats: 0
+  final_stats: 3162.5
   final_stats: 0
-  final_stats: 3736.7
   final_stats: 0
-  final_stats: 0
-  final_stats: 690.13
-  final_stats: 480
+  final_stats: 617.2
+  final_stats: 140
   final_stats: 0
   final_stats: 5
   final_stats: 0
-  final_stats: 8.44509
+  final_stats: 6.59996
   final_stats: 5
   final_stats: 0
-  final_stats: 5210.6125
+  final_stats: 3841
   final_stats: 27
   final_stats: 60
   final_stats: 60
@@ -51,12 +51,12 @@ character_stats_results: {
 stat_weights_results: {
  key: "TestExodin-Phase5-StatWeights-Default"
  value: {
-  weights: 0.33168
-  weights: 0.18755
+  weights: 0.20122
+  weights: 0.1659
   weights: 0
   weights: 0
   weights: 0
-  weights: 0.46717
+  weights: 0.34888
   weights: 0
   weights: 0
   weights: 0
@@ -64,13 +64,13 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0
-  weights: 1.9014
-  weights: 0.29623
+  weights: 2.01074
+  weights: 0.29886
   weights: 0
   weights: 0
-  weights: 0.11918
-  weights: 2.92752
-  weights: 2.92659
+  weights: 0.08315
+  weights: 1.87699
+  weights: 2.70411
   weights: 0
   weights: 0
   weights: 0
@@ -101,78 +101,78 @@ stat_weights_results: {
 dps_results: {
  key: "TestExodin-Phase5-AllItems-Avenger'sBattlegear"
  value: {
-  dps: 634.33583
-  tps: 676.8102
+  dps: 448.97478
+  tps: 487.63666
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-AllItems-FieldMarshal'sAegis"
  value: {
-  dps: 615.39296
-  tps: 658.04555
+  dps: 436.27872
+  tps: 474.9662
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-AllItems-Freethinker'sArmor"
  value: {
-  dps: 523.42218
-  tps: 565.72549
+  dps: 365.14903
+  tps: 403.49685
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-AllItems-JudgementArmor"
  value: {
-  dps: 545.61749
-  tps: 590.39294
+  dps: 383.50829
+  tps: 423.74538
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-AllItems-LawbringerArmor"
  value: {
-  dps: 502.00597
-  tps: 544.65856
+  dps: 356.10424
+  tps: 394.84731
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-AllItems-LieutenantCommander'sRedoubt"
  value: {
-  dps: 581.92233
-  tps: 624.15096
+  dps: 405.74368
+  tps: 443.87451
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-AllItems-RedemptionArmor"
  value: {
-  dps: 513.71589
-  tps: 556.57597
+  dps: 368.46218
+  tps: 407.62885
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-Average-Default"
  value: {
-  dps: 477.28663
-  tps: 519.28605
+  dps: 335.26706
+  tps: 373.4347
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-exodin-6CF2DR-FullBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 366.17386
-  tps: 575.83069
+  dps: 311.63493
+  tps: 520.21009
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-exodin-6CF2DR-FullBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 79.60148
-  tps: 90.11874
+  dps: 68.79118
+  tps: 79.22486
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-Settings-Dwarf-blank-P5 Seal of Martyrdom Ret-p5ret-exodin-6CF2DR-FullBuffs-P5-Consumes-ShortSingleTarget"
  value: {
-  dps: 174.01395
-  tps: 191.26271
+  dps: 150.5802
+  tps: 167.77979
  }
 }
 dps_results: {
@@ -199,22 +199,22 @@ dps_results: {
 dps_results: {
  key: "TestExodin-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-exodin-6CF2DR-FullBuffs-P5-Consumes-LongMultiTarget"
  value: {
-  dps: 365.78531
-  tps: 576.22881
+  dps: 312.15217
+  tps: 521.12066
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-exodin-6CF2DR-FullBuffs-P5-Consumes-LongSingleTarget"
  value: {
-  dps: 80.54232
-  tps: 91.08417
+  dps: 68.7906
+  tps: 79.24394
  }
 }
 dps_results: {
  key: "TestExodin-Phase5-Settings-Human-blank-P5 Seal of Martyrdom Ret-p5ret-exodin-6CF2DR-FullBuffs-P5-Consumes-ShortSingleTarget"
  value: {
-  dps: 173.36391
-  tps: 190.61267
+  dps: 149.67204
+  tps: 166.79788
  }
 }
 dps_results: {
@@ -241,7 +241,7 @@ dps_results: {
 dps_results: {
  key: "TestExodin-Phase5-SwitchInFrontOfTarget-Default"
  value: {
-  dps: 431.85188
-  tps: 471.4206
+  dps: 304.14401
+  tps: 340.35085
  }
 }

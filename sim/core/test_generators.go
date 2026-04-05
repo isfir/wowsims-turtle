@@ -106,17 +106,18 @@ type EncounterCombo struct {
 	Encounter *proto.Encounter
 }
 type SettingsCombos struct {
-	Class       proto.Class
-	Races       []proto.Race
-	GearSets    []GearSetCombo
-	TalentSets  []TalentsCombo
-	SpecOptions []SpecOptionsCombo
-	Rotations   []RotationCombo
-	Buffs       []BuffsCombo
-	Encounters  []EncounterCombo
-	SimOptions  *proto.SimOptions
-	IsHealer    bool
-	Cooldowns   *proto.Cooldowns
+	Class        proto.Class
+	Races        []proto.Race
+	GearSets     []GearSetCombo
+	TalentSets   []TalentsCombo
+	SpecOptions  []SpecOptionsCombo
+	Rotations    []RotationCombo
+	Buffs        []BuffsCombo
+	Encounters   []EncounterCombo
+	SimOptions   *proto.SimOptions
+	IsHealer     bool
+	InfiniteMana bool
+	Cooldowns    *proto.Cooldowns
 }
 
 func (combos *SettingsCombos) NumTests() int {
@@ -184,6 +185,7 @@ func (combos *SettingsCombos) GetTest(testIdx int) (string, *proto.ComputeStatsR
 				DistanceFromTarget: 30,
 				ReactionTimeMs:     150,
 				ChannelClipDelayMs: 50,
+				InfiniteMana:       combos.InfiniteMana,
 			}, specOptionsCombo.SpecOptions),
 			buffsCombo.Party,
 			buffsCombo.Raid,
@@ -403,6 +405,7 @@ type CharacterSuiteConfig struct {
 	IsHealer        bool
 	IsTank          bool
 	InFrontOfTarget bool
+	InfiniteMana    bool
 
 	OtherRaces       []proto.Race
 	OtherGearSets    []GearSetCombo
@@ -449,6 +452,7 @@ func FullCharacterTestSuiteGenerator(configs []CharacterSuiteConfig) []TestGener
 				DistanceFromTarget: 5,
 				ReactionTimeMs:     150,
 				ChannelClipDelayMs: 50,
+				InfiniteMana:       config.InfiniteMana,
 			},
 			config.SpecOptions.SpecOptions)
 
@@ -493,10 +497,11 @@ func FullCharacterTestSuiteGenerator(configs []CharacterSuiteConfig) []TestGener
 								Consumes: allConsumeOptions,
 							},
 						},
-						IsHealer:   config.IsHealer,
-						Encounters: MakeDefaultEncounterCombos(),
-						SimOptions: DefaultSimTestOptions,
-						Cooldowns:  config.Cooldowns,
+						IsHealer:     config.IsHealer,
+						InfiniteMana: config.InfiniteMana,
+						Encounters:   MakeDefaultEncounterCombos(),
+						SimOptions:   DefaultSimTestOptions,
+						Cooldowns:    config.Cooldowns,
 					},
 				},
 				{

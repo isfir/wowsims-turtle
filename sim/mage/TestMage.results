@@ -1,41 +1,41 @@
 character_stats_results: {
  key: "TestMage-Phase1-CharacterStats-Default"
  value: {
-  final_stats: 70.84
-  final_stats: 87.285
-  final_stats: 536.80275
-  final_stats: 571.1475
-  final_stats: 408.595
-  final_stats: 462
-  final_stats: 253
+  final_stats: 45.1
+  final_stats: 59.4
+  final_stats: 444.4
+  final_stats: 513.975
+  final_stats: 393.8
+  final_stats: 510
+  final_stats: 293
   final_stats: 40
-  final_stats: 15
+  final_stats: 40
   final_stats: 0
   final_stats: 0
   final_stats: 0
-  final_stats: 58.6
-  final_stats: 7
-  final_stats: 43.82205
-  final_stats: 12
+  final_stats: 60.6
+  final_stats: 8
+  final_stats: 31.75877
+  final_stats: 16
   final_stats: 0
-  final_stats: 1012.84
+  final_stats: 647.1
   final_stats: 0
-  final_stats: 16.2
-  final_stats: 12
-  final_stats: 0
-  final_stats: 0
-  final_stats: 9500.2125
+  final_stats: 6.2
+  final_stats: 14
   final_stats: 0
   final_stats: 0
-  final_stats: 1037.57
-  final_stats: 440
+  final_stats: 8642.625
+  final_stats: 0
+  final_stats: 0
+  final_stats: 981.8
+  final_stats: 100
   final_stats: 0
   final_stats: 5
   final_stats: 0
   final_stats: 3.2
   final_stats: 5
   final_stats: 0
-  final_stats: 6858.0275
+  final_stats: 5754
   final_stats: 77
   final_stats: 100
   final_stats: 100
@@ -43,7 +43,7 @@ character_stats_results: {
   final_stats: 110
   final_stats: 384
   final_stats: 0
-  final_stats: 267
+  final_stats: 302
   final_stats: 0
   final_stats: 0
  }
@@ -54,21 +54,19 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0
-  weights: -1.59764
+  weights: 0.30527
   weights: 0
-  weights: 0.99998
-  weights: 0.99998
-  weights: 0
-  weights: 0
+  weights: 0.89206
+  weights: 0.89206
   weights: 0
   weights: 0
   weights: 0
   weights: 0
-  weights: 0.53563
-  weights: 12.20945
   weights: 0
   weights: 0
-  weights: 0
+  weights: 0.42256
+  weights: 11.88634
+  weights: 24.98978
   weights: 0
   weights: 0
   weights: 0
@@ -95,238 +93,240 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0
+  weights: 0.89206
   weights: 0
+  weights: 1.94164
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-Arcanist'sRegalia"
  value: {
-  dps: 1229.15565
-  tps: 704.45205
+  dps: 1312.37946
+  tps: 703.96823
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-Arcanist'sVestments"
  value: {
-  dps: 1302.21789
-  tps: 851.28064
+  dps: 1319.86464
+  tps: 813.1542
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-Champion'sArcanum"
  value: {
-  dps: 1315.23703
-  tps: 857.1568
+  dps: 1351.00306
+  tps: 832.1515
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-EnigmaRegalia"
  value: {
-  dps: 1496.0457
-  tps: 972.51173
+  dps: 1454.15672
+  tps: 896.43391
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-EnigmaVestments"
  value: {
-  dps: 1538.32509
-  tps: 998.3935
+  dps: 1460.0597
+  tps: 899.11346
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-FieldMarshal'sRegalia"
  value: {
-  dps: 1395.64255
-  tps: 907.91534
+  dps: 1387.10726
+  tps: 854.31254
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-FrostfireRegalia"
  value: {
-  dps: 1343.74614
-  tps: 719.02813
+  dps: 1419.40955
+  tps: 722.53284
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-FrostfireVestments"
  value: {
-  dps: 1505.17589
-  tps: 983.87429
+  dps: 1438.96678
+  tps: 886.43187
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-Illusionist'sAttire"
  value: {
-  dps: 1518.29524
-  tps: 988.61727
+  dps: 1414.22615
+  tps: 870.77846
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-IronweaveBattlesuit"
  value: {
-  dps: 923.34001
-  tps: 605.29633
+  dps: 1121.5055
+  tps: 690.52197
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-LieutenantCommander'sArcanum"
  value: {
-  dps: 1315.23703
-  tps: 857.1568
+  dps: 1351.00306
+  tps: 832.1515
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-NetherwindRegalia"
  value: {
-  dps: 1257.01359
-  tps: 803.11174
+  dps: 1352.05489
+  tps: 813.6835
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-NetherwindVestments"
  value: {
-  dps: 1426.33127
-  tps: 928.78129
+  dps: 1396.74069
+  tps: 860.01175
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-RegaliaoftheGuardian"
  value: {
-  dps: 1606.02439
-  tps: 906.0478
-  hps: 224.175
+  dps: 1546.3112
+  tps: 829.97846
+  hps: 189.175
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-TheDefiler'sIntent"
  value: {
-  dps: 1548.36907
-  tps: 1002.75826
+  dps: 1621.67776
+  tps: 998.68054
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-TheHighlander'sIntent"
  value: {
-  dps: 1548.36907
-  tps: 1002.75826
+  dps: 1621.67776
+  tps: 998.68054
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-TrappingsofVaultedSecrets"
  value: {
-  dps: 1569.85846
-  tps: 1042.75304
+  dps: 1509.7553
+  tps: 948.27048
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-VestmentsoftheGuardian"
  value: {
-  dps: 1697.33066
-  tps: 1102.17576
+  dps: 1652.56096
+  tps: 1018.57467
  }
 }
 dps_results: {
  key: "TestMage-Phase1-AllItems-Warlord'sRegalia"
  value: {
-  dps: 1395.64255
-  tps: 907.91534
+  dps: 1387.10726
+  tps: 854.31254
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Average-Default"
  value: {
-  dps: 1847.54297
-  tps: 1194.34218
+  dps: 1765.07338
+  tps: 1087.72673
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongMultiTarget"
  value: {
-  dps: 1838.7232
-  tps: 2238.98257
+  dps: 1746.25175
+  tps: 1075.49147
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongSingleTarget"
  value: {
-  dps: 1838.7232
-  tps: 1189.46268
+  dps: 1746.25175
+  tps: 1075.49147
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-ShortSingleTarget"
  value: {
-  dps: 1999.39304
-  tps: 1252.27331
+  dps: 1896.57579
+  tps: 1133.23424
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongMultiTarget"
  value: {
-  dps: 771.31236
-  tps: 849.19791
+  dps: 1443.34918
+  tps: 889.01388
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongSingleTarget"
  value: {
-  dps: 771.31236
-  tps: 492.39177
+  dps: 1443.34918
+  tps: 889.01388
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Gnome-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-ShortSingleTarget"
  value: {
-  dps: 1289.95858
-  tps: 793.74479
+  dps: 1576.92949
+  tps: 941.0991
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongMultiTarget"
  value: {
-  dps: 1768.68669
-  tps: 2114.66544
+  dps: 1727.04073
+  tps: 1063.64463
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-LongSingleTarget"
  value: {
-  dps: 1768.68669
-  tps: 1142.32926
+  dps: 1727.04073
+  tps: 1063.64463
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-FullBuffs-Default-Consumes-ShortSingleTarget"
  value: {
-  dps: 1983.50908
-  tps: 1239.53421
+  dps: 1874.47185
+  tps: 1119.56013
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongMultiTarget"
  value: {
-  dps: 741.7722
-  tps: 803.18934
+  dps: 1438.86896
+  tps: 886.30069
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-LongSingleTarget"
  value: {
-  dps: 741.7722
-  tps: 473.27533
+  dps: 1438.86896
+  tps: 886.30069
  }
 }
 dps_results: {
  key: "TestMage-Phase1-Settings-Troll-arcane_st_bis-Arcane-arcane_st-NoBuffs-Default-Consumes-ShortSingleTarget"
  value: {
-  dps: 1238.83586
-  tps: 759.41901
+  dps: 1573.69759
+  tps: 939.13672
  }
 }
 dps_results: {
  key: "TestMage-Phase1-SwitchInFrontOfTarget-Default"
  value: {
-  dps: 1831.85337
-  tps: 1185.07266
+  dps: 1744.32997
+  tps: 1075.23974
  }
 }

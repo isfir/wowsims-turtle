@@ -15,10 +15,11 @@ func init() {
 func TestMage(t *testing.T) {
 	core.RunTestSuite(t, t.Name(), core.FullCharacterTestSuiteGenerator([]core.CharacterSuiteConfig{
 		{
-			Class:      proto.Class_ClassMage,
-			Phase:      1,
-			Race:       proto.Race_RaceGnome,
-			OtherRaces: []proto.Race{proto.Race_RaceTroll},
+			Class:        proto.Class_ClassMage,
+			Phase:        1,
+			Race:         proto.Race_RaceGnome,
+			OtherRaces:   []proto.Race{proto.Race_RaceTroll},
+			InfiniteMana: true,
 
 			Talents:     DefaultTalents,
 			GearSet:     core.GetGearSet("../../ui/mage/gear_sets", "arcane_st_bis"),
@@ -47,15 +48,25 @@ var PlayerOptions = &proto.Player_Mage{
 var DefaultConsumes = core.ConsumesCombo{
 	Label: "Default-Consumes",
 	Consumes: &proto.Consumes{
-		DefaultConjured: proto.Conjured_ConjuredDemonicRune,
-		DefaultPotion:   proto.Potions_MajorManaPotion,
-		Flask:           proto.Flask_FlaskOfSupremePower,
-		FirePowerBuff:   proto.FirePowerBuff_ElixirOfGreaterFirepower,
-		FrostPowerBuff:  proto.FrostPowerBuff_ElixirOfFrostPower,
-		Food:            proto.Food_FoodRunnTumTuberSurprise,
-		MainHandImbue:   proto.WeaponImbue_BrilliantWizardOil,
-		SapperExplosive: proto.SapperExplosive_SapperGoblinSapper,
-		SpellPowerBuff:  proto.SpellPowerBuff_GreaterArcaneElixir,
+		Alcohol:                    proto.Alcohol_AlcoholMedivhMerlotBlue,
+		BlastedLandsBuff:           proto.BlastedLandsBuff_CerebralCortexCompound,
+		DefaultConjured:            proto.Conjured_ConjuredDemonicRune,
+		DefaultPotion:              proto.Potions_QuicknessPotion,
+		DreamshardElixir:           true,
+		Dreamtonic:                 true,
+		ElixirOfGreaterArcanePower: true,
+		FirePowerBuff:              proto.FirePowerBuff_ElixirOfGreaterFirepower,
+		Flask:                      proto.Flask_FlaskOfSupremePower,
+		Food:                       proto.Food_FoodDanonzosTelAbimMedley,
+		FrostPowerBuff:             proto.FrostPowerBuff_ElixirOfGreaterFrostPower,
+		HealthElixir:               proto.HealthElixir_ElixirOfFortitude,
+		MagebloodPotion:            true,
+		MainHandImbue:              proto.WeaponImbue_BrilliantWizardOil,
+		MiscConsumes:               &proto.MiscConsumes{JujuFlurry: true},
+		NordanaarHerbalTea:         true,
+		SapperExplosive:            proto.SapperExplosive_SapperGoblinSapper,
+		SpellPowerBuff:             proto.SpellPowerBuff_GreaterArcaneElixir,
+		ZanzaBuff:                  proto.ZanzaBuff_SpiritOfZanza,
 	},
 }
 
@@ -74,10 +85,15 @@ var ItemFilters = core.ItemFilter{
 
 var Stats = []proto.Stat{
 	proto.Stat_StatIntellect,
+	proto.Stat_StatSpirit,
 	proto.Stat_StatSpellPower,
+	proto.Stat_StatSpellDamage,
 	proto.Stat_StatArcanePower,
 	proto.Stat_StatFirePower,
 	proto.Stat_StatFrostPower,
 	proto.Stat_StatSpellHit,
 	proto.Stat_StatSpellCrit,
+	proto.Stat_StatSpellHaste,
+	proto.Stat_StatMP5,
+	proto.Stat_StatFortune,
 }

@@ -1,4 +1,3 @@
-import { Encounter } from '../core/encounter';
 import * as PresetUtils from '../core/preset_utils';
 import {
 	Alcohol,
@@ -28,6 +27,8 @@ import {
 } from '../core/proto/common';
 import { Mage_Options as MageOptions, Mage_Options_ArmorType as ArmorType } from '../core/proto/mage';
 import { SavedTalents } from '../core/proto/ui';
+import { Player } from '../core/player.js';
+import { TypedEvent } from '../core/typed_event.js';
 import { Stats } from '../core/proto_utils/stats.js';
 import ArcaneSTAPL from './apls/arcane_st.apl.json';
 import ArcaneAoEAPL from './apls/arcane_aoe.apl.json';
@@ -39,6 +40,8 @@ import FireSTBiS from './gear_sets/fire_st_bis.gear.json';
 ///////////////////////////////////////////////////////////////////////////
 //                                 Gear Presets
 ///////////////////////////////////////////////////////////////////////////
+export const DefaultBossEncounter = 'Default/Raid Boss (1 Lvl 63 Demon)';
+export const DefaultTrashEncounter = 'Default/Trash (5 lvl 60 Undead)';
 
 export const GearArcaneSTBiS = PresetUtils.makePresetGear('Arcane ST BiS', ArcaneSTGearBiS);
 export const GearArcaneAoEBiS = PresetUtils.makePresetGear('Arcane AoE BiS', ArcaneAoEGearBiS);
@@ -126,7 +129,7 @@ export const EPFireST = PresetUtils.makePresetEpWeights('Fire ST', Stats.fromMap
 	{},
 ))
 
-export const DefaultEP = EPArcaneST
+export const DefaultEP = EPArcaneST;
 
 ///////////////////////////////////////////////////////////////////////////
 //                                Build Presets
@@ -137,21 +140,21 @@ export const PresetBuildArcaneST = PresetUtils.makePresetBuild('Arcane ST', {
 	talents: TalentsArcane,
 	rotation: ROTATION_PRESET_ARCANE_ST,
 	epWeights: EPArcaneST,
-	// encounter: "Default",
+	encounter: PresetUtils.makePresetEncounter('Default/Raid Boss (1 Lvl 63 Demon)'),
 });
 export const PresetBuildArcaneAoE = PresetUtils.makePresetBuild('Arcane AoE', {
 	gear: GearArcaneAoEBiS,
 	talents: TalentsArcane,
 	rotation: ROTATION_PRESET_ARCANE_AOE,
 	epWeights: EPArcaneAoE,
-	// encounter: "Trash",
+	encounter: PresetUtils.makePresetEncounter('Default/Trash (5 lvl 60 Undead)'),
 });
 export const PresetBuildFireST = PresetUtils.makePresetBuild('Fire ST', {
 	gear: GearFireSTBiS,
 	talents: TalentsFire,
 	rotation: ROTATION_PRESET_FIRE_ST,
 	epWeights: EPFireST,
-	// encounter: "Default",
+	encounter: PresetUtils.makePresetEncounter('Default/Raid Boss (1 Lvl 63 Demon)'),
 });
 
 export const BuildPresets = [PresetBuildArcaneST, PresetBuildArcaneAoE, PresetBuildFireST]

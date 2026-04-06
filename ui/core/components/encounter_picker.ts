@@ -132,11 +132,10 @@ export class EncounterPicker extends Component {
 
 			makeTargetInputsPicker(this.rootElem, modEncounter, 0);
 
-			const advancedModal = new AdvancedEncounterModal(simUI.rootElem, simUI, modEncounter);
 			const advancedButton = document.createElement('button');
 			advancedButton.classList.add('advanced-button', 'btn', 'btn-primary');
 			advancedButton.textContent = 'Advanced';
-			advancedButton.addEventListener('click', () => advancedModal.open());
+			advancedButton.addEventListener('click', () => new AdvancedEncounterModal(simUI.rootElem, simUI, modEncounter).open());
 			this.rootElem.appendChild(advancedButton);
 		});
 	}

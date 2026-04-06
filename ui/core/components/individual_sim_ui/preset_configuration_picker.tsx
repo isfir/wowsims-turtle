@@ -98,7 +98,14 @@ export class PresetConfigurationPicker extends Component {
 			}
 			if (epWeights) this.simUI.player.setEpWeights(eventID, epWeights.epWeights);
 			if (encounter) {
-				if (encounter.encounter) this.simUI.sim.encounter.fromProto(eventID, encounter.encounter);
+				if (encounter.encounter) {
+					this.simUI.sim.encounter.fromProto(eventID, encounter.encounter);
+				} else {
+					const presetEncounter = this.simUI.sim.db.getPresetEncounter(encounter.name);
+					if (presetEncounter) {
+						this.simUI.sim.encounter.applyPreset(eventID, presetEncounter);
+					}
+				}
 				if (encounter.healingModel) this.simUI.player.setHealingModel(eventID, encounter.healingModel);
 				if (encounter.tanks) this.simUI.sim.raid.setTanks(eventID, encounter.tanks);
 				if (encounter.buffs) this.simUI.player.setBuffs(eventID, encounter.buffs);
@@ -143,7 +150,12 @@ export class PresetConfigurationPicker extends Component {
 			}
 		}
 		const hasEpWeights = epWeights ? this.simUI.player.getEpWeights().equals(epWeights.epWeights) : true;
-		const hasEncounter = encounter?.encounter ? Encounter.equals(encounter.encounter, this.simUI.sim.encounter.toProto()) : true;
+		const presetEncounter = encounter ? this.simUI.sim.db.getPresetEncounter(encounter.name) : null;
+		const hasEncounter = encounter
+			? encounter.encounter
+				? Encounter.equals(encounter.encounter, this.simUI.sim.encounter.toProto())
+				: !!presetEncounter && this.simUI.sim.encounter.matchesPreset(presetEncounter)
+			: true;
 		const hasHealingModel = encounter?.healingModel ? HealingModel.equals(encounter.healingModel, this.simUI.player.getHealingModel()) : true;
 		const hasOptions = options ? this.containsAllFields(this.simUI.player.getSpecOptions(), options) : true;
 

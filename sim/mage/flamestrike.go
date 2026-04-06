@@ -42,7 +42,7 @@ func (mage *Mage) newFlamestrikeSpellConfig(rank int) core.SpellConfig {
 	manaCost := FlamestrikeManaCost[rank]
 	level := FlamestrikeLevel[rank]
 
-	castTime := time.Second * 3
+	castTime := time.Millisecond * 2500
 
 	return core.SpellConfig{
 		ActionID:    core.ActionID{SpellID: spellId},

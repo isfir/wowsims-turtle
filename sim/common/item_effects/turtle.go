@@ -34,19 +34,15 @@ func init() {
 	core.NewItemEffect(DropletOfNordrassil, func(agent core.Agent) {
 		character := agent.GetCharacter()
 
-		buffAura := character.RegisterAura(core.Aura{
-			ActionID: core.ActionID{SpellID: 58227},
-			Label:    "Nordrassil's Reprieve",
-			Duration: time.Second * 10,
-			OnGain: func(aura *core.Aura, sim *core.Simulation) {
-				character.AddStatDynamic(sim, stats.SpellDamage, 80)
-				character.AddStatDynamic(sim, stats.SpellHit, 3)
+		buffAura := character.NewTemporaryStatsAura(
+			"Nordrassil's Reprieve",
+			core.ActionID{SpellID: 58227},
+			stats.Stats{
+				stats.SpellDamage: 80,
+				stats.SpellHit:    3,
 			},
-			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-				character.AddStatDynamic(sim, stats.SpellDamage, -80)
-				character.AddStatDynamic(sim, stats.SpellHit, -3)
-			},
-		})
+			time.Second*10,
+		)
 
 		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:     "Nordrassil's Reprieve Passive",
@@ -85,8 +81,7 @@ func init() {
 			ActionID:    core.ActionID{SpellID: 51004},
 			SpellSchool: core.SpellSchoolFrost,
 			DefenseType: core.DefenseTypeMagic,
-			ProcMask:    core.ProcMaskEmpty,
-			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+			ProcMask:    core.ProcMaskSpellDamage,
 
 			DamageMultiplier: 1,
 			ThreatMultiplier: 1,
@@ -105,8 +100,7 @@ func init() {
 			ActionID:    core.ActionID{SpellID: 51006},
 			SpellSchool: core.SpellSchoolFire,
 			DefenseType: core.DefenseTypeMagic,
-			ProcMask:    core.ProcMaskEmpty,
-			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+			ProcMask:    core.ProcMaskSpellDamage,
 
 			DamageMultiplier: 1,
 			ThreatMultiplier: 1,
@@ -152,8 +146,7 @@ func init() {
 			ActionID:    core.ActionID{SpellID: 51008},
 			SpellSchool: core.SpellSchoolArcane,
 			DefenseType: core.DefenseTypeMagic,
-			ProcMask:    core.ProcMaskEmpty,
-			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+			ProcMask:    core.ProcMaskSpellDamage,
 
 			DamageMultiplier: 1,
 			ThreatMultiplier: 1,
@@ -184,8 +177,7 @@ func init() {
 			ActionID:    core.ActionID{SpellID: 51010},
 			SpellSchool: core.SpellSchoolHoly,
 			DefenseType: core.DefenseTypeMagic,
-			ProcMask:    core.ProcMaskEmpty,
-			Flags:       core.SpellFlagNoOnCastComplete | core.SpellFlagPassiveSpell,
+			ProcMask:    core.ProcMaskSpellDamage,
 
 			DamageMultiplier: 1,
 			ThreatMultiplier: 1,
@@ -282,6 +274,7 @@ func init() {
 			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 				spell.BonusCoefficient = 0.15
 				spell.CalcAndDealDamage(sim, target, 300, spell.OutcomeMagicHitAndCrit)
+
 				spell.BonusCoefficient = 0.05
 				for _, aoeTarget := range sim.Encounter.TargetUnits {
 					spell.CalcAndDealDamage(sim, aoeTarget, 100, spell.OutcomeMagicHitAndCrit)
@@ -359,7 +352,6 @@ func init() {
 
 			DamageMultiplier: 1,
 			ThreatMultiplier: 1,
-
 			BonusCoefficient: 0.15,
 
 			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
@@ -371,20 +363,15 @@ func init() {
 			ActionID: core.ActionID{SpellID: 57663},
 			Label:    "Elune's Wrath (Moonlight)",
 			Duration: time.Second * 10,
-
-			OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-				if !result.Landed() {
-					return
-				}
-				if !spell.ProcMask.Matches(core.ProcMaskSpellDamage) {
-					return
-				}
-				if spell.Flags.Matches(core.SpellFlagHelpful | core.SpellFlagPassiveSpell) {
-					return
-				}
-
+		})
+		core.ApplyProcTriggerCallback(&character.Unit, elunesMoonlightAura, core.ProcTrigger{
+			Callback:          core.CallbackOnSpellHitDealt,
+			Outcome:           core.OutcomeLanded,
+			ProcMask:          core.ProcMaskSpellDamage,
+			SpellFlagsExclude: core.SpellFlagHelpful | core.SpellFlagPassiveSpell,
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 				eluneInfusionICD.Use(sim)
-				aura.Deactivate(sim)
+				elunesMoonlightAura.Deactivate(sim)
 				eluneInfusion.Cast(sim, result.Target)
 			},
 		})
@@ -689,6 +676,7 @@ func init() {
 				},
 			})
 		})
+
 		applyElunesGrace := character.RegisterSpell(core.SpellConfig{
 			ActionID:    core.ActionID{SpellID: 52405},
 			SpellSchool: core.SpellSchoolNature,
@@ -770,18 +758,14 @@ func init() {
 			},
 		})
 
-		core.MakePermanent(character.GetOrRegisterAura(core.Aura{
-			Label: "Elune Infusion Passive",
-			OnSpellHitDealt: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
-				if !result.Landed() || !spell.ProcMask.Matches(core.ProcMaskSpellDamage) {
-					return
-				}
-				if result.LandedExecutionIndex != 1 {
-					return
-				}
-				if !sim.Proc(character.Unit.ApplyFortuneToProcChance(0.05), "Elune Infusion Passive") {
-					return
-				}
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
+			Name:                 "Elune Infusion Passive",
+			Callback:             core.CallbackOnSpellHitDealt,
+			Outcome:              core.OutcomeLanded,
+			ProcMask:             core.ProcMaskSpellDamage,
+			ProcChance:           0.05,
+			LandedExecutionIndex: 1,
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 				if !eluneInfusionICD.IsReady(sim) {
 					return
 				}
@@ -803,7 +787,7 @@ func init() {
 
 				eluneInfusion.Cast(sim, result.Target)
 			},
-		}))
+		})
 
 		useSpell := character.RegisterSpell(core.SpellConfig{
 			ActionID: core.ActionID{ItemID: TheScytheOfElune},
@@ -845,17 +829,13 @@ func init() {
 	// (Proc chance: 10%, ICD: 18s)
 	core.NewItemEffect(BindingsOfContainedMagic, func(agent core.Agent) {
 		character := agent.GetCharacter()
-		buffAura := character.RegisterAura(core.Aura{
-			ActionID: core.ActionID{SpellID: 51060},
-			Label:    "Uncontained Magic",
-			Duration: time.Second * 6,
-			OnGain: func(aura *core.Aura, sim *core.Simulation) {
-				character.AddStatDynamic(sim, stats.SpellDamage, 100)
-			},
-			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-				character.AddStatDynamic(sim, stats.SpellDamage, -100)
-			},
-		})
+
+		buffAura := character.NewTemporaryStatsAura(
+			"Uncontained Magic",
+			core.ActionID{SpellID: 51060},
+			stats.Stats{stats.SpellDamage: 100},
+			time.Second*6,
+		)
 
 		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
 			Name:       "Uncontained Magic Passive",
@@ -952,6 +932,7 @@ func init() {
 	// (Proc chance: 8%)
 	core.NewItemEffect(SpellpowerGogglesXtremePlusPlus, func(agent core.Agent) {
 		character := agent.GetCharacter()
+
 		buffAura := character.RegisterAura(core.Aura{
 			ActionID: core.ActionID{SpellID: 52907},
 			Label:    "Overpowered",

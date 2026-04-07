@@ -28,21 +28,23 @@ const (
 type ProcHandler func(sim *Simulation, spell *Spell, result *SpellResult)
 
 type ProcTrigger struct {
-	Name              string
-	ActionID          ActionID
-	ActionIDForProc   ActionID
-	Duration          time.Duration
-	Callback          AuraCallback
-	ProcMask          ProcMask
-	SpellFlagsExclude SpellFlag
-	SpellFlags        SpellFlag
-	Outcome           HitOutcome
-	Harmful           bool
-	ProcChance        float64
-	PPM               float64
-	ICD               time.Duration
-	AffectedByFortune bool
-	Handler           ProcHandler
+	Name                 string
+	ActionID             ActionID
+	ActionIDForProc      ActionID
+	Duration             time.Duration
+	Callback             AuraCallback
+	ProcMask             ProcMask
+	SpellFlagsExclude    SpellFlag
+	SpellFlags           SpellFlag
+	Outcome              HitOutcome
+	ExecutionIndex       int32
+	LandedExecutionIndex int32
+	Harmful              bool
+	ProcChance           float64
+	PPM                  float64
+	ICD                  time.Duration
+	AffectedByFortune    bool
+	Handler              ProcHandler
 }
 
 func ApplyProcTriggerCallback(unit *Unit, aura *Aura, config ProcTrigger) {
@@ -80,6 +82,12 @@ func ApplyProcTriggerCallback(unit *Unit, aura *Aura, config ProcTrigger) {
 			return
 		}
 		if config.Outcome != OutcomeEmpty && !result.Outcome.Matches(config.Outcome) {
+			return
+		}
+		if config.ExecutionIndex != 0 && result.ExecutionIndex != config.ExecutionIndex {
+			return
+		}
+		if config.LandedExecutionIndex != 0 && result.LandedExecutionIndex != config.LandedExecutionIndex {
 			return
 		}
 		if config.Harmful && result.Damage == 0 {

@@ -407,10 +407,10 @@ func init() {
 				Duration: time.Second * 10,
 
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexArcane] *= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexArcane] *= 1.08
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexArcane] /= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexArcane] /= 1.08
 				},
 			})
 		})
@@ -467,13 +467,13 @@ func init() {
 				Duration: time.Second * 10,
 
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFire] *= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexFire] *= 1.08
 					for _, school := range magicCritTakenSchools {
 						aura.Unit.PseudoStats.SchoolCritTakenChance[school] += 0.02
 					}
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFire] /= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexFire] /= 1.08
 					for _, school := range magicCritTakenSchools {
 						aura.Unit.PseudoStats.SchoolCritTakenChance[school] -= 0.02
 					}
@@ -540,10 +540,10 @@ func init() {
 				Duration: time.Second * 10,
 
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFrost] *= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexFrost] *= 1.08
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexFrost] /= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexFrost] /= 1.08
 				},
 				OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 					if !result.Landed() {
@@ -607,11 +607,11 @@ func init() {
 				Duration: time.Second * 10,
 
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexHoly] *= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexHoly] *= 1.08
 					aura.Unit.AddStatsDynamic(sim, elunesRadianceHitPenalty)
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexHoly] /= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexHoly] /= 1.08
 					aura.Unit.AddStatsDynamic(sim, elunesRadianceHitPenalty.Invert())
 				},
 				OnSpellHitTaken: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
@@ -669,11 +669,11 @@ func init() {
 				Duration: time.Second * 10,
 
 				OnGain: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexNature] *= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexNature] *= 1.08
 					aura.Unit.PseudoStats.DamageDealtMultiplier *= 0.92
 				},
 				OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-					aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexNature] /= 1.08
+					aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexNature] /= 1.08
 					aura.Unit.PseudoStats.DamageDealtMultiplier /= 0.92
 				},
 				OnCastComplete: func(aura *core.Aura, sim *core.Simulation, spell *core.Spell) {
@@ -722,11 +722,11 @@ func init() {
 					Label:    "Elune's Twilight",
 
 					OnGain: func(aura *core.Aura, sim *core.Simulation) {
-						aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexShadow] *= 1.08
+						aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexShadow] *= 1.08
 						aura.Unit.PseudoStats.HealingTakenMultiplier *= 0.75
 					},
 					OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-						aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexShadow] /= 1.08
+						aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexShadow] /= 1.08
 						aura.Unit.PseudoStats.HealingTakenMultiplier /= 0.75
 					},
 				},

@@ -216,10 +216,10 @@ func (pureborn *ScytheclawPureborn) registerCrookedClawSpell() {
 			Duration: time.Second * 5,
 
 			OnGain: func(aura *core.Aura, sim *core.Simulation) {
-				aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexPhysical] *= 1.03
+				aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexPhysical] *= 1.03
 			},
 			OnExpire: func(aura *core.Aura, sim *core.Simulation) {
-				aura.Unit.PseudoStats.SchoolBonusDamageTaken[stats.SchoolIndexPhysical] /= 1.03
+				aura.Unit.PseudoStats.SchoolDamageTakenMultiplier[stats.SchoolIndexPhysical] /= 1.03
 			},
 		})
 	})

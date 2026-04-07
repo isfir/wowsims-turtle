@@ -10,6 +10,7 @@ import (
 
 const (
 	SpellpowerGogglesXtremePlusPlus = 33095
+	RingOfBurningTalons             = 33154
 	DropletOfNordrassil             = 33294
 	SpellwovenNobilityDrape         = 55056
 	JewelOfWildMagics               = 55087
@@ -865,6 +866,82 @@ func init() {
 			ICD:        time.Second * 18,
 			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 				buffAura.Activate(sim)
+			},
+		})
+	})
+
+	// https://database.turtlecraft.gg/?item=33154
+	// Your harmful spells have a 10% chance to Conflagrate the target, dealing 100 Fire damage every second for 5 sec.
+	// While affected, the target periodically scorches nearby enemies for 40 Fire damage.
+	core.NewItemEffect(RingOfBurningTalons, func(agent core.Agent) {
+		character := agent.GetCharacter()
+
+		splashSpell := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52984},
+			SpellSchool: core.SpellSchoolFire,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagPassiveSpell | core.SpellFlagNoOnCastComplete,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+			BonusCoefficient: 0.02,
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				for _, aoeTarget := range sim.Encounter.TargetUnits {
+					if aoeTarget == target {
+						continue
+					}
+
+					spell.CalcAndDealDamage(sim, aoeTarget, 40, spell.OutcomeMagicHit)
+				}
+			},
+		})
+
+		conflagrationSpell := character.RegisterSpell(core.SpellConfig{
+			ActionID:    core.ActionID{SpellID: 52983},
+			SpellSchool: core.SpellSchoolFire,
+			DefenseType: core.DefenseTypeMagic,
+			ProcMask:    core.ProcMaskEmpty,
+			Flags:       core.SpellFlagPureDot | core.SpellFlagPassiveSpell,
+
+			DamageMultiplier: 1,
+			ThreatMultiplier: 1,
+
+			Dot: core.DotConfig{
+				Aura: core.Aura{
+					ActionID: core.ActionID{SpellID: 52983},
+					Label:    "Conflagration",
+				},
+				NumberOfTicks:    5,
+				TickLength:       time.Second,
+				BonusCoefficient: 0.04,
+				OnSnapshot: func(sim *core.Simulation, target *core.Unit, dot *core.Dot, isRollover bool) {
+					dot.Snapshot(target, 80, isRollover)
+				},
+				OnTick: func(sim *core.Simulation, target *core.Unit, dot *core.Dot) {
+					splashSpell.Cast(sim, target)
+					dot.CalcAndDealPeriodicSnapshotDamage(sim, target, dot.OutcomeTick)
+				},
+			},
+
+			ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
+				result := spell.CalcOutcome(sim, target, spell.OutcomeMagicHit)
+				if result.Landed() {
+					spell.Dot(target).Apply(sim)
+				}
+			},
+		})
+
+		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
+			Name:                 "Conflagration Passive",
+			Callback:             core.CallbackOnSpellHitDealt,
+			Outcome:              core.OutcomeLanded,
+			ProcMask:             core.ProcMaskSpellDamage,
+			ProcChance:           0.10,
+			LandedExecutionIndex: 1,
+			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
+				conflagrationSpell.Cast(sim, result.Target)
 			},
 		})
 	})

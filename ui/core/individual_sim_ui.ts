@@ -259,6 +259,8 @@ export abstract class IndividualSimUI<SpecType extends Spec> extends SimUI {
 			});
 		}
 
+		this.addSidebarSummary();
+
 		this.addSidebarComponents();
 		this.addGearTab();
 		this.bt = this.addBulkTab();
@@ -271,6 +273,103 @@ export abstract class IndividualSimUI<SpecType extends Spec> extends SimUI {
 		}
 
 		this.addTopbarComponents();
+	}
+
+	private addSidebarSummary() {
+		const summaryElem = document.createElement('div');
+		summaryElem.classList.add('sim-sidebar-summary', 'within-raid-sim-hide');
+
+		const encounterValue = document.createElement('div');
+		encounterValue.classList.add('sim-sidebar-summary-value');
+
+		const talentsValue = document.createElement('div');
+		talentsValue.classList.add('sim-sidebar-summary-value', 'sim-sidebar-summary-talents');
+
+		const talentIcon = document.createElement('img');
+		talentIcon.classList.add('sim-sidebar-summary-talent-icon');
+		talentIcon.alt = '';
+
+		const talentText = document.createElement('span');
+		talentText.classList.add('sim-sidebar-summary-talent-text');
+		talentsValue.appendChild(talentIcon);
+		talentsValue.appendChild(talentText);
+
+		const rotationValue = document.createElement('div');
+		rotationValue.classList.add('sim-sidebar-summary-value');
+
+		const rows = [
+			{ label: 'Encounter', valueElem: encounterValue },
+			{ label: 'Talents', valueElem: talentsValue },
+			{ label: 'Rotation', valueElem: rotationValue },
+		];
+
+		rows.forEach(({ label, valueElem }) => {
+			const row = document.createElement('div');
+			row.classList.add('sim-sidebar-summary-row');
+
+			const labelElem = document.createElement('div');
+			labelElem.classList.add('sim-sidebar-summary-label');
+			labelElem.textContent = label;
+
+			row.appendChild(labelElem);
+			row.appendChild(valueElem);
+			summaryElem.appendChild(row);
+		});
+
+		const divider = document.createElement('hr');
+		divider.classList.add('sim-sidebar-summary-divider');
+		summaryElem.appendChild(divider);
+
+		this.simActionsContainer.insertBefore(summaryElem, this.iterationsPicker);
+
+		const updateSummary = () => {
+			encounterValue.textContent = this.getEncounterSummaryName();
+			talentIcon.src = this.player.getTalentTreeIcon();
+			talentText.textContent = this.player.getTalentTreePoints().join('/');
+			rotationValue.textContent = this.getRotationSummaryName();
+		};
+
+		this.sim.waitForInit().then(updateSummary);
+		TypedEvent.onAny([this.sim.encounter.changeEmitter, this.player.talentsChangeEmitter, this.player.rotationChangeEmitter]).on(updateSummary);
+	}
+
+	private getEncounterSummaryName(): string {
+		const matchedPreset = this.sim.db.getAllPresetEncounters().find(preset => this.sim.encounter.matchesPreset(preset));
+		return matchedPreset?.path || 'Custom';
+	}
+
+	private getRotationSummaryName(): string {
+		const matchedPreset = this.individualConfig.presets.rotations.find(rotation => {
+			if (rotation.enableWhen && !rotation.enableWhen(this.player)) {
+				return false;
+			}
+
+			const activeRotation = this.player.getResolvedAplRotation();
+			if (activeRotation.type === APLRotationType.TypeAuto) activeRotation.type = APLRotationType.TypeAPL;
+
+			if (rotation.rotation?.rotation?.type === APLRotationType.TypeSimple && rotation.rotation.rotation?.simple?.specRotationJson) {
+				return this.player.specTypeFunctions.rotationEquals(
+					this.player.specTypeFunctions.rotationFromJson(JSON.parse(rotation.rotation.rotation.simple.specRotationJson)),
+					this.player.getSimpleRotation(),
+				);
+			}
+
+			return APLRotation.equals(rotation.rotation.rotation, activeRotation);
+		});
+
+		if (matchedPreset) {
+			return matchedPreset.name;
+		}
+
+		switch (this.player.getRotationType()) {
+			case APLRotationType.TypeAuto:
+				return 'Custom Auto';
+			case APLRotationType.TypeSimple:
+				return 'Custom Simple';
+			case APLRotationType.TypeAPL:
+			default:
+				return 'Custom APL';
+		}
 	}
 
 	private loadSettings() {

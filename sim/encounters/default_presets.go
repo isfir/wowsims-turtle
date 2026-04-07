@@ -32,7 +32,7 @@ func addDefaultRaidBoss() {
 			TargetInputs:     make([]*proto.TargetInput, 0),
 		},
 	})
-	core.AddPresetEncounter("Raid Boss", []string{
+	core.AddPresetEncounter("Raid Boss (1 Lvl 63 Demon)", []string{
 		"Default/Raid Boss",
 	})
 }
@@ -63,7 +63,7 @@ func addDefaultTrash() {
 			TargetInputs:     make([]*proto.TargetInput, 0),
 		},
 	})
-	core.AddPresetEncounter("Trash", []string{
+	core.AddPresetEncounter("Trash (5 lvl 60 Undead)", []string{
 		"Default/Trash",
 		"Default/Trash",
 		"Default/Trash",

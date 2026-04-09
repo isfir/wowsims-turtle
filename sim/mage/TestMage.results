@@ -46,6 +46,7 @@ character_stats_results: {
   final_stats: 302
   final_stats: 0
   final_stats: 0
+  final_stats: 0
  }
 }
 stat_weights_results: {
@@ -96,6 +97,7 @@ stat_weights_results: {
   weights: 0.91586
   weights: 0
   weights: 2.19192
+  weights: 0
  }
 }
 dps_results: {

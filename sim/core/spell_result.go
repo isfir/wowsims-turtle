@@ -474,6 +474,10 @@ func (spell *Spell) dealDamageInternal(sim *Simulation, isPeriodic bool, result 
 		}
 	}
 
+	if result.Damage > 0 {
+		spell.Unit.applyVampirism(sim, result.Damage, result.Target)
+	}
+
 	if !spell.Flags.Matches(SpellFlagNoOnDamageDealt) {
 		if isPeriodic {
 			spell.Unit.OnPeriodicDamageDealt(sim, spell, result)

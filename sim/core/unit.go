@@ -115,6 +115,7 @@ type Unit struct {
 	// All spells that can be cast by this unit.
 	Spellbook                 []*Spell
 	spellRegistrationHandlers []SpellRegisteredHandler
+	vampirismSpell            *Spell
 
 	// Pets owned by this Unit.
 	PetAgents []PetAgent
@@ -519,6 +520,8 @@ func (unit *Unit) finalize() {
 	unit.stats = unit.initialStats
 
 	unit.AutoAttacks.finalize()
+
+	unit.registerVampirismSpell()
 
 	for _, spell := range unit.Spellbook {
 		spell.finalize()

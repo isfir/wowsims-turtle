@@ -499,6 +499,8 @@ export class CharacterStats extends Component {
 				displayStr = `${rawValue}%`;
 			} else if (stat === Stat.StatFortune) {
 				displayStr = `${rawValue}%`;
+			} else if (stat === Stat.StatVampirism) {
+				displayStr = `${rawValue}%`;
 			}
 		} else {
 			const pseudoStat = unitStat.getPseudoStat();

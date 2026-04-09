@@ -63,6 +63,7 @@ const (
 	SpellDamage
 	FeralAttackPower
 	Fortune
+	Vampirism
 
 	// DO NOT add new stats here without discussing it first; new stats come with
 	// a performance penalty.
@@ -272,6 +273,8 @@ func (s Stat) StatName() string {
 		return "FeralAttackPower"
 	case Fortune:
 		return "Fortune"
+	case Vampirism:
+		return "Vampirism"
 	}
 
 	return "none"

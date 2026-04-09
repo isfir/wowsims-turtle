@@ -144,7 +144,7 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 2566, SpellId: 23802, Name: "Enchant Bracer - Healing Power", Quality: proto.ItemQuality_ItemQualityCommon, Stats: stats.Stats{stats.HealingPower: 24}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
 	{EffectId: 1886, SpellId: 20011, Name: "Enchant Bracer - Superior Stamina", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
 	{EffectId: 432, SpellId: 57028, Name: "Enchant Bracer - Spell Power", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.SpellDamage: 12}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
-	{EffectId: 3011, SpellId: 57146, Name: "Enchant Bracer - Vampirism", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
+	{EffectId: 3011, SpellId: 57146, Name: "Enchant Bracer - Vampirism", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Vampirism: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeWrist},
 
 	// Hands
 	{EffectId: 846, SpellId: 13620, Name: "Enchant Gloves - Fishing", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeHands},
@@ -181,7 +181,7 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 929, SpellId: 20020, Name: "Enchant Boots - Greater Stamina", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 7}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
 	{EffectId: 851, SpellId: 20024, Name: "Enchant Boots - Spirit", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Spirit: 5}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
 	{EffectId: 1887, SpellId: 20023, Name: "Enchant Boots - Greater Agility", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Agility: 7}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
-	{EffectId: 3011, SpellId: 57148, Name: "Enchant Boots - Vampirism", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
+	{EffectId: 3011, SpellId: 57148, Name: "Enchant Boots - Vampirism", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Vampirism: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeFeet},
 
 	// Waist
 	{EffectId: 71, ItemId: 61779, SpellId: 57164, Name: "Copper Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Stamina: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
@@ -211,6 +211,7 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 2158, ItemId: 56004, SpellId: 51028, Name: "Radiant Ember", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FirePower: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
 	{EffectId: 2236, ItemId: 56057, SpellId: 51033, Name: "Glittering Sapphire Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FrostPower: 9}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
 	{EffectId: 3008, ItemId: 56074, SpellId: 51046, Name: "Graceful Agate Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.SpellPenetration: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
+	{EffectId: 3011, ItemId: 56006, SpellId: 51032, Name: "Glowing Ruby Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Vampirism: 1}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},
 
 	// Weapon
 	{EffectId: 36, SpellId: 6296, Name: "Fiery Blaze Enchantment", Quality: proto.ItemQuality_ItemQualityCommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWeapon},

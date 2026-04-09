@@ -46,6 +46,7 @@ character_stats_results: {
   final_stats: 185
   final_stats: 0
   final_stats: 0
+  final_stats: 0
  }
 }
 character_stats_results: {
@@ -94,6 +95,7 @@ character_stats_results: {
   final_stats: 384
   final_stats: 0
   final_stats: 185
+  final_stats: 0
   final_stats: 0
   final_stats: 0
  }
@@ -146,6 +148,7 @@ character_stats_results: {
   final_stats: 185
   final_stats: 0
   final_stats: 0
+  final_stats: 0
  }
 }
 character_stats_results: {
@@ -196,6 +199,7 @@ character_stats_results: {
   final_stats: 185
   final_stats: 0
   final_stats: 0
+  final_stats: 0
  }
 }
 stat_weights_results: {
@@ -221,6 +225,7 @@ stat_weights_results: {
   weights: 0.1562
   weights: 0
   weights: 5.07007
+  weights: 0
   weights: 0
   weights: 0
   weights: 0
@@ -296,6 +301,7 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0
+  weights: 0
  }
 }
 stat_weights_results: {
@@ -346,6 +352,7 @@ stat_weights_results: {
   weights: 0
   weights: 0
   weights: 0
+  weights: 0
  }
 }
 stat_weights_results: {
@@ -371,6 +378,7 @@ stat_weights_results: {
   weights: 0.16113
   weights: 6.76499
   weights: 6.23844
+  weights: 0
   weights: 0
   weights: 0
   weights: 0

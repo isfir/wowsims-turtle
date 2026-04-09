@@ -191,6 +191,7 @@ export const statOrder: Array<Stat> = [
 	Stat.StatParry,
 	Stat.StatFortune,
 	Stat.StatResilience,
+	Stat.StatVampirism,
 	Stat.StatArcaneResistance,
 	Stat.StatFireResistance,
 	Stat.StatFrostResistance,
@@ -262,6 +263,7 @@ export const statNames: Map<Stat, string> = new Map([
 	[Stat.StatShadowResistance, 'Shadow Resistance'],
 	[Stat.StatBonusArmor, 'Bonus Armor'],
 	[Stat.StatFortune, 'Fortune'],
+	[Stat.StatVampirism, 'Vampirism'],
 ]);
 
 export const pseudoStatOrder: Array<PseudoStat> = [

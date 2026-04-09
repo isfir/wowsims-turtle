@@ -357,6 +357,8 @@ function formatEffectStatLine(stat: Stat, value: number): string | null {
 			return `Equip: Increases your chance to trigger effects from equipped items by ${formatNumber(value)}%.`;
 		case Stat.StatResilience:
 			return `Equip: Reduces damage taken from critical hits and damage over time effects by ${formatNumber(value)}%.`;
+		case Stat.StatVampirism:
+			return `Equip: ${formatNumber(value)}% of damage dealt is returned as healing.`;
 
 		case Stat.StatEnergy:
 			return `Equip: Increases your maximum Energy by ${formatWholeNumber(value)}.`;

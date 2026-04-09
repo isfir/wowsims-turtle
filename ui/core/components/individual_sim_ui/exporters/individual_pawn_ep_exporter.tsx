@@ -94,6 +94,7 @@ export class IndividualPawnEPExporter<SpecType extends Spec> extends IndividualE
 		[Stat.StatHealingPower]: 'Healing',
 		[Stat.StatFeralAttackPower]: 'FeralAttackPower',
 		[Stat.StatFortune]: 'Fortune',
+		[Stat.StatVampirism]: 'Vampirism',
 	};
 	static pseudoStatNames: Partial<Record<PseudoStat, string>> = {
 		[PseudoStat.PseudoStatMainHandDps]: 'MeleeDps',

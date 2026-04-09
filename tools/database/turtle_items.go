@@ -31,7 +31,7 @@ type SpellAnalysis struct {
 }
 
 const (
-	statsLen       = int(proto.Stat_StatFortune) + 1
+	statsLen       = int(proto.Stat_StatVampirism) + 1
 	weaponSkillLen = int(proto.WeaponSkill_WeaponSkillFeralCombat) + 1
 )
 
@@ -513,6 +513,22 @@ func parseItemEffects(row []string, colIdx map[string]int, spellEffects map[int3
 	return effects
 }
 
+func specialCaseSpellAnalysis(spellID int32) (SpellAnalysis, bool) {
+	switch spellID {
+	case 45420, 45421, 45422, 45423, 45424:
+		return SpellAnalysis{
+			Effects: []SpellEffect{
+				{
+					Stat:  proto.Stat_StatVampirism,
+					Value: float64(spellID - 45419),
+				},
+			},
+		}, true
+	default:
+		return SpellAnalysis{}, false
+	}
+}
+
 func hasWeaponDamage(row []string, colIdx map[string]int) bool {
 	minDmgStr := getString(row, colIdx, "damage1Min")
 	return minDmgStr != "" && minDmgStr != "0.0"
@@ -822,6 +838,11 @@ func parseSpellEffectsCSV(csvData string) map[int32]SpellAnalysis {
 
 		spellID, err := strconv.Atoi(row[colIdx["id"]])
 		if err != nil {
+			continue
+		}
+
+		if analysis, ok := specialCaseSpellAnalysis(int32(spellID)); ok {
+			analyses[int32(spellID)] = analysis
 			continue
 		}
 

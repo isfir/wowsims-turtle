@@ -7,7 +7,7 @@ import {
 	Stat,
 	WeaponSkill,
 } from '../proto/common';
-import { UISpell, UIItem } from '../proto/ui';
+import { UIItem,UISpell } from '../proto/ui';
 import { Database } from '../proto_utils/database';
 import { getEnchantDescription } from '../proto_utils/enchants';
 import {
@@ -339,7 +339,7 @@ function formatEffectStatLine(stat: Stat, value: number): string | null {
 		case Stat.StatMeleeCrit:
 			return `Equip: Improves your chance to get a critical strike by ${formatNumber(value)}%.`;
 		case Stat.StatArmorPenetration:
-			return `Equip: Your attacks ignore ${formatWholeNumber(value)} of your opponent's armor.`;
+			return `Equip: Your attacks ignore ${formatWholeNumber(value)} of your target's armor.`;
 		case Stat.StatExpertise:
 			return `Equip: Increases your expertise by ${formatNumber(value)}.`;
 
@@ -356,7 +356,7 @@ function formatEffectStatLine(stat: Stat, value: number): string | null {
 		case Stat.StatFortune:
 			return `Equip: Increases your chance to trigger effects from equipped items by ${formatNumber(value)}%.`;
 		case Stat.StatResilience:
-			return `Equip: Improves your resilience rating by ${formatNumber(value)}.`;
+			return `Equip: Reduces damage taken from critical hits and damage over time effects by ${formatNumber(value)}%.`;
 
 		case Stat.StatEnergy:
 			return `Equip: Increases your maximum Energy by ${formatWholeNumber(value)}.`;

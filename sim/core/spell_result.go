@@ -304,6 +304,7 @@ func (spell *Spell) calcDamageInternal(sim *Simulation, target *Unit, baseDamage
 			result.Outcome |= partialOutcome
 		}
 
+		result.applyTargetCritDamageTakenModifiers()
 		spell.ApplyPostOutcomeDamageModifiers(sim, result)
 	} else {
 		afterAttackMods := result.Damage
@@ -327,6 +328,8 @@ func (spell *Spell) calcDamageInternal(sim *Simulation, target *Unit, baseDamage
 		}
 
 		afterOutcome := result.Damage
+		result.applyTargetCritDamageTakenModifiers()
+		afterCritTakenMods := result.Damage
 		spell.ApplyPostOutcomeDamageModifiers(sim, result)
 		afterPostOutcome := result.Damage
 
@@ -334,7 +337,7 @@ func (spell *Spell) calcDamageInternal(sim *Simulation, target *Unit, baseDamage
 
 		spell.Unit.Log(
 			sim,
-			"%s %s [DEBUG] MAP+Bonus: %0.01f, RAP+Bonus: %0.01f, SP+Bonus: %0.01f, BaseDamage:%0.01f, AfterAttackerMods:%0.01f, AfterResistances:%0.01f, AfterTargetMods:%0.01f, AfterOutcome:%0.01f, AfterPostOutcome:%0.01f",
+			"%s %s [DEBUG] MAP+Bonus: %0.01f, RAP+Bonus: %0.01f, SP+Bonus: %0.01f, BaseDamage:%0.01f, AfterAttackerMods:%0.01f, AfterResistances:%0.01f, AfterTargetMods:%0.01f, AfterOutcome:%0.01f, AfterCritTakenMods:%0.01f, AfterPostOutcome:%0.01f",
 			target.LogLabel(),
 			spell.ActionID,
 			spell.Unit.GetStat(stats.AttackPower)+TernaryFloat64(spell.SchoolIndex == stats.SchoolIndexPhysical, bonusDamage, 0),
@@ -345,6 +348,7 @@ func (spell *Spell) calcDamageInternal(sim *Simulation, target *Unit, baseDamage
 			afterResistances,
 			afterTargetMods,
 			afterOutcome,
+			afterCritTakenMods,
 			afterPostOutcome,
 		)
 	}
@@ -686,6 +690,13 @@ func (spell *Spell) TargetDamageMultiplier(attackTable *AttackTable, isPeriodic 
 		attackTable.Defender.GetSchoolDamageTakenMultiplier(spell) *
 		attackTable.DamageTakenMultiplier
 
+	if isPeriodic {
+		resilience := max(0.0, attackTable.Defender.GetStat(stats.Resilience))
+		if resilience > 0 {
+			multiplier *= max(0.0, 1.0-(resilience/100.0))
+		}
+	}
+
 	if spell.Flags.Matches(SpellFlagPoison) {
 		multiplier *= attackTable.Defender.PseudoStats.PoisonDamageTakenMultiplier
 	}
@@ -718,4 +729,17 @@ func (spell *Spell) applyTargetHealingModifiers(damage float64, attackTable *Att
 	return damage *
 		attackTable.Defender.PseudoStats.HealingTakenMultiplier *
 		attackTable.HealingDealtMultiplier
+}
+
+func (result *SpellResult) applyTargetCritDamageTakenModifiers() {
+	if !result.DidCrit() {
+		return
+	}
+
+	resilience := max(0.0, result.Target.GetStat(stats.Resilience))
+	if resilience == 0 {
+		return
+	}
+
+	result.Damage *= max(0.0, 1.0-(resilience/100.0))
 }

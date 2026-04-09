@@ -189,7 +189,7 @@ var EnchantOverrides = []*proto.UIEnchant{
 	{EffectId: 28, ItemId: 61783, SpellId: 57176, Name: "Thorium Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
 	{EffectId: 2160, ItemId: 67, SpellId: 41, Name: "Dragonscale Belt Buckle", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.FirePower: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
 	{EffectId: 3052, ItemId: 61785, SpellId: 57182, Name: "Dreamsteel Belt Buckle", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.Intellect: 10}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
-	{EffectId: 3054, ItemId: 61810, SpellId: 57186, Name: "Bloody Belt Buckle", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
+	{EffectId: 3054, ItemId: 61810, SpellId: 57186, Name: "Bloody Belt Buckle", Quality: proto.ItemQuality_ItemQualityRare, Stats: stats.Stats{stats.Resilience: 3}.ToFloatArray(), Type: proto.ItemType_ItemTypeWaist},
 
 	// Neck
 	{EffectId: 92, ItemId: 56008, SpellId: 51035, Name: "Brilliant Opal Gemstone", Quality: proto.ItemQuality_ItemQualityUncommon, Stats: stats.Stats{stats.Agility: 6}.ToFloatArray(), Type: proto.ItemType_ItemTypeNeck, ExtraTypes: []proto.ItemType{proto.ItemType_ItemTypeFinger}},

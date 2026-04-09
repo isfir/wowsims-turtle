@@ -74,41 +74,43 @@ const (
 
 // Aura types (only ones we care about)
 const (
-	auraModDamageDone              = 13
-	auraModStat                    = 29
-	auraModResistance              = 22
-	auraModBaseResistance          = 83
-	auraModSpellHitChance          = 55
-	auraModSpellCritChance         = 57
-	auraModSpellCritChanceSchool   = 71
-	auraModMeleeHaste              = 138
-	auraModRangedHaste             = 140
-	auraModCastingSpeedNotStack    = 65
-	auraModAttackPower             = 99
-	auraModRangedAttackPower       = 124
-	auraModRangedAttackPowerVersus = 131
-	auraModIncreaseHealth          = 34
-	auraModIncreaseEnergy          = 35
-	auraModPowerRegen              = 85
-	auraModManaRegenInterrupt      = 134
-	auraModCritPercent             = 52
-	auraModHitChance               = 54
-	auraModHealingDone             = 135
-	auraModHealing                 = 115
-	auraModSkill                   = 30
-	auraModSkillTalent             = 98
-	auraModParrySkill              = 46
-	auraModDodgeSkill              = 48
-	auraModBlockSkill              = 50
-	auraModParryPercent            = 47
-	auraModDodgePercent            = 49
-	auraModBlockPercent            = 51
-	auraModShieldBlockValue        = 158
-	auraModAttackerSpellHitChance  = 186
-	auraModAttackerMeleeHitChance  = 184
-	auraModAttackerRangedHitChance = 185
-	auraModTargetResistance        = 123
-	auraModFortune                 = 223
+	auraModDamageDone                 = 13
+	auraModStat                       = 29
+	auraModResistance                 = 22
+	auraModBaseResistance             = 83
+	auraModSpellHitChance             = 55
+	auraModSpellCritChance            = 57
+	auraModSpellCritChanceSchool      = 71
+	auraModMeleeHaste                 = 138
+	auraModRangedHaste                = 140
+	auraModCastingSpeedNotStack       = 65
+	auraModAttackPower                = 99
+	auraModRangedAttackPower          = 124
+	auraModRangedAttackPowerVersus    = 131
+	auraModIncreaseHealth             = 34
+	auraModIncreaseEnergy             = 35
+	auraModPowerRegen                 = 85
+	auraModManaRegenInterrupt         = 134
+	auraModCritPercent                = 52
+	auraModHitChance                  = 54
+	auraModHealingDone                = 135
+	auraModHealing                    = 115
+	auraModSkill                      = 30
+	auraModSkillTalent                = 98
+	auraModParrySkill                 = 46
+	auraModDodgeSkill                 = 48
+	auraModBlockSkill                 = 50
+	auraModParryPercent               = 47
+	auraModDodgePercent               = 49
+	auraModBlockPercent               = 51
+	auraModShieldBlockValue           = 158
+	auraModAttackerSpellHitChance     = 186
+	auraModAttackerMeleeHitChance     = 184
+	auraModAttackerRangedHitChance    = 185
+	auraModTargetResistance           = 123
+	auraModFortune                    = 223
+	auraModPeriodicDamagePercentTaken = 197
+	auraModCritDamageTaken            = 198
 )
 
 const (
@@ -116,6 +118,13 @@ const (
 	powerTypeRage   = 1
 	powerTypeFocus  = 2
 	powerTypeEnergy = 3
+)
+
+const (
+	spellSchoolMaskNormal = 1
+	spellSchoolMaskSpell  = 124
+	spellSchoolMaskMagic  = 126
+	spellSchoolMaskAll    = 127
 )
 
 var classMaskMap = []struct {
@@ -450,22 +459,17 @@ func parseItemSpellEffects(row []string, colIdx map[string]int, spellEffects map
 		}
 
 		for _, effect := range analysis.Effects {
-			if effect.Stat != proto.Stat(-1) {
+			switch {
+			case effect.WeaponSkill != proto.WeaponSkill_WeaponSkillUnknown:
+				weaponSkills[effect.WeaponSkill] += effect.Value
+
+			case effect.BonusPhysicalDamage != 0:
+				bonusPhysicalDamage += effect.BonusPhysicalDamage
+
+			case effect.Stat != proto.Stat(-1):
 				bonuses[effect.Stat] += effect.Value
 			}
-			if effect.WeaponSkill != proto.WeaponSkill_WeaponSkillUnknown {
-				weaponSkills[effect.WeaponSkill] += effect.Value
-			}
-			if effect.BonusPhysicalDamage != 0 {
-				bonusPhysicalDamage += effect.BonusPhysicalDamage
-			}
 		}
-	}
-
-	if bonuses[proto.Stat_StatSpellDamage] > 0 && bonuses[proto.Stat_StatSpellDamage] == bonuses[proto.Stat_StatHealingPower] {
-		bonuses[proto.Stat_StatSpellPower] += bonuses[proto.Stat_StatSpellDamage]
-		bonuses[proto.Stat_StatSpellDamage] = 0
-		bonuses[proto.Stat_StatHealingPower] = 0
 	}
 
 	return bonuses, weaponSkills, bonusPhysicalDamage
@@ -562,6 +566,31 @@ func factionRestrictionFromRaceMask(mask uint32) proto.UIItem_FactionRestriction
 		return proto.UIItem_FACTION_RESTRICTION_HORDE_ONLY
 	default:
 		return proto.UIItem_FACTION_RESTRICTION_UNSPECIFIED
+	}
+}
+
+func targetResistanceMaskToEffects(mask int32, value float64) ([]SpellEffect, bool) {
+	value = math.Abs(value)
+
+	switch mask {
+	case spellSchoolMaskNormal:
+		return []SpellEffect{
+			{Stat: proto.Stat_StatArmorPenetration, Value: value},
+		}, true
+
+	case spellSchoolMaskSpell, spellSchoolMaskMagic:
+		return []SpellEffect{
+			{Stat: proto.Stat_StatSpellPenetration, Value: value},
+		}, true
+
+	case spellSchoolMaskAll:
+		return []SpellEffect{
+			{Stat: proto.Stat_StatArmorPenetration, Value: value},
+			{Stat: proto.Stat_StatSpellPenetration, Value: value},
+		}, true
+
+	default:
+		return nil, false
 	}
 }
 
@@ -797,6 +826,8 @@ func parseSpellEffectsCSV(csvData string) map[int32]SpellAnalysis {
 		}
 
 		analysis := SpellAnalysis{}
+		var resilienceDotValue float64
+		var resilienceCritValue float64
 
 		for i := 1; i <= 3; i++ {
 			effectCol := fmt.Sprintf("effect_%d", i)
@@ -840,6 +871,16 @@ func parseSpellEffectsCSV(csvData string) map[int32]SpellAnalysis {
 			if value == 0 {
 				continue
 			}
+			switch int32(aura) {
+			case auraModPeriodicDamagePercentTaken:
+				if int32(miscValue) == 127 {
+					resilienceDotValue += math.Abs(value)
+					continue
+				}
+			case auraModCritDamageTaken:
+				resilienceCritValue += math.Abs(value)
+				continue
+			}
 
 			converted, handled := auraTypeToEffects(int32(aura), int32(miscValue), value)
 			if !handled {
@@ -849,12 +890,84 @@ func parseSpellEffectsCSV(csvData string) map[int32]SpellAnalysis {
 			analysis.Effects = append(analysis.Effects, converted...)
 		}
 
+		normalizeSpellAnalysis(&analysis, resilienceDotValue, resilienceCritValue)
+
 		if len(analysis.Effects) > 0 || analysis.HasUnhandledEffect {
 			analyses[int32(spellID)] = analysis
 		}
 	}
 
 	return analyses
+}
+
+func normalizeSpellAnalysis(
+	analysis *SpellAnalysis,
+	resilienceDotValue float64,
+	resilienceCritValue float64,
+) {
+	statTotals := make([]float64, statsLen)
+	weaponSkillTotals := make([]float64, weaponSkillLen)
+	var bonusPhysicalDamage float64
+
+	for _, effect := range analysis.Effects {
+		if effect.Stat != proto.Stat(-1) {
+			statIdx := int(effect.Stat)
+			if statIdx >= 0 && statIdx < len(statTotals) {
+				statTotals[statIdx] += effect.Value
+			}
+		}
+
+		if effect.WeaponSkill != proto.WeaponSkill_WeaponSkillUnknown {
+			wsIdx := int(effect.WeaponSkill)
+			if wsIdx >= 0 && wsIdx < len(weaponSkillTotals) {
+				weaponSkillTotals[wsIdx] += effect.Value
+			}
+		}
+
+		if effect.BonusPhysicalDamage != 0 {
+			bonusPhysicalDamage += effect.BonusPhysicalDamage
+		}
+	}
+
+	if resilienceDotValue > 0 || resilienceCritValue > 0 {
+		if resilienceDotValue == resilienceCritValue {
+			statTotals[int(proto.Stat_StatResilience)] += resilienceDotValue
+		} else {
+			analysis.HasUnhandledEffect = true
+		}
+	}
+
+	if statTotals[int(proto.Stat_StatSpellDamage)] > 0 && statTotals[proto.Stat_StatSpellDamage] == statTotals[proto.Stat_StatHealingPower] {
+		statTotals[int(proto.Stat_StatSpellPower)] = statTotals[int(proto.Stat_StatSpellDamage)]
+		statTotals[int(proto.Stat_StatSpellDamage)] = 0
+		statTotals[int(proto.Stat_StatHealingPower)] = 0
+	}
+
+	analysis.Effects = analysis.Effects[:0]
+
+	for statIdx, value := range statTotals {
+		if value != 0 {
+			analysis.Effects = append(analysis.Effects, SpellEffect{
+				Stat:  proto.Stat(statIdx),
+				Value: value,
+			})
+		}
+	}
+
+	for wsIdx, value := range weaponSkillTotals {
+		if value != 0 {
+			analysis.Effects = append(analysis.Effects, SpellEffect{
+				WeaponSkill: proto.WeaponSkill(wsIdx),
+				Value:       value,
+			})
+		}
+	}
+
+	if bonusPhysicalDamage != 0 {
+		analysis.Effects = append(analysis.Effects, SpellEffect{
+			BonusPhysicalDamage: bonusPhysicalDamage,
+		})
+	}
 }
 
 func auraTypeToEffects(auraType, miscValue int32, value float64) ([]SpellEffect, bool) {
@@ -959,7 +1072,7 @@ func auraTypeToEffects(auraType, miscValue int32, value float64) ([]SpellEffect,
 		return []SpellEffect{{Stat: proto.Stat_StatBlockValue, Value: value}}, true
 
 	case auraModTargetResistance:
-		return []SpellEffect{{Stat: proto.Stat_StatSpellPenetration, Value: math.Abs(value)}}, true
+		return targetResistanceMaskToEffects(miscValue, value)
 
 	case auraModFortune:
 		return []SpellEffect{{Stat: proto.Stat_StatFortune, Value: value}}, true

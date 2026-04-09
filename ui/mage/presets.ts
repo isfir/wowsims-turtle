@@ -1,3 +1,4 @@
+import { Player } from '../core/player.js';
 import * as PresetUtils from '../core/preset_utils';
 import {
 	Alcohol,
@@ -27,14 +28,13 @@ import {
 } from '../core/proto/common';
 import { Mage_Options as MageOptions, Mage_Options_ArmorType as ArmorType } from '../core/proto/mage';
 import { SavedTalents } from '../core/proto/ui';
-import { Player } from '../core/player.js';
-import { TypedEvent } from '../core/typed_event.js';
 import { Stats } from '../core/proto_utils/stats.js';
-import ArcaneSTAPL from './apls/arcane_st.apl.json';
+import { TypedEvent } from '../core/typed_event.js';
 import ArcaneAoEAPL from './apls/arcane_aoe.apl.json';
+import ArcaneSTAPL from './apls/arcane_st.apl.json';
 import FireST from './apls/fire_st.apl.json';
-import ArcaneSTGearBiS from './gear_sets/arcane_st_bis.gear.json';
 import ArcaneAoEGearBiS from './gear_sets/arcane_aoe_bis.gear.json';
+import ArcaneSTGearBiS from './gear_sets/arcane_st_bis.gear.json';
 import FireSTBiS from './gear_sets/fire_st_bis.gear.json';
 
 ///////////////////////////////////////////////////////////////////////////

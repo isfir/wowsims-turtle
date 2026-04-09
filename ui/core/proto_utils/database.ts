@@ -1,7 +1,7 @@
 import { MAX_CHARACTER_LEVEL } from '../constants/mechanics.js';
 import { BASE_PATH, REPO_NAME } from '../constants/other.js';
 import { Class, EquipmentSpec, ItemRandomSuffix, ItemSlot, ItemSpec, ItemSwap, PresetEncounter, PresetTarget, SimDatabase } from '../proto/common.js';
-import { IconData, UIDatabase, UIEnchant as Enchant, UIFaction as Faction, UIItem as Item, UISpell as Spell, UINPC as Npc, UIZone as Zone, UIItemSet as ItemSet } from '../proto/ui.js';
+import { IconData, UIDatabase, UIEnchant as Enchant, UIFaction as Faction, UIItem as Item, UIItemSet as ItemSet,UINPC as Npc, UISpell as Spell, UIZone as Zone } from '../proto/ui.js';
 import { distinct } from '../utils.js';
 import { EquippedItem } from './equipped_item.js';
 import { Gear, ItemSwapGear } from './gear.js';

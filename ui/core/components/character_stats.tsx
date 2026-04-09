@@ -496,7 +496,7 @@ export class CharacterStats extends Component {
 			} else if (stat === Stat.StatParry) {
 				displayStr = `${(rawValue / Mechanics.PARRY_RATING_PER_PARRY_CHANCE).toFixed(2)}%`;
 			} else if (stat === Stat.StatResilience) {
-				displayStr = `${rawValue} (${(rawValue / Mechanics.RESILIENCE_RATING_PER_CRIT_REDUCTION_CHANCE).toFixed(2)}%)`;
+				displayStr = `${rawValue}%`;
 			} else if (stat === Stat.StatFortune) {
 				displayStr = `${rawValue}%`;
 			}

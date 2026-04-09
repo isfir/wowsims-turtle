@@ -1,5 +1,4 @@
 import { TooltipManager } from '../components/tooltip_manager';
-
 import { MAX_CHARACTER_LEVEL } from '../constants/mechanics';
 import { BASE_PATH } from '../constants/other.js';
 import { ResourceType } from '../proto/api';

@@ -45002,13 +45002,13 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 68923,tmh leather chest,,,,INV_Chest_Chain_15,0,0,0,0,0,7,0,0,tm_leather_01_Sleeve_AU,,,tm_leather_01_Chest_TU,tm_leather_01_Chest_TL,,,,0
 68924,tmh leather legs,,,,INV_Pants_Mail_15,0,0,0,0,0,7,0,0,,,,,,tm_leather_01_Pants_LU,tm_leather_01_Pants_LL,,0
 68925,tmh leather hands,,,,INV_Gauntlets_25,1,0,0,0,0,7,0,0,,tm_leather_01_Glove_AL,tm_leather_01_Glove_HA,,,,,,0
-68926,tmh leather boots,,,,INV_Boots_Chain_05,1,0,0,0,0,7,0,0,,,,,,,tm_leather_01_Pants_LL,tm_leather_01_Boot_FO,0
+68926,tmh leather boots,,,,INV_Boots_Chain_05,1,0,0,0,0,7,0,0,,,,,,,tm_leather_01_Boots_LL,tm_leather_01_Boot_FO,0
 68927,Helm_plate_timber_01.mdx,,tm_plate_helm_001,tm_plate_helm_002,INV_Helmet_58,0,0,0,0,0,10,248,306,,,,,,,,,0
 68928,LShoulder_plate_timber_01.mdx,RShoulder_plate_timber_01.mdx,tm_plate_shoulder_main_001,tm_plate_shoulder_detail_001,INV_Shoulder_29,0,0,0,0,0,10,0,0,,,,,,,,,0
 68929,tmh heavy chest,,,,INV_Chest_Plate02,0,0,0,0,0,10,0,0,tm_plate_01_Sleeve_AU,,,tm_plate_01_Chest_TU,tm_plate_01_Chest_TL,,,,0
 68930,tmh heavy legs,,,,INV_Pants_Plate_05,0,0,0,0,0,10,0,0,,,,,,tm_plate_01_Pants_LU,tm_plate_01_Pants_LL,,0
 68931,tmh heavy hands,,,,INV_Gauntlets_28,3,0,0,0,0,10,0,0,,tm_plate_01_Glove_AL,tm_plate_01_Glove_HA,,,,,,0
-68932,tmh heavy boots,,,,INV_Boots_Plate_06,3,0,0,0,0,10,0,0,,,,,,,tm_plate_01_Pants_LL,tm_plate_01_Boot_FO,0
+68932,tmh heavy boots,,,,INV_Boots_Plate_06,3,0,0,0,0,10,0,0,,,,,,,tm_plate_01_Boots_LL,tm_plate_01_Boot_FO,0
 68933,,,,,INV_MISC_PETMOONKINNE,0,0,0,0,0,0,0,0,,,,,,,,,0
 68934,,,,,Ability_Hunter_Pet_TallStrider,0,0,0,0,0,0,0,0,,,,,,,,,0
 68935,,,,,inv_misc_petmoonkinta,0,0,0,0,0,0,0,0,,,,,,,,,0
@@ -45117,7 +45117,7 @@ id,modelName_1,modelName_2,modelTexture_1,modelTexture_2,inventoryIcon,geosetGro
 69038,tmh leather chest,,,,INV_Chest_Chain_15,0,0,0,0,0,0,0,0,tm_leather_01_Sleeve_AU,,,tm_leather_01_Chest_TU,tm_leather_01_Chest_TL,,,,0
 69039,tmh leather legs,,,,INV_Pants_Mail_15,0,0,0,0,0,0,0,0,,,,,,tm_leather_01_Pants_LU,tm_leather_01_Pants_LL,,0
 69040,tmh leather hands,,,,INV_Gauntlets_25,1,0,0,0,0,0,0,0,,tm_leather_01_Glove_AL,tm_leather_01_Glove_HA,,,,,,0
-69041,tmh leather boots,,,,INV_Boots_Chain_05,1,0,0,0,0,0,0,0,,,,,,,tm_leather_01_Pants_LL,tm_leather_01_Boot_FO,0
+69041,tmh leather boots,,,,INV_Boots_Chain_05,1,0,0,0,0,0,0,0,,,,,,,tm_leather_01_Boots_LL,tm_leather_01_Boot_FO,0
 69042,Helm_Cloth_B_05.mdx,,Helm_Cloth_A_01WhiteCool,,hat_of_the_junior_chef_1,0,0,0,0,0,7,249,305,,,,,,,,,0
 69043,,,,,claw_of_the_satyr_2,0,0,0,0,0,16,0,0,,,,,,,,,0
 69044,,,,,INV_Shirt_GuildTabard_01,1,0,0,0,0,7,0,0,,,,TABARD_A_62EARTHENRING_CHEST_TU,Tabard_A_62EarthenRing_Chest_TL,,,,0

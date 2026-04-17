@@ -946,11 +946,12 @@ func init() {
 		}).AttachMultiplyCastSpeed(&character.Unit, 0.9)
 
 		core.MakeItemProcTriggerAura(&character.Unit, core.ProcTrigger{
-			Name:       "Overpowered Passive",
-			Callback:   core.CallbackOnSpellHitDealt,
-			Outcome:    core.OutcomeLanded,
-			ProcMask:   core.ProcMaskSpellDamage,
-			ProcChance: 0.08,
+			Name:                 "Overpowered Passive",
+			Callback:             core.CallbackOnSpellHitDealt,
+			Outcome:              core.OutcomeLanded,
+			ProcMask:             core.ProcMaskSpellDamage,
+			ProcChance:           0.08,
+			LandedExecutionIndex: 1,
 			Handler: func(sim *core.Simulation, spell *core.Spell, result *core.SpellResult) {
 				buffAura.Activate(sim)
 			},
